@@ -1,0 +1,867 @@
+:root{
+
+    --emerald:#0B5D3B;
+
+    --terracotta:#C96A4A;
+
+    --cream:#FAF6EF;
+
+    --gold:#D4A24C;
+
+    --text:#2D2D2D;
+
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:var(--cream);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+nav{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    background:white;
+
+    box-shadow:
+    0 2px 15px rgba(0,0,0,.08);
+
+}
+
+.nav-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:18px 6%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo img{
+
+    width:140px;
+
+    display:block;
+
+}
+
+.nav-links{
+
+    list-style:none;
+
+    display:flex;
+
+    gap:40px;
+
+}
+
+.nav-links a{
+
+    position:relative;
+
+    text-decoration:none;
+
+    color:#0D6B3D;
+
+    font-weight:600;
+
+    transition:.3s ease;
+
+}
+
+/* Hover */
+
+.nav-links a:hover{
+
+    color:#D17A4A;
+
+}
+
+/* Active link */
+
+.nav-links a.active{
+
+    color:#D17A4A;
+
+}
+
+/* Underline animation */
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:#D17A4A;
+
+    transition:.3s ease;
+
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+
+    width:100%;
+
+}
+.dropdown{
+    position:relative;
+}
+
+.dropdown-menu{
+
+    position:absolute;
+
+    top:100%;
+    left:0;
+
+    min-width:220px;
+
+    background:white;
+
+    list-style:none;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    padding:10px 0;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.3s ease;
+
+}
+
+.dropdown:hover .dropdown-menu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.dropdown-menu li{
+    width:100%;
+}
+
+.dropdown-menu a{
+
+    display:block;
+
+    padding:14px 20px;
+
+    text-decoration:none;
+
+    color:var(--emerald);
+
+}
+
+.dropdown-menu a:hover{
+
+    background:var(--cream);
+
+    color:var(--terracotta);
+
+}
+
+.shop-btn{
+
+    background:var(--emerald);
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 28px;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.shop-btn:hover{
+
+    background:var(--terracotta);
+
+}
+.menu-toggle{
+    display:none;
+    font-size:2rem;
+    color:var(--emerald);
+    cursor:pointer;
+}
+.story-video{
+    width:100%;
+    background:#000;
+}
+
+.story-video video{
+    width:100%;
+    height:100vh;
+    object-fit:cover;
+}
+.about-avoglow{
+
+    background:#ffffff;
+
+    padding:120px 8%;
+
+}
+
+.about-container{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:80px;
+
+    align-items:center;
+
+}
+
+.about-image img{
+
+    width:100%;
+
+    height:630px; /* adjust this */
+
+    object-fit:cover;
+
+    border-radius:20px;
+
+    display:block;
+
+}
+
+.section-tag{
+
+    color:#d87a4a;
+
+    font-size:.85rem;
+
+    letter-spacing:3px;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+}
+
+.about-content h2{
+
+    color:#0b6b3f;
+
+    font-size:3rem;
+
+    line-height:1.2;
+
+    margin:20px 0;
+
+}
+
+.about-content p{
+
+    color:#555;
+
+    line-height:1.9;
+
+    margin-bottom:20px;
+
+    font-size:1.05rem;
+
+}
+/* .atari-section{
+
+    padding:120px 8%;
+
+    background:#f7f3ec;
+
+}
+
+.atari-container{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:80px;
+
+    align-items:center;
+
+}
+
+.atari-image img{
+
+    width:100%;
+
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:25px;
+
+    display:block;
+
+}
+
+.atari-tag{
+
+    color:#d87a4a;
+
+    text-transform:uppercase;
+
+    letter-spacing:4px;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    display:block;
+
+    margin-bottom:20px;
+
+}
+
+.atari-content h2{
+
+    font-size:4rem;
+
+    line-height:1.1;
+
+    color:#0b6b3f;
+
+    margin-bottom:30px;
+
+}
+
+.atari-content p{
+
+    font-size:1.15rem;
+
+    line-height:2;
+
+    color:#555;
+
+    margin-bottom:20px;
+
+} */
+.atari-connection{
+
+    padding:80px 8%;
+
+    background:#f7f3ec;
+
+}
+
+.connection-container{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+.section-tag{
+
+    display:block;
+
+    color:#d87a4a;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+
+}
+
+.atari-connection h2{
+
+    font-size:3rem;
+
+    color:#0b6b3f;
+
+    margin-bottom:35px;
+
+    line-height:1.2;
+
+}
+
+.lead-text{
+
+    font-size:1.4rem;
+
+    color:#0b6b3f;
+
+    font-weight:500;
+
+    margin-bottom:30px;
+
+    line-height:1.8;
+
+}
+
+.atari-connection p{
+
+    color:#666;
+
+    font-size:1.15rem;
+
+    line-height:2;
+
+    margin-bottom:15px;
+
+}
+
+.connection-footer{
+    margin-top:40px;
+    font-size:1rem;
+    color:#0b6b3f;
+    font-style:italic;
+    font-weight:500;
+}
+.people-section{
+
+    padding:120px 8%;
+
+    background:#fff;
+
+}
+
+.founder-section{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:80px;
+
+    align-items:center;
+
+    margin-bottom:120px;
+
+}
+
+.founder-image img{
+
+    width:100%;
+
+    height:650px;
+
+    object-fit:cover;
+
+    border-radius:25px;
+
+}
+
+.section-tag{
+
+    color:#d87a4a;
+
+    text-transform:uppercase;
+
+    letter-spacing:4px;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+}
+
+.founder-content h2{
+
+    font-size:3.5rem;
+
+    color:#0b6b3f;
+
+    line-height:1.1;
+
+    margin:20px 0 30px;
+
+}
+
+.founder-content p{
+
+    color:#555;
+
+    line-height:2;
+
+    font-size:1.1rem;
+
+    margin-bottom:18px;
+
+}
+
+.founder-quote{
+
+    margin-top:30px;
+
+    padding:25px;
+
+    background:#f7f3ec;
+
+    border-left:4px solid #0b6b3f;
+
+    border-radius:12px;
+
+    font-style:italic;
+
+    color:#0b6b3f;
+
+}
+
+.founder-content h4{
+
+    margin-top:20px;
+
+    color:#0b6b3f;
+    font-size: 1.3rem;
+
+}
+
+/* TEAM */
+
+.team-section{
+
+    max-width:1300px;
+
+    margin:auto;
+
+    text-align:center;
+
+}
+
+.team-section h2{
+
+    font-size:3.5rem;
+
+    color:#0b6b3f;
+
+    margin:20px 0 60px;
+
+}
+
+.team-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:35px;
+
+}
+
+.team-card{
+
+    background:#f7f3ec;
+
+    padding:25px;
+
+    border-radius:20px;
+
+}
+
+.team-card img{
+
+    width:100%;
+
+    height:350px;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+}
+
+.team-card h3{
+
+    color:#0b6b3f;
+
+    margin-bottom:10px;
+
+}
+
+.team-card p{
+
+    color:#666;
+
+}
+.mission-vision{
+
+    padding:120px 8%;
+
+    background:#f7f3ec;
+
+}
+
+.section-heading{
+
+    text-align:center;
+
+    margin-bottom:70px;
+
+}
+
+.section-heading span{
+
+    color:#d87a4a;
+
+    text-transform:uppercase;
+
+    letter-spacing:4px;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+}
+
+.section-heading h2{
+
+    font-size:4rem;
+
+    color:#0b6b3f;
+
+    margin-top:20px;
+
+}
+
+.purpose-grid{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:40px;
+
+}
+
+.purpose-card{
+
+    background:white;
+
+    padding:60px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.05);
+
+}
+
+.purpose-card h3{
+
+    color:#0b6b3f;
+
+    font-size:2rem;
+
+    margin-bottom:25px;
+
+}
+
+.purpose-card p{
+
+    color:#555;
+
+    line-height:2;
+
+    font-size:1.1rem;
+
+}
+/* FOOTER */
+
+.footer{
+
+    background:var(--emerald);
+
+    color:white;
+
+}
+
+.footer-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:80px 8%;
+
+    display:grid;
+
+    grid-template-columns:
+    2fr 1fr 1fr 1fr;
+
+    gap:50px;
+
+}
+
+.footer-brand img{
+
+    width:140px;
+
+    background:white;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+}
+
+.footer-brand p{
+
+    line-height:1.9;
+
+    color:rgba(255,255,255,.85);
+
+}
+
+.footer h4{
+
+    margin-bottom:20px;
+
+    color:var(--gold);
+
+    font-size:1.2rem;
+
+}
+
+.footer-links ul{
+
+    list-style:none;
+
+}
+
+.footer-links li{
+
+    margin-bottom:12px;
+
+}
+
+.footer-links a,
+.footer-social a{
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.3s;
+
+}
+
+.footer-links a:hover,
+.footer-social a:hover{
+
+    color:var(--gold);
+
+}
+
+.footer-contact p{
+
+    margin-bottom:12px;
+
+}
+
+.footer-social{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+}
+
+.footer-bottom{
+
+    text-align:center;
+
+    padding:25px;
+
+    border-top:
+    1px solid rgba(255,255,255,.15);
+
+}
+
+.footer-bottom p{
+
+    color:rgba(255,255,255,.8);
+
+}
+
