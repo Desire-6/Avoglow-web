@@ -309,7 +309,7 @@ nav{
 
 /* LEFT SIDE */
 
-.contact-info{
+/* .contact-info{
 
     background:#f7f3ec;
 
@@ -363,7 +363,7 @@ nav{
 
 /* SOCIALS */
 
-.social-section h3{
+/* .social-section h3{
 
     color:#0b6b3f;
 
@@ -431,7 +431,7 @@ nav{
 
     color:white;
 
-}
+} */ */
 
 /* FORM */
 
@@ -505,6 +505,58 @@ nav{
     background:#084e2e;
 
 }
+.contact-info{ 
+    background:#F3EFE6; 
+    padding:40px; 
+    border-radius:20px; 
+} 
+.contact-info h2{ 
+    color:#0B6B3A; 
+    font-size:38px; 
+    margin-bottom:35px; 
+} 
+.contact-item{ 
+    display:flex; 
+    gap:18px; 
+    margin-bottom:28px; 
+} 
+.contact-item i{ 
+    color:#0B6B3A; 
+    font-size:24px; 
+    margin-top:5px; 
+} 
+.contact-item h4{
+     color:#0B6B3A; 
+     margin-bottom:5px; 
+} 
+.contact-item p{
+    color:#666; 
+    margin:0; 
+} 
+.social-section{ 
+    margin-top:25px; 
+    padding-top:25px; 
+    border-top:1px solid #ddd; 
+} 
+.social-icons{
+     display:flex; 
+     gap:15px; 
+     margin-top:15px; 
+    } .social-icons a{ 
+        width:45px; 
+        height:45px; 
+        border-radius:50%; 
+        background:white; 
+        display:flex; 
+        align-items:center; 
+        justify-content:center; 
+        color:#0B6B3A; 
+        text-decoration:none; 
+        transition:.3s; 
+    } .social-icons a:hover{ 
+        background:#0B6B3A; 
+        color:white; 
+    }
 
 
 /* FOOTER */
