@@ -434,7 +434,14 @@ nav{
 } */ */
 
 /* FORM */
+.contact-info{
 
+    background:#f7f3ec;
+
+    padding:50px;
+
+    border-radius:20px;
+}
 
 .contact-form h2{
 
@@ -555,7 +562,7 @@ nav{
         transition:.3s; 
     } .social-icons a:hover{ 
         background:#0B6B3A; 
-        color:white; 
+        color:white;
     }
 
 

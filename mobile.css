@@ -664,5 +664,81 @@
     font-size:2.8rem;
 
 }
+/* IMPACT */
+.impact-stats{ 
+    padding:80px 20px;
+ }
+.impact-grid{
+    grid-template-columns:1fr; 
+    gap:20px; 
+} 
+.impact-header{
+    margin-bottom:50px; 
+} 
+.impact-header h2{
+    font-size:38px; 
+} 
+.impact-header p{
+    font-size:16px;
+} 
+.impact-card{
+    padding:40px 25px; 
+} 
+.impact-card h3{
+    font-size:42px; 
+} 
+.impact-card p{
+    font-size:16px; 
+}
 
+    .community-impact{
+        padding:80px 20px;
+    }
+
+    .impact-header h2{
+        font-size:42px;
+    }
+
+    .impact-header p{
+        font-size:16px;
+    }
+
+    .impact-track img{
+        width:280px;
+        height:220px;
+    }
+
+    .slide{
+        grid-template-columns:1fr;
+    }
+
+    .story-card p{
+        font-size:18px;
+    }
+
+    .slider-btn{
+        width:45px;
+        height:45px;
+    }
+
+    .future-section{
+        padding:80px 20px;
+    }
+
+    .future-content h2{
+        font-size:36px;
+    }
+
+    .future-intro{
+        font-size:20px;
+    }
+
+    .future-content p{
+        font-size:16px;
+    }
+
+    .future-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
 }

@@ -1,0 +1,241 @@
+:root{
+
+    --emerald:#0B5D3B;
+
+    --terracotta:#C96A4A;
+
+    --cream:#FAF6EF;
+
+    --gold:#D4A24C;
+
+    --text:#2D2D2D;
+
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:var(--cream);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+}
+nav{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    background:white;
+
+    box-shadow:
+    0 2px 15px rgba(0,0,0,.08);
+
+}
+
+.nav-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:18px 6%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.logo img{
+
+    width:140px;
+
+    display:block;
+
+}
+
+.nav-links{
+
+    list-style:none;
+
+    display:flex;
+
+    gap:40px;
+
+}
+
+.nav-links a{
+
+    position:relative;
+
+    text-decoration:none;
+
+    color:#0D6B3D;
+
+    font-weight:600;
+
+    transition:.3s ease;
+
+}
+
+/* Hover */
+
+.nav-links a:hover{
+
+    color:#D17A4A;
+
+}
+
+/* Active link */
+
+.nav-links a.active{
+
+    color:#D17A4A;
+
+}
+
+/* Underline animation */
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-6px;
+
+    width:0;
+
+    height:2px;
+
+    background:#D17A4A;
+
+    transition:.3s ease;
+
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after{
+
+    width:100%;
+
+}
+.dropdown{
+    position:relative;
+}
+
+.dropdown-menu{
+
+    position:absolute;
+
+    top:100%;
+    left:0;
+
+    min-width:220px;
+
+    background:white;
+
+    list-style:none;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+    padding:10px 0;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.3s ease;
+
+}
+
+.dropdown:hover .dropdown-menu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.dropdown-menu li{
+    width:100%;
+}
+
+.dropdown-menu a{
+
+    display:block;
+
+    padding:14px 20px;
+
+    text-decoration:none;
+
+    color:var(--emerald);
+
+}
+
+.dropdown-menu a:hover{
+
+    background:var(--cream);
+
+    color:var(--terracotta);
+
+}
+
+.shop-btn{
+
+    background:var(--emerald);
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 28px;
+
+    border-radius:8px;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.shop-btn:hover{
+
+    background:var(--terracotta);
+
+}
+.menu-toggle{
+    display:none;
+    font-size:2rem;
+    color:var(--emerald);
+    cursor:pointer;
+}
