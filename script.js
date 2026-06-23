@@ -334,3 +334,125 @@ document.querySelector(".review-arrow.right")
     });
 
 });
+
+// document.getElementById("addToCart")
+// .addEventListener("click", function(){
+
+   
+// const menuToggle =
+// document.querySelector(".menu-toggle");
+
+// const navLinks =
+// document.querySelector(".nav-links");
+
+// menuToggle.addEventListener("click", () => {
+
+//     navLinks.classList.toggle("active");
+
+// });
+
+// window.addEventListener("load", () => {
+
+//     const hash = window.location.hash;
+
+//     const map = {
+
+//         "#hair-care": "hair",
+//         "#skin-care": "skin",
+//         "#wellness": "wellness",
+//         "#gift-sets": "gift",
+//         "#all-products": "all"
+
+//     };
+
+//     const filter = map[hash];
+
+//     if(!filter) return;
+
+//     const btn = document.querySelector(
+//         `.filter-btn[data-filter="${filter}"]`
+//     );
+
+//     if(btn){
+
+//         btn.click();
+
+//     }
+
+// });
+
+//     document
+//     .querySelectorAll(".product-card")
+//     .forEach(card => {
+
+//         if(
+//             filter === "all" ||
+//             card.classList.contains(filter)
+//         ){
+
+//             card.style.display = "block";
+
+//         }else{
+
+//             card.style.display = "none";
+
+//         }
+
+//     });
+
+
+// ELEMENTS
+
+const addToCartBtn =
+document.getElementById("addToCart");
+
+if(addToCartBtn){
+
+    addToCartBtn.addEventListener("click", function(){
+
+        const selectedSize =
+        document.querySelector(".size-btn.active")
+        .textContent.trim();
+
+        const selectedPrice =
+        Number(
+            document.querySelector(".size-btn.active")
+            .dataset.price
+        );
+
+        const product = {
+
+            name: "Root & Revive",
+
+            subtitle: "Triple Active Hair Elixir",
+
+            category: "Hair Care",
+
+            image: "Images/root-revive.png",
+
+            size: selectedSize,
+
+            price: selectedPrice,
+
+            quantity: quantity
+
+        };
+
+        let cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+        cart.push(product);
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        alert("Added to Cart!");
+
+
+    });
+
+}
