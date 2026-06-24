@@ -19,34 +19,118 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <!-- NAVBAR -->
 
-<nav class="cart-nav">
+<nav>
 
-    <a href="index.html" class="logo">
+    <div class="nav-container">
 
-        <img src="Images/logo.png"
-             alt="Avoglow">
+        <a href="index.html" class="logo">
 
-    </a>
-    
-
-    <div class="nav-actions">
-
-        <a href="account.html">
-
-            <i class="fa-regular fa-user"></i>
+            <img src="Images/logo.png"
+                 alt="Avoglow">
 
         </a>
 
-        <a href="cart.html"
-           class="cart-icon">
+        <ul class="nav-links">
 
-              <i class="fas fa-shopping-cart"></i>
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
 
-            <span id="cart-count">
-                0
-            </span>
+            <li class="dropdown">
 
-        </a>
+                <a href="shop.html">
+                    Shop ▾
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <li>
+                        <a href="shop.html">
+                            All Products
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="shop.html#hair-care">
+                            Hair Care
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="shop.html#skin-care">
+                            Skin Care
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="shop.html#wellness">
+                            Wellness
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="shop.html#gift-sets">
+                            Gift Sets
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <li>
+                <a href="story.html">
+                    Our Story
+                </a>
+            </li>
+
+            <li>
+                <a href="circularity.html">
+                    Circularity
+                </a>
+            </li>
+
+            <li>
+                <a href="impact.html">
+                    Impact
+                </a>
+            </li>
+
+            <li>
+                <a href="contact.html">
+                    Contact
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="menu-toggle">
+            ☰
+        </div>
+
+        <div class="nav-actions">
+
+            <a href="account.html"
+               class="account-icon">
+
+                <i class="fas fa-user"></i>
+
+            </a>
+
+            <a href="cart.html"
+               class="cart-icon">
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <span class="cart-count" id="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </div>
 
     </div>
 
