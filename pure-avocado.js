@@ -459,3 +459,28 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Pure-Avocado Oil",
+    category: "Skin & Hair Care",
+    price: 10000,
+    image: "Images/pure-avocado-oil.png",
+    link: "pure-avocado-oil.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+// viewed = viewed.slice(0,4);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);

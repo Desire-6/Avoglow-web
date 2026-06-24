@@ -264,3 +264,93 @@ if(checkoutBtn){
 updateCartBadge();
 
 renderCart();
+function loadRecentlyViewed(){
+
+    const container =
+    document.getElementById(
+        "recently-viewed-container"
+    );
+
+    if(!container) return;
+
+    const viewed =
+    JSON.parse(
+        localStorage.getItem(
+            "recentlyViewed"
+        )
+    ) || [];
+
+    container.innerHTML = "";
+
+    viewed.forEach(product => {
+
+        container.innerHTML += `
+
+        <div class="recent-card">
+
+            <a href="${product.link}">
+
+                <img src="${product.image}"
+                     alt="${product.name}">
+
+            </a>
+
+            <div class="recent-content">
+
+                <h3>${product.name}</h3>
+
+                <p class="recent-category">
+                    ${product.category}
+                </p>
+
+                <div class="recent-price">
+                    UGX ${product.price.toLocaleString()}
+                </div>
+
+                <a href="${product.link}">
+                    <button class="recent-btn">
+                        View Product
+                    </button>
+                </a>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+loadRecentlyViewed();
+const recentContainer =
+document.getElementById("recently-viewed-container");
+
+const leftArrow =
+document.querySelector(".recent-arrow.left");
+
+const rightArrow =
+document.querySelector(".recent-arrow.right");
+
+if(recentContainer){
+
+    rightArrow.addEventListener("click", () => {
+
+        recentContainer.scrollBy({
+            left: 350,
+            behavior: "smooth"
+        });
+
+    });
+
+    leftArrow.addEventListener("click", () => {
+
+        recentContainer.scrollBy({
+            left: -350,
+            behavior: "smooth"
+        });
+
+    });
+
+}

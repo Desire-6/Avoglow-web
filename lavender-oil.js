@@ -459,3 +459,26 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Lavender-Avocado Oil",
+    category: "Skin Care",
+    price: 15000,
+    image: "Images/lavender-oil.png",
+    link: "lavender-oil.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);

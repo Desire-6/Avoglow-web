@@ -458,3 +458,28 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Root & Revive",
+    category: "Hair Care",
+    price: 25000,
+    image: "Images/root-revive.png",
+    link: "root-revive.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+// viewed = viewed.slice(0,4);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);

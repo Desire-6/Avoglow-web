@@ -459,3 +459,28 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Intensive Hair Butter",
+    category: "Hair Care",
+    price: 25000,
+    image: "Images/hair-butter.png",
+    link: "hair-butter.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+// viewed = viewed.slice(0,4);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);

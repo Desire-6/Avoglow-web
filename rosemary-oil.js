@@ -459,3 +459,28 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Rosemary-Avocado Oil",
+    category: "Skin Care",
+    price: 15000,
+    image: "Images/rosemary-oil.png",
+    link: "rosemary-oil.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+// viewed = viewed.slice(0,4);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);

@@ -459,3 +459,28 @@ alert("Added to Cart!");
     });
 
 }
+const currentProduct = {
+    name: "Avochai",
+    category: "Wellness",
+    price: 12000,
+    image: "Images/avochai.png",
+    link: "avochai.html"
+};
+
+let viewed =
+JSON.parse(
+    localStorage.getItem("recentlyViewed")
+) || [];
+
+viewed = viewed.filter(
+    item => item.name !== currentProduct.name
+);
+
+viewed.unshift(currentProduct);
+
+viewed = viewed.slice(0,4);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);
