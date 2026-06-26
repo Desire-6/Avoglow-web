@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,8 +8,9 @@
     <title>
         Avoglow | Naturally Nourished
     </title>
-    <link rel="stylesheet" href="root-revive.css">
+
     <link rel="stylesheet" href="mobile.css">
+     <link rel="stylesheet" href="product.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -106,7 +107,9 @@
 
         <i class="fas fa-shopping-cart"></i>
 
-       <span class="cart-count" id="cart-count">0</span>
+        <span class="cart-count" id="cart-count">
+    0
+</span>
 
         <!-- <span>Cart</span> -->
 
@@ -121,31 +124,29 @@
 
         <div class="product-image">
 
-            <img src="Images/avochai.png"
-                 alt="Avochai">
+        <img id="product-image"
+     src=""
+     alt="">
 
-        </div> 
+        </div>
 
         <div class="product-details">
 
-            <span class="product-tag">
-                Wellness
-            </span>
+           <span class="product-tag"
+      id="product-category">
+</span>
 
-            <h1> 
-                Avochai
-            </h1>
+           <h1 id="product-name"></h1>
 
-            <p class="subtitle">
-                Avocado Seed Wellness Chai
-            </p>
+           <p class="subtitle"
+   id="product-paragraph"></p>
 
-            <div class="price">
-                UGX 12000
-            </div>
+           <div class="price"
+     id="product-price"></div>
 
-            <p class="product-intro">
-                A unique caffeine-free wellness drink crafted from avocado seeds and carefully selected spices. AvoChai transforms avocado seeds into a comforting and flavorful beverage that can be enjoyed any time of day.
+        <p class="product-intro"
+   id="product-intro"></p>
+
             <!-- SIZE -->
 
            <div class="options-row">
@@ -155,19 +156,9 @@
 
         <h4>Select Size</h4>
 
-        <div class="sizes">
+        <div class="sizes" id="sizes-container">
 
-            <!-- <button class="size-btn active"
-                    data-price="15000">
-                50ml
-            </button> -->
-
-            <button class="size-btn"
-                    data-price="12000">
-                100ml
-            </button>
-
-        </div>
+</div>
 
     </div>
 
@@ -193,14 +184,14 @@
 
     Total:
     <span id="total-price">
-        UGX 12,000
+        UGX 25,000
     </span>
 
 </div>
 
-                   <button
-    id="addToCart"
-    class="add-cart-btn">
+           <button
+    class="add-cart-btn"
+    id="addToCart">
 
     Add To Cart
 
@@ -221,145 +212,81 @@
 
         <h2>Description</h2>
 
-        <p>
-           AvoChai is a wholesome wellness beverage made from carefully processed avocado seeds blended with warming spices. Created as a caffeine-free alternative to conventional tea and coffee, AvoChai offers a rich, satisfying flavor that can be enjoyed morning, afternoon, or evening. Every cup reflects Avoglow's commitment to transforming avocado resources into innovative products that support wellness and sustainability.
-        </p>
+     <p id="product-description"></p>
 
     </div>
         <div class="content-block">
 
         <h2>Key Benefits</h2>
-
- <ul>
-    <li>Caffeine-free alternative to tea and coffee</li>
-    <li>Made from avocado seeds</li>
-    <li>Rich and warming flavor profile</li>
-    <li>Suitable for any time of day</li>
-    <li>Crafted from natural ingredients</li>
-</ul>
+<ul id="benefits-list"></ul>
 
     </div>
         <div class="content-block">
 
         <h2>How To Use</h2>
 
- <ul>
-    <li>Add 1–2teaspoons of Avochai to hot water.</li>
-    <li>Allow to steep for 5–10.</li>
-    <li>Strain if desired.</li>
-    <li>Enjoy hot.</li>
-    <p>Optional:</p>
-     <li>Add honey or milk according to preference.</li>
-</ul>
+ <ul id="how-to-use-list"></ul>
 
     </div>
         <div class="content-block">
 
         <h2>Key Ingredients</h2>
 
-    <ul>
-    <li>Avocado Seed powder</li>
-    <li>Ginger</li>
-    <li>Cinnamon</li>
-    <li>Cardamom</li>
-    <li>Cloves</li>
-</ul>
+        <ul id="ingredients-list"></ul>
 
     </div>
         <div class="content-block">
 
-        <h2>The Story Behind Avochai</h2>
+        <h2 id="story-title"></h2>
 
-        <p>
-
-           AvoChai was born from Avoglow's mission to ensure that every part of the avocado creates value. By transforming avocado seeds into a flavorful wellness beverage, we developed a product that supports sustainability while offering consumers a unique and enjoyable caffeine-free drink. Every cup of AvoChai represents innovation, wellness, and responsible resource utilization.
-
-        </p>
+        <p id="story-text"></p>
 
     </div>
 
 </section>
-<section class="reviews-section">
+<section class="product-review-preview">
 
     <h2>Customer Reviews</h2>
 
-    <div class="reviews-summary">
+    <div class="review-preview-card">
 
-        <div class="overall-rating">
+        <div class="review-score">
 
-            <h3 id="average-rating">0.0</h3>
+            <h1 id="average-rating">0.0</h1>
 
             <div id="average-stars" class="stars">
                 ☆☆☆☆☆
             </div>
 
             <p>
-                Based on
+
                 <span id="review-count">0</span>
-                reviews
+                Customer Reviews
+
             </p>
 
         </div>
 
-        <div class="rating-breakdown">
+        <div class="review-action">
 
-            <div class="bar-row">
-                <span>5★</span>
-                <div class="bar">
-                    <div id="five-star-bar" class="fill"></div>
-                </div>
-            </div>
+            <p>
+                See what customers are saying about this product.
+            </p>
 
-            <div class="bar-row">
-                <span>4★</span>
-                <div class="bar">
-                    <div id="four-star-bar" class="fill"></div>
-                </div>
-            </div>
+            <a
+                id="view-all-reviews"
+                class="view-reviews-btn"
+                href="#">
 
-            <div class="bar-row">
-                <span>3★</span>
-                <div class="bar">
-                    <div id="three-star-bar" class="fill"></div>
-                </div>
-            </div>
+                Read Customer Reviews →
 
-            <div class="bar-row">
-                <span>2★</span>
-                <div class="bar">
-                    <div id="two-star-bar" class="fill"></div>
-                </div>
-            </div>
-
-            <div class="bar-row">
-                <span>1★</span>
-                <div class="bar">
-                    <div id="one-star-bar" class="fill"></div>
-                </div>
-            </div>
+            </a>
 
         </div>
 
     </div>
 
-   <div class="reviews-slider-wrapper">
-
-    <button class="review-arrow left">
-        &#10094;
-    </button>
-
-    <div id="reviews-container" class="reviews-grid">
-
-    </div>
-
-    <button class="review-arrow right">
-        &#10095;
-    </button>
-
-</div>
-
 </section>
-
 <section class="related-products">
 
     <div class="section-heading">
@@ -368,67 +295,9 @@
 
     </div>
 
-    <div class="related-grid">
-
-        <!-- Product 1 -->
-
-        <div class="related-card">
-
-            <img src="Images/root-revive.png"
-                 alt="Root & Revive">
-
-            <h3>Root & Revive</h3>
-
-            <p>Triple Active Hair Elixir</p>
-
-            <span>UGX 25,000</span>
-
-            <a href="root-revive.html">
-                View Product
-            </a>
-
-        </div>
-
-        <!-- Product 2 -->
-
-        <div class="related-card">
-
-            <img src="Images/pure-avocado-oil.png"
-                 alt="Pure Avocado Oil">
-
-            <h3>Pure Avocado Oil</h3>
-
-            <p>Multi-Purpose Nourishing Oil</p>
-
-            <span>UGX 50,000</span>
-
-            <a href="pure-avocado-oil.html">
-                View Product
-            </a>
-
-        </div>
-
-        <!-- Product 3 -->
-
-        <div class="related-card">
-
-            <img src="Images/hair-butter.png"
-                 alt="Hair Butter">
-
-            <h3>Intensive Hair Butter</h3>
-
-            <p>Deep Moisture & Strength</p>
-
-            <span>UGX 10,000</span>
-
-            <a href="hair-butter.html">
-                View Product
-            </a>
-
-        </div>
-
-    </div>
-
+    <div class="related-grid"
+     id="related-products">
+</div>
 </section>
 <footer class="footer">
 
@@ -505,8 +374,7 @@
     </div>
 
 </footer>
-<script src="avochai.js"></script>
+<script type="module" src="product-page.js"></script>
 <script src="cart-badge.js"></script>
-</body>
 </body>
 </html>

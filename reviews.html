@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>
+        Customer Reviews | Avoglow
+    </title>
+
+    <link rel="stylesheet" href="mobile.css">
+     <link rel="stylesheet" href="reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav>
+    <div class="nav-container">
+        <a href="#" class="logo">
+            <img
+                src="Images/logo.png"
+                alt="Avoglow">
+        </a>
+        <ul class="nav-links">
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="dropdown">
+
+    <a href="shop.html">
+        Shop ▾
+    </a>
+
+    <ul class="dropdown-menu">
+
+        <li>
+            <a href="shop.html">
+                All Products
+            </a>
+        </li>
+
+        <li>
+            <a href="shop.html#hair-care">
+                Hair Care
+            </a>
+        </li>
+
+        <li>
+            <a href="shop.html#skin-care">
+                Skin Care
+            </a>
+        </li>
+
+        <li>
+            <a href="shop.html#wellness">
+                Wellness
+            </a>
+        </li>
+
+        <li>
+            <a href="shop.html#gift-sets">
+                Gift Sets
+            </a>
+        </li>
+
+    </ul>
+
+</li>
+            <li>
+                <a href="story.html">
+                    Our Story
+                </a>
+            </li>
+            <li>
+                <a href="circularity.html">
+                    Circularity
+                </a>
+            </li>
+            <li>
+                <a href="impact.html">
+                    Impact
+                </a>
+            </li>
+            <li>
+                <a href="contact.html">
+                    Contact
+                </a>
+            </li>
+        </ul>
+        <div class="menu-toggle">
+            ☰
+        </div>
+       <div class="nav-actions">
+
+    <a href="account.html"
+       class="account-icon">
+
+        <i class="fas fa-user"></i>
+        <!-- <span>Account</span> -->
+
+    </a>
+
+    <a href="cart.html"
+       class="cart-icon">
+
+        <i class="fas fa-shopping-cart"></i>
+
+        <span class="cart-count" id="cart-count">
+    0
+</span>
+
+        <!-- <span>Cart</span> -->
+
+    </a>
+
+</div>
+    </div>
+</nav>
+<section class="reviews-page">
+
+    <div class="reviews-box">
+
+       <div class="feedback-title">
+    <button id="backToProduct" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <h1>Customer Reviews</h1>
+</div>
+        <div class="feedback-content">
+
+            <!-- LEFT SUMMARY -->
+
+            <aside class="feedback-summary">
+
+                <h4>
+                    VERIFIED RATINGS (
+                    <span id="review-count">0</span>
+                    )
+                </h4>
+
+                <div class="rating-box">
+
+                    <h2>
+                        <span id="average-rating">
+                            0.0
+                        </span>/5
+                    </h2>
+
+                    <div
+                        id="average-stars"
+                        class="average-stars">
+
+                        ☆☆☆☆☆
+
+                    </div>
+
+                    <p>
+
+                        <span id="review-count-text">
+                            0
+                        </span>
+
+                        verified ratings
+
+                    </p>
+
+                </div>
+
+                <!-- 5 Stars -->
+
+                <div class="rating-row">
+
+                    <span class="star-label">
+                        5 ★
+                    </span>
+
+                    <span
+                        id="five-star-count"
+                        class="rating-number">
+
+                        (0)
+
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            id="five-star-bar"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- 4 Stars -->
+
+                <div class="rating-row">
+
+                    <span class="star-label">
+                        4 ★
+                    </span>
+
+                    <span
+                        id="four-star-count"
+                        class="rating-number">
+
+                        (0)
+
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            id="four-star-bar"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- 3 Stars -->
+
+                <div class="rating-row">
+
+                    <span class="star-label">
+                        3 ★
+                    </span>
+
+                    <span
+                        id="three-star-count"
+                        class="rating-number">
+
+                        (0)
+
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            id="three-star-bar"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- 2 Stars -->
+
+                <div class="rating-row">
+
+                    <span class="star-label">
+                        2 ★
+                    </span>
+
+                    <span
+                        id="two-star-count"
+                        class="rating-number">
+
+                        (0)
+
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            id="two-star-bar"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- 1 Star -->
+
+                <div class="rating-row">
+
+                    <span class="star-label">
+                        1 ★
+                    </span>
+
+                    <span
+                        id="one-star-count"
+                        class="rating-number">
+
+                        (0)
+
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            id="one-star-bar"
+                            class="progress-fill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+            <!-- RIGHT REVIEWS -->
+
+            <section class="feedback-reviews">
+
+                <h4>
+
+                    PRODUCT REVIEWS (
+
+                    <span id="product-review-count">
+                        0
+                    </span>
+
+                    )
+
+                </h4>
+
+                <div id="reviews-container">
+
+                    <!-- Reviews inserted by JavaScript -->
+
+                </div>
+
+                <!-- Pagination -->
+
+                <div class="pagination">
+
+    <button id="prevPage">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <span id="pageNumber">1</span>
+
+    <button id="nextPage">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+</div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <img
+                src="Images/logo.png"
+                alt="Avoglow Logo">
+
+            <p>
+                Naturally nourishing hair, skin and wellness
+                through the power of avocados while creating
+                positive impact for farmers and communities.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>Explore</h4>
+
+            <ul>
+
+                <li><a href="index.html">Home</a></li>
+
+                <li><a href="shop.html">Shop</a></li>
+
+                <li><a href="our-story.html">Our Story</a></li>
+
+                <li><a href="circularity.html">Circularity</a></li>
+
+                <li><a href="impact.html">Impact</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h4>Contact</h4>
+
+            <p>Mbale, Uganda</p>
+
+            <p>+256 787 244 223</p>
+
+            <p>info@avoglow.com</p>
+
+        </div>
+
+        <div class="footer-social">
+
+            <h4>Follow Us</h4>
+
+            <a href="#">Instagram</a>
+
+            <a href="#">TikTok</a>
+
+            <a href="#">Facebook</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Avoglow. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+<script type="module" src="reviews.js"></script>
+<script src="cart-badge.js"></script>
+</body>
+</html>

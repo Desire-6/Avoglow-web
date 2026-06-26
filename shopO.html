@@ -153,10 +153,123 @@
 
 </section>
 <section class="products-section">
-    <div class="products-grid" id="products-grid">
 
-</div>
-    
+    <div class="products-grid">
+
+        <!-- PRODUCT 1 -->
+        <div class="product-card hair">
+            <img src="Images/root-revive.png" alt="">
+            <h3>Root & Revive</h3>
+            <p>Triple Active Hair Elixir</p>
+
+            <span class="price">
+                UGX 25,000
+            </span>
+
+            <a href="root-revive.html"
+   class="product-btn">
+    View Product
+</a>
+        </div>
+
+        <!-- PRODUCT 2 -->
+        <div class="product-card hair">
+            <img src="Images/hair-butter.png" alt="">
+            <h3>Intensive Hair Butter</h3>
+            <p>Deep moisture & strength</p>
+
+            <span class="price">
+                UGX 25,000
+            </span>
+
+            <a href="hair-butter.html"
+   class="product-btn">
+    View Product
+</a>
+        </div>
+
+        <!-- PRODUCT 3 -->
+        <div class="product-card gift">
+            <img src="Images/power-duo.png" alt="">
+            <h3>Power Duo</h3>
+            <p>Complete Hair Revival System</p>
+
+            <span class="price">
+                UGX 50,000
+            </span> 
+
+            <a href="power-duo.html"
+               class="product-btn">
+                View Product
+            </a>
+        </div>
+
+        <!-- PRODUCT 4 -->
+        <div class="product-card skin">
+            <img src="Images/pure-avocado-oil.png" alt="">
+            <h3>Pure Avocado Oil</h3>
+            <p>Cold Pressed Natural Oil</p>
+
+            <span class="price">
+                UGX 10,000
+            </span>
+
+            <a href="pure-avocado-oil.html"
+               class="product-btn">
+                View Product
+            </a>
+        </div>
+
+        <!-- PRODUCT 5 -->
+        <div class="product-card skin">
+            <img src="Images/rosemary-oil.png" alt="">
+            <h3>Rosemary Avocado Oil</h3>
+            <p>Nourishing Hair & Skin Oil</p>
+
+            <span class="price">
+                UGX 15,000
+            </span>
+
+            <a href="rosemary-oil.html"
+               class="product-btn">
+                View Product
+            </a>
+        </div>
+
+        <!-- PRODUCT 6 -->
+        <div class="product-card skin">
+            <img src="Images/lavender-oil.png" alt="">
+            <h3>Lavender Avocado Oil</h3>
+            <p>Gentle Daily Care Oil</p>
+
+            <span class="price">
+                UGX 15,000
+            </span>
+
+            <a href="lavender-oil.html"
+               class="product-btn">
+                View Product
+            </a>
+        </div>
+
+        <!-- PRODUCT 7 -->
+        <div class="product-card wellness">
+            <img src="Images/avochai.png" alt="">
+            <h3>AvoChai</h3>
+            <p>Caffeine-Free Wellness Drink</p>
+
+            <span class="price">
+                UGX 12,000
+            </span>
+
+            <a href="avochai.html"
+               class="product-btn">
+                View Product
+            </a>
+        </div>
+
+    </div>
+
 </section>
 <footer class="footer">
 
@@ -246,46 +359,43 @@ menuToggle.addEventListener("click", () => {
 
 });
 </script>
-<script type="module" src="products.js"></script>
 <script>
 
 const filterButtons =
-document.querySelectorAll(".filter-btn");
+document.querySelectorAll('.filter-btn');
+
+const products =
+document.querySelectorAll('.product-card');
 
 filterButtons.forEach(button => {
 
-  button.addEventListener("click", () => {
+    button.addEventListener('click', () => {
 
-    document
-      .querySelector(".filter-btn.active")
-      ?.classList.remove("active");
+        document
+        .querySelector('.filter-btn.active')
+        .classList
+        .remove('active');
 
-    button.classList.add("active");
+        button.classList.add('active');
 
-    const filter =
-      button.dataset.filter;
+        const filter =
+        button.dataset.filter;
 
-    const products =
-      document.querySelectorAll(".product-card");
+        products.forEach(product => {
 
-    products.forEach(product => {
+            if(
+                filter === 'all' ||
+                product.classList.contains(filter)
+            ){
+                product.style.display = 'block';
+            }
+            else{
+                product.style.display = 'none';
+            }
 
-      if (
-        filter === "all" ||
-        product.classList.contains(filter)
-      ) {
-
-        product.style.display = "block";
-
-      } else {
-
-        product.style.display = "none";
-
-      }
+        });
 
     });
-
-  });
 
 });
 

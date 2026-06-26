@@ -301,13 +301,61 @@ nav{
 }
 
 .product-image img{
-
-    width:100%;
-    height: 800px;
-    object-fit: cover;
-
+    display: block;
     border-radius:24px;
 
+}
+/* ===========================
+   PRODUCT IMAGE STYLES
+=========================== */
+
+/* Root & Revive */
+.root-revive-image{
+    width:100%;
+    height:600px;
+    object-fit:cover;
+}
+
+/* Hydration Mist */
+.hydration-mist-image{
+    width:100%;
+    height:750px;
+    object-fit:cover;
+}
+
+/* Intensive Hair Butter */
+.hair-butter-image{
+    width:100%;
+    height:600px;
+    object-fit:cover;
+}
+
+/* Pure Avocado Oil */
+.pure-avocado-oil-image{
+    width:100%;
+    height:800px;
+    object-fit:cover;
+}
+
+/* Lavender Oil */
+.lavender-oil-image{
+    width:100%;
+    height:650px;
+    object-fit:cover;
+}
+
+/* Rosemary Avocado Oil */
+.rosemary-avocado-oil-image{
+    width:100%;
+    height:800px;
+    object-fit:cover;
+}
+
+/* Avochai */
+.avochai-image{
+    width:100%;
+    height:600px;
+    object-fit:cover;
 }
 
 .product-tag{
@@ -564,6 +612,105 @@ nav{
 
 }
 
+.product-review-preview{
+
+    max-width:1100px;
+
+    margin:20px auto 60px;
+
+    padding:0 8%;
+
+}
+
+.product-review-preview h2{
+
+    color:var(--emerald);
+    
+    font-size:2.2rem;
+
+    margin-bottom:12px;
+
+}
+
+.review-preview-card{
+
+    background:#FAF7F2;
+border: 1px solid #ECE4D8;
+box-shadow: 0 8px 30px rgba(0,0,0,.05);;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+    gap:40px;
+
+}
+
+.review-score h1{
+
+    font-size:4rem;
+
+    color:var(--emerald);
+
+}
+
+.review-score p{
+
+    color:#666;
+
+    margin-top:10px;
+
+}
+
+.review-action{
+
+    text-align:right;
+
+}
+
+.review-action p{
+
+    margin-bottom:20px;
+
+    color:#555;
+
+    line-height:1.7;
+
+}
+
+.view-reviews-btn{
+
+    display:inline-block;
+
+    background:var(--emerald);
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:15px 30px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.view-reviews-btn:hover{
+
+    background:var(--terracotta);
+
+}
 .reviews-section{
      max-width:1100px;
      margin:20px auto 60px;
@@ -571,133 +718,339 @@ nav{
 }
 
 .reviews-section h2{
-    color:#0b6b43;
+    color:#0B5D3B;
     font-size:2rem;
     margin-bottom:40px;
 }
-
-.reviews-summary{
+.reviews-header{
     display:flex;
-    gap:60px;
-    margin-bottom:50px;
-    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
 }
 
+.reviews-header a{
+    color:#d67a50;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.reviews-header a:hover{
+    color:#0b6b43;
+}
+.reviews-wrapper{
+
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:50px;
+
+}
+
+.reviews-summary{
+
+    width:320px;
+
+    height:fit-content;
+
+    position:sticky;
+    top:120px;
+
+}
+
+.average-score{
+
+    text-align:center;
+    margin-bottom:35px;
+
+}
+
+.average-score h1{
+
+    font-size:4rem;
+    color:#0B5D3B;
+
+}
+
+
 .overall-rating{
-    min-width:220px;
+
+    width:260px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+    text-align:center;
+
 }
 
 .overall-rating h3{
-    font-size:3.5rem;
+
+    font-size:65px;
+
     color:#0b6b43;
+
+    margin-bottom:8px;
+
 }
 
 .stars{
-    color:#d67a50;
-    font-size:1.3rem;
-    margin:10px 0;
+
+    font-size:30px;
+
+    color:#F4B400;
+
+    margin-bottom:12px;
+
+}
+
+.overall-rating p{
+
+    color:#777;
+
+    margin-top:10px;
+
 }
 
 .rating-breakdown{
+
     flex:1;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+
+}
+
+.rating-bars{
+
+    margin-top:30px;
+
 }
 
 .bar-row{
+
     display:flex;
+
     align-items:center;
-    gap:15px;
-    margin-bottom:12px;
+
+    gap:18px;
+
+    margin-bottom:18px;
+
 }
 
 .bar{
+
     flex:1;
-    height:10px;
-    background:#ddd;
+
+    height:12px;
+
+    background:#ececec;
+
     border-radius:20px;
+
 }
 
 .fill{
+
     height:100%;
-    background:#0b6b43;
-    border-radius:20px;
+
     width:0%;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        90deg,
+        #0b6b43,
+        #17a45d
+    );
+
 }
 
+/* RIGHT SIDE */
 .reviews-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    display:flex;
     gap:25px;
+
+    margin-top:40px;
+
+    overflow:hidden;
+
 }
 
 .review-card{
-    background:white;
-    border-radius:16px;
+
+    flex:1;
+
+    min-width:320px;
+
+    background:#fff;
+
+    border-radius:18px;
+
     padding:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
 }
 
-.review-card .review-stars{
-    color:#d67a50;
+.reviews-footer{
+
+    text-align:center;
+
+    margin-top:35px;
+
+}
+
+.see-all-btn{
+
+    display:inline-block;
+
+    background:#0B5D3B;
+
+    color:white;
+
+    padding:14px 30px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+}
+
+.see-all-btn:hover{
+
+    background:#C96A4A;
+
+}
+
+.reviews-list{
+
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+
+}
+
+
+.review-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     margin-bottom:15px;
-    font-size:1.1rem;
+
+}
+
+.review-stars{
+
+    color:#F4B400;
+
+    font-size:18px;
+
+    margin-bottom:15px;
+
+}
+
+.verified{
+
+    color:#0B8A4A;
+    font-weight:600;
+
+}
+
+.review-card h3{
+
+    color:#0B5D3B;
+    margin-bottom:12px;
+     margin:10px 0;
+
+    font-size:1.8rem;
+
 }
 
 .review-card p{
-    line-height:1.7;
+
+    line-height:1.8;
     color:#555;
-    margin-bottom:20px;
-}
 
-.review-card h4{
+}
+.review-title{
+
     color:#0b6b43;
+
+    font-size:24px;
+
+    margin:12px 0 20px;
+
+    line-height:1.7;
+
 }
 
-.review-card span{
-    color:#d67a50;
-    font-size:.9rem;
-}
-.reviews-slider-wrapper{
-    position: relative;
-    display: flex;
-    align-items: center;
+.review-comment{
+
+    color:#555;
+
+    line-height:1.8;
+
+    margin-bottom:25px;
+
+    font-size:17px;
+
 }
 
-.reviews-grid{
-    display: flex;
-    gap: 25px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    width: 100%;
+.review-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-top:1px solid #eee;
+
+    padding-top:18px;
+
 }
 
-.reviews-grid::-webkit-scrollbar{
-    display: none;
+.review-footer strong{
+
+    color:#222;
+
+    font-size:18px;
+
 }
 
-.review-arrow{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    border: none;
-    background: transparent;
-    color: #d4744c;
-    font-size: 45px;
-    cursor: pointer;
-    z-index: 10;
+.review-footer span{
+
+    color:#777;
+
+    font-size:15px;
+
 }
 
-.review-arrow.left{
-    left: -15px;
+.verified{
+
+    color:#0b6b43;
+
+    font-weight:700;
+
+    font-size:15px;
+
 }
 
-.review-arrow.right{
-    right: -15px;
-}
-
-.review-arrow:hover{
-    color: #0b6b43;
-}
 .related-products{
 
     padding:80px 8%;

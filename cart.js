@@ -354,3 +354,30 @@ if(recentContainer){
     });
 
 }
+const checkoutBtn =
+document.getElementById("checkout-btn");
+
+if(checkoutBtn){
+
+    checkoutBtn.addEventListener("click", (e)=>{
+
+        e.preventDefault();
+
+        const loggedIn =
+        localStorage.getItem("loggedIn");
+
+        if(loggedIn === "true"){
+
+            window.location.href =
+            "checkout.html";
+
+        }else{
+
+            window.location.href =
+            "login.html";
+
+        }
+
+    });
+
+}
