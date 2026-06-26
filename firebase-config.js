@@ -1,9 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyBbymB7zY46rOVuaXHOLeXJo1GUiEUR27Y",
   authDomain: "avoglow.firebaseapp.com",
   projectId: "avoglow",
   storageBucket: "avoglow.firebasestorage.app",
