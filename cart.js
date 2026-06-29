@@ -1,3 +1,8 @@
+import { auth } from "./firebase-config.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 /* ==========================
    LOAD CART
 ========================== */
@@ -28,6 +33,9 @@ document.getElementById("total");
 
 const cartCount =
 document.getElementById("cart-count");
+
+const checkoutBtn =
+document.getElementById("checkout-btn");
 
 /* ==========================
    FORMAT UGX
@@ -111,15 +119,17 @@ function decreaseQty(index){
 /* ==========================
    REMOVE ITEM
 ========================== */
+let removeIndex = null;
 
 function removeItem(index){
 
-    cart.splice(index,1);
+    removeIndex = index;
 
-    saveCart();
+    document
+        .getElementById("remove-modal")
+        .classList.add("show");
 
 }
-
 /* ==========================
    RENDER CART
 ========================== */
@@ -128,19 +138,39 @@ function renderCart(){
 
     cartItems.innerHTML = "";
 
-    if(cart.length === 0){
+  if(cart.length === 0){
 
-        emptyCart.style.display = "block";
+    emptyCart.style.display = "block";
 
-        summaryBox.style.display = "none";
+    summaryBox.style.display = "none";
 
-        return;
+    document
+        .querySelector(".cart-layout")
+        .classList.add("empty");
+
+    if(checkoutBtn){
+
+        checkoutBtn.disabled = true;
 
     }
 
-    emptyCart.style.display = "none";
+    return;
 
-    summaryBox.style.display = "block";
+}
+
+   emptyCart.style.display = "none";
+
+summaryBox.style.display = "block";
+
+document
+    .querySelector(".cart-layout")
+    .classList.remove("empty");
+
+if(checkoutBtn){
+
+    checkoutBtn.disabled = false;
+
+}
 
     let subtotal = 0;
 
@@ -245,16 +275,6 @@ formatUGX(subtotal);
 totalElement.textContent =
 formatUGX(subtotal);
 
-const checkoutBtn =
-document.getElementById("checkout-btn");
-
-if(checkoutBtn){
-
-    checkoutBtn.textContent =
-    `Checkout (${formatUGX(subtotal)})`;
-
-}
-
 }
 
 /* ==========================
@@ -354,30 +374,92 @@ if(recentContainer){
     });
 
 }
-const checkoutBtn =
-document.getElementById("checkout-btn");
-
 if(checkoutBtn){
 
-    checkoutBtn.addEventListener("click", (e)=>{
+    checkoutBtn.addEventListener("click",(e)=>{
 
         e.preventDefault();
 
-        const loggedIn =
-        localStorage.getItem("loggedIn");
+        if(auth.currentUser){
 
-        if(loggedIn === "true"){
-
-            window.location.href =
-            "checkout.html";
+            window.location.href="checkout.html";
 
         }else{
 
-            window.location.href =
-            "login.html";
+            localStorage.setItem(
+                "redirectAfterLogin",
+                "checkout.html"
+            );
+
+            window.location.href="login.html";
 
         }
 
     });
 
 }
+
+const removeModal =
+document.getElementById("remove-modal");
+
+const cancelRemove =
+document.getElementById("cancel-remove");
+
+const confirmRemove =
+document.getElementById("confirm-remove");
+
+if(cancelRemove){
+
+    cancelRemove.addEventListener("click",()=>{
+
+        removeModal.classList.remove("show");
+
+    });
+
+}
+
+if(confirmRemove){
+
+    confirmRemove.addEventListener("click",()=>{
+
+        if(removeIndex !== null){
+
+            cart.splice(removeIndex,1);
+
+            saveCart();
+
+            removeIndex = null;
+
+        }
+
+        removeModal.classList.remove("show");
+
+        showToast("Product removed successfully");
+
+    });
+
+}
+
+function showToast(message){
+
+    const toast = document.getElementById("toast");
+
+    toast.innerHTML = `✓ ${message}`;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+/* ==========================
+   MAKE FUNCTIONS GLOBAL
+========================== */
+
+window.increaseQty = increaseQty;
+window.decreaseQty = decreaseQty;
+window.removeItem = removeItem;

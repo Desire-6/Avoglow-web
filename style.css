@@ -149,7 +149,6 @@ nav{
     gap:30px;
 }
 
-.account-icon,
 .cart-icon{
     display:flex;
     align-items:center;
@@ -161,12 +160,10 @@ nav{
     transition:.3s;
 }
 
-.account-icon:hover,
 .cart-icon:hover{
     color:#d87c4a;
 }
 
-.account-icon i,
 .cart-icon i{
     font-size:20px;
 }
@@ -263,6 +260,130 @@ nav{
     color:var(--emerald);
     cursor:pointer;
 }
+/* Account dropdown */
+.account-dropdown{
+
+    position:relative;
+
+}
+
+.account-icon{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    text-decoration:none;
+
+    color:var(--emerald);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.account-icon:hover{
+
+    color:var(--terracotta);
+
+}
+
+.dropdown-arrow{
+
+    font-size:12px;
+
+    margin-left:2px;
+
+}
+
+.account-menu{
+
+    position:absolute;
+
+    top:calc(100% + 12px);
+
+    right:0;
+
+    width:240px;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    overflow:hidden;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.25s ease;
+
+    z-index:9999;
+
+}
+
+.account-dropdown:hover .account-menu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.account-menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 20px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    transition:.25s;
+
+}
+
+.account-menu a:hover{
+
+    background:var(--cream);
+
+    color:var(--emerald);
+
+}
+
+.account-menu hr{
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.logout-link{
+
+    color:#D17A4A !important;
+
+}
+
+.logout-link:hover{
+
+    background:#fff3f3;
+
+    color:#c62828;
+
+}
 .hero-slider{
     position:relative;
     width:100%;
@@ -291,7 +412,7 @@ nav{
 
 .slide-1{
 
-    background-image:url("Images/hero.png");
+    background-image:url("Images/landing1.jpg");
 
     background-size:cover;
 

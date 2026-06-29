@@ -40,6 +40,40 @@ if (!productFound) {
     return;
 
 }
+/* ==========================
+   SAVE RECENTLY VIEWED
+========================== */
+
+let viewed =
+JSON.parse(localStorage.getItem("recentlyViewed")) || [];
+
+// Remove duplicate if already exists
+viewed = viewed.filter(item => item.slug !== productFound.slug);
+
+// Add current product to the beginning
+viewed.unshift({
+
+    name: productFound.name,
+
+    category: productFound.category,
+
+    price: productFound.price,
+
+    image: productFound.image,
+
+    link: `product.html?slug=${productFound.slug}`,
+
+    slug: productFound.slug
+
+});
+
+// Keep only the latest 10
+viewed = viewed.slice(0,10);
+
+localStorage.setItem(
+    "recentlyViewed",
+    JSON.stringify(viewed)
+);
 
 // IMAGE
 
@@ -526,14 +560,21 @@ if (addToCartBtn) {
 
         }
 
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
+     localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+);
 
-        alert(
-            "Added to cart!"
-        );
+console.log("Cart saved:", cart);
+
+updateCartBadge();
+
+console.log(
+    "Badge now:",
+    document.getElementById("cart-count").textContent
+);
+
+showToast("Product added successfully");
 
     });
 
@@ -799,3 +840,31 @@ if(seeAll){
 }
 
 }
+function showToast(message){
+
+    const toast =
+    document.getElementById("toast");
+
+    const text =
+    document.getElementById("toast-message");
+
+    text.textContent = "✓ " + message;
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+
+document.getElementById("close-toast")
+.addEventListener("click",()=>{
+
+    document
+    .getElementById("toast")
+    .classList.remove("show");
+
+});

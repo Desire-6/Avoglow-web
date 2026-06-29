@@ -253,34 +253,134 @@ nav{
 
 }
 
-.shop-btn{
-
-    background:var(--emerald);
-
-    color:white;
-
-    text-decoration:none;
-
-    padding:14px 28px;
-
-    border-radius:8px;
-
-    font-weight:700;
-
-    transition:.3s;
-
-}
-
-.shop-btn:hover{
-
-    background:var(--terracotta);
-
-}
 .menu-toggle{
     display:none;
     font-size:2rem;
     color:var(--emerald);
     cursor:pointer;
+}
+.account-dropdown{
+
+    position:relative;
+
+}
+
+.account-icon{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    text-decoration:none;
+
+    color:var(--emerald);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.account-icon:hover{
+
+    color:var(--terracotta);
+
+}
+
+.dropdown-arrow{
+
+    font-size:12px;
+
+    margin-left:2px;
+
+}
+
+.account-menu{
+
+    position:absolute;
+
+    top:calc(100% + 12px);
+
+    right:0;
+
+    width:240px;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    overflow:hidden;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.25s ease;
+
+    z-index:9999;
+
+}
+
+.account-dropdown:hover .account-menu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.account-menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 20px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    transition:.25s;
+
+}
+
+.account-menu a:hover{
+
+    background:var(--cream);
+
+    color:var(--emerald);
+
+}
+
+.account-menu hr{
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.logout-link{
+
+    color:#D17A4A !important;
+
+}
+
+.logout-link:hover{
+
+    background:#fff3f3;
+
+    color:#c62828;
+
 }
 .product-page{
 
@@ -1162,6 +1262,67 @@ box-shadow: 0 8px 30px rgba(0,0,0,.05);;
 .related-card a:hover{
 
     background:var(--terracotta);
+
+}
+
+/* ==========================
+   TOP SUCCESS NOTIFICATION
+========================== */
+
+.toast{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    background:#0f9d58;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:16px 20px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    transform:translateY(-100%);
+
+    transition:transform .35s ease;
+
+    z-index:99999;
+
+}
+
+.toast.show{
+
+    transform:translateY(0);
+
+}
+
+#close-toast{
+
+    position:absolute;
+
+    right:20px;
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:28px;
+
+    cursor:pointer;
 
 }
 /* FOOTER */

@@ -94,13 +94,24 @@
         </div>
        <div class="nav-actions">
 
-    <a href="account.html"
-       class="account-icon">
+    <div class="account-dropdown">
+
+    <a href="#" class="account-icon">
 
         <i class="fas fa-user"></i>
-        <!-- <span>Account</span> -->
+
+        <span id="account-greeting">
+            Account
+        </span>
+
+        <i class="fas fa-caret-down dropdown-arrow"></i>
 
     </a>
+
+    <div id="account-menu"
+         class="account-menu"></div>
+
+</div>
 
     <a href="cart.html"
        class="cart-icon">
@@ -299,6 +310,13 @@
      id="related-products">
 </div>
 </section>
+<div id="toast" class="toast">
+
+    <span id="toast-message"></span>
+
+    <button id="close-toast">&times;</button>
+
+</div>
 <footer class="footer">
 
     <div class="footer-container">
@@ -376,5 +394,6 @@
 </footer>
 <script type="module" src="product-page.js"></script>
 <script src="cart-badge.js"></script>
+<script type="module" src="account-dropdown.js"></script>
 </body>
 </html>

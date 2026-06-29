@@ -3,64 +3,107 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Account | Avoglow</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="login.css">
+    <title>Login | Avoglow</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet"
+          href="login.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
 <body>
 
-<section class="auth-section">
+<section class="login-section">
 
-    <div class="auth-card">
+    <div class="login-card">
 
-        <img src="Images/logo.png"
-             alt="Avoglow Logo"
-             class="auth-logo">
+        <img
+            src="Images/logo.png"
+            class="login-logo"
+            alt="Avoglow">
 
         <h1>Welcome Back</h1>
 
-        <p>
-            Sign in to continue to checkout.
+        <p class="login-subtitle">
+
+            Sign in to continue shopping your favourite avocado-powered products.
+
         </p>
 
-        <form id="loginForm">
+        <form id="login-form">
 
-            <div class="form-group">
+            <!-- EMAIL -->
 
-                <label>Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Email Address"
+                required>
 
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    required>
+            <small
+                class="error-message"
+                id="email-error">
 
-            </div>
+            </small>
 
-            <div class="form-group">
+            <!-- PASSWORD -->
 
-                <label>Password</label>
+            <div class="password-box">
 
                 <input
                     type="password"
                     id="password"
-                    placeholder="Enter your password"
+                    placeholder="Password"
                     required>
+
+                <i class="fas fa-eye toggle-password"></i>
 
             </div>
 
-            <button type="submit"
-                    class="auth-btn">
+            <small
+                class="error-message"
+                id="password-error">
 
-                Sign In
+            </small>
+
+            <!-- OPTIONS -->
+
+            <div class="login-options">
+
+                <label class="remember-me">
+
+                    <input
+                        type="checkbox"
+                        id="remember-me">
+
+                    Remember Me
+
+                </label>
+
+                <a
+                    href="#"
+                    id="forgot-password">
+
+                    Forgot Password?
+
+                </a>
+
+            </div>
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                id="login-btn">
+
+                Login
 
             </button>
 
@@ -68,22 +111,55 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
         <div class="divider">
 
-            OR
+            <span>OR</span>
 
         </div>
 
-        <a href="register.html"
-           class="create-account">
+        <!-- GOOGLE LOGIN -->
 
-           Create Account
+        <button
+            id="google-login"
+            class="google-btn">
 
-        </a>
+            <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google">
+
+            Continue with Google
+
+        </button>
+
+        <!-- SIGNUP -->
+
+        <p class="signup-link">
+
+            Don't have an account?
+
+            <a href="signup.html">
+
+                Create One
+
+            </a>
+
+        </p>
 
     </div>
 
 </section>
 
-<script src="login.js"></script>
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+<script
+    type="module"
+    src="login.js">
+
+</script>
 
 </body>
 

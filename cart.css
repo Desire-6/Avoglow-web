@@ -263,6 +263,129 @@ nav{
     color:var(--emerald);
     cursor:pointer;
 }
+.account-dropdown{
+
+    position:relative;
+
+}
+
+.account-icon{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    text-decoration:none;
+
+    color:var(--emerald);
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.account-icon:hover{
+
+    color:var(--terracotta);
+
+}
+
+.dropdown-arrow{
+
+    font-size:12px;
+
+    margin-left:2px;
+
+}
+
+.account-menu{
+
+    position:absolute;
+
+    top:calc(100% + 12px);
+
+    right:0;
+
+    width:240px;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    overflow:hidden;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:.25s ease;
+
+    z-index:9999;
+
+}
+
+.account-dropdown:hover .account-menu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+.account-menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px 20px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    transition:.25s;
+
+}
+
+.account-menu a:hover{
+
+    background:var(--cream);
+
+    color:var(--emerald);
+
+}
+
+.account-menu hr{
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.logout-link{
+
+    color:#D17A4A !important;;
+
+}
+
+.logout-link:hover{
+
+    background:#fff3f3;
+
+    color:#c62828;
+
+}
 /* ==========================
    HERO
 ========================== */
@@ -314,6 +437,13 @@ nav{
     grid-template-columns:2fr 1fr;
 
     gap:40px;
+
+}
+.cart-layout.empty{
+
+    display:flex;
+
+    justify-content:center;
 
 }
 .product-subtitle{
@@ -688,25 +818,28 @@ nav{
 
 .empty-cart{
 
-    display:none;
+    max-width:650px;
 
-    background:white;
+    width:100%;
 
-    border-radius:24px;
+    /* margin:80px auto; */
 
-    padding:80px 30px;
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:70px 50px;
 
     text-align:center;
 
-    box-shadow:0 8px 25px rgba(0,0,0,.05);
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
 
 }
-
 .empty-cart i{
 
     font-size:70px;
 
-    color:#D97C4A;
+    color:#0b6b3a;
 
     margin-bottom:25px;
 
@@ -731,22 +864,33 @@ nav{
     line-height:1.7;
 
 }
-
 .continue-shopping{
 
     display:inline-block;
 
     margin-top:25px;
 
-    padding:16px 30px;
+    padding:16px 42px;
 
-    background:#006838;
+    border-radius:10px;
 
-    color:white;
+    background:#0b6b3a;
+
+    color:#fff;
 
     text-decoration:none;
 
-    border-radius:10px;
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.continue-shopping:hover{
+
+    background:#09572f;
+
+    transform:translateY(-2px);
 
 }
 
@@ -756,6 +900,7 @@ nav{
 
 .recently-viewed{
     padding:40px 8%;
+    background: #fff;
 }
 
 .section-heading{
@@ -807,7 +952,7 @@ nav{
 
     flex:0 0 260px;
 
-    background:white;
+    background:var(--cream);
 
     border-radius:20px;
 
@@ -927,6 +1072,160 @@ nav{
         font-size:40px;
 
     }
+
+}
+/* ==========================
+   REMOVE MODAL
+========================== */
+
+.modal{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:10000;
+
+}
+
+.modal.show{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    background:#fff;
+
+    width:90%;
+    max-width:420px;
+
+    border-radius:16px;
+
+    padding:30px;
+
+    text-align:center;
+
+    animation:pop .25s ease;
+
+}
+
+.modal-content h2{
+
+    color:#1b5e20;
+
+    margin-bottom:15px;
+
+}
+
+.modal-content p{
+
+    color:#555;
+
+    line-height:1.6;
+
+    margin-bottom:25px;
+
+}
+
+.modal-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+
+}
+
+.cancel-btn{
+
+    padding:12px 28px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#ddd;
+
+}
+
+.remove-confirm-btn{
+
+    padding:12px 28px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#b71c1c;
+
+    color:white;
+
+}
+
+
+@keyframes pop{
+
+    from{
+
+        transform:scale(.9);
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+        opacity:1;
+
+    }
+
+}
+.toast{
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    background: #0f9d58;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 18px;
+
+    transform: translateY(-100%);
+
+    transition: .35s ease;
+
+    z-index: 99999;
+
+}
+
+.toast.show{
+
+    transform: translateY(0);
 
 }
 /* FOOTER */

@@ -112,12 +112,23 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
         <div class="nav-actions">
 
-            <a href="account.html"
-               class="account-icon">
+           <div class="account-dropdown">
 
-                <i class="fas fa-user"></i>
+    <a href="#" class="account-icon" id="account-toggle">
 
-            </a>
+        <i class="fas fa-user"></i>
+
+        <span id="account-greeting">
+            Account
+        </span>
+
+        <i class="fas fa-caret-down dropdown-arrow"></i>
+
+    </a>
+
+    <div class="account-menu" id="account-menu"></div>
+
+</div>
 
             <a href="cart.html"
                class="cart-icon">
@@ -169,15 +180,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             <div id="empty-cart"
                  class="empty-cart">
 
-                <i class="fa-solid fa-bag-shopping"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
 
                 <h2>
                     Your cart is empty
                 </h2>
 
                 <p>
-                    Discover nourishing avocado-powered products
-                    crafted for your hair, skin and wellness.
+                    Looks like you haven't added anything yet. Explore our avocado-powered skincare, haircare and wellness collection.
                 </p>
 
                 <a href="shop.html"
@@ -233,7 +243,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
    id="checkout-btn"
    class="checkout-btn">
 
-    Checkout
+    Proceed to Checkout
 
 </a>
 
@@ -253,10 +263,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <!-- RECOMMENDATIONS -->
 
-<section class="recommendations">
-
-<!-- RECOMMENDATIONS -->
-
 <section class="recently-viewed">
 
     <div class="section-heading">
@@ -268,11 +274,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         </p>
 
     </div>
-<!-- 
-    <div id="recently-viewed-container"
-         class="recent-grid">
-
-    </div> -->
     <div class="recently-viewed-wrapper">
 
     <button class="recent-arrow left">
@@ -291,6 +292,40 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 </div>
 
 </section>
+<!-- REMOVE CONFIRMATION MODAL -->
+
+<div id="remove-modal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Remove Product</h2>
+
+        <p>
+            Are you sure you want to remove this product from your cart?
+        </p>
+
+        <div class="modal-buttons">
+
+            <button id="cancel-remove"
+                    class="cancel-btn">
+
+                Cancel
+
+            </button>
+
+            <button id="confirm-remove"
+                    class="remove-confirm-btn">
+
+                Remove
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toast" class="toast"></div>
 <footer class="footer">
 
     <div class="footer-container">
@@ -367,7 +402,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 </footer>
 
-<script src="cart.js"></script>
+<script type="module" src="cart.js"></script>
+<script type="module" src="account-dropdown.js"></script>
 
 </body>
 

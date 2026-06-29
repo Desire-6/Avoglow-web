@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Account | Avoglow</title>
+
+<link rel="stylesheet"
+href="account.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="nav-container">
+
+        <a href="index.html" class="logo">
+
+            <img src="Images/logo.png" alt="Avoglow">
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li class="dropdown">
+
+                <a href="shop.html">
+                    Shop ▾
+                </a>
+
+                <ul class="dropdown-menu">
+
+                    <li><a href="shop.html">All Products</a></li>
+
+                    <li><a href="shop.html#hair-care">Hair Care</a></li>
+
+                    <li><a href="shop.html#skin-care">Skin Care</a></li>
+
+                    <li><a href="shop.html#wellness">Wellness</a></li>
+
+                    <li><a href="shop.html#gift-sets">Gift Sets</a></li>
+
+                </ul>
+
+            </li>
+
+            <li>
+
+                <a href="story.html">
+
+                    Our Story
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="circularity.html">
+
+                    Circularity
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="impact.html">
+
+                    Impact
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <div class="menu-toggle">
+
+            ☰
+
+        </div>
+
+        <div class="nav-actions">
+
+            <!-- ACCOUNT -->
+<div class="account-dropdown">
+
+    <a href="#" class="account-icon" id="account-toggle">
+
+        <i class="fas fa-user"></i>
+
+        <span id="account-greeting">
+            Account
+        </span>
+
+        <i class="fas fa-caret-down dropdown-arrow"></i>
+
+    </a>
+
+    <div class="account-menu" id="account-menu"></div>
+
+</div>
+
+            <!-- CART -->
+
+            <a href="cart.html" class="cart-icon">
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <span class="cart-count" id="cart-count">
+
+                    0
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<section class="account-wrapper">
+
+    <!-- ==========================
+         SIDEBAR
+    =========================== -->
+
+    <aside class="account-sidebar">
+
+        <div class="user-summary">
+
+            <div class="avatar">
+
+                <i class="fa-regular fa-user"></i>
+
+            </div>
+
+            <h3 id="user-name">
+
+                Loading...
+
+            </h3>
+
+            <p id="user-email">
+
+                Loading...
+
+            </p>
+
+        </div>
+
+        <nav aria-label="Account Navigation">
+
+            <a href="account.html" class="active">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="orders.html">
+
+                <i class="fa-solid fa-box"></i>
+
+                My Orders
+
+            </a>
+
+            <a href="wishlist.html">
+
+                <i class="fa-regular fa-heart"></i>
+
+                Wishlist
+
+            </a>
+
+            <a href="recently-viewed.html">
+
+                <i class="fa-regular fa-clock"></i>
+
+                Recently Viewed
+
+            </a>
+
+            <a href="inbox.html">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                Inbox
+
+            </a>
+
+            <a href="addresses.html">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                Address Book
+
+            </a>
+
+            <a href="settings.html">
+
+                <i class="fa-solid fa-gear"></i>
+
+                Account Settings
+
+            </a>
+
+            <a href="shop.html">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+                Continue Shopping
+
+            </a>
+
+            <button id="logout-btn">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                Logout
+
+            </button>
+
+        </nav>
+
+    </aside>
+
+    <!-- ==========================
+         MAIN CONTENT
+    =========================== -->
+
+    <main class="account-content">
+
+        <h1>
+
+            Account Overview
+
+        </h1>
+
+        <p class="subtitle">
+
+            Welcome back,
+
+            <strong id="welcome-name">
+
+                Customer
+
+            </strong>
+
+        </p>
+
+        <div class="account-grid">
+
+            <!-- ACCOUNT DETAILS -->
+
+            <div class="info-card">
+
+                <h3>
+
+                    Account Details
+
+                </h3>
+
+                <div class="card-content">
+
+                    <p>
+
+                        <strong>Name</strong>
+
+                    </p>
+
+                    <p id="detail-name">
+
+                        Loading...
+
+                    </p>
+
+                    <br>
+
+                    <p>
+
+                        <strong>Email</strong>
+
+                    </p>
+
+                    <p id="detail-email">
+
+                        Loading...
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- ADDRESS -->
+
+            <div class="info-card">
+
+                <h3>
+
+                    Addresses
+
+                </h3>
+
+                <div class="card-content">
+
+                    <p id="default-address">
+
+                        No address saved yet.
+
+                    </p>
+
+                    <a href="addresses.html">
+
+                        <button>
+
+                            Add Address
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- NEWSLETTER -->
+
+            <div class="info-card">
+
+                <h3>
+
+                    Newsletter
+
+                </h3>
+
+                <div class="card-content">
+
+                    <p>
+
+                        Stay updated with beauty tips, exclusive offers and new product launches.
+
+                    </p>
+
+                    <a href="settings.html">
+
+                        <button>
+
+                            Manage Preferences
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- SUPPORT -->
+
+            <div class="info-card">
+
+                <h3>
+
+                    Need Help?
+
+                </h3>
+
+                <div class="card-content">
+
+                    <p>
+
+                        Need assistance with your order or have questions about our products?
+
+                    </p>
+
+                    <a href="contact.html">
+
+                        <button>
+
+                            Contact Support
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+            </div>
+            
+
+        </div>
+
+    </main>
+
+</section>
+<section class="account-recently-viewed">
+
+    <div class="section-heading">
+
+        <h2>Recently Viewed</h2>
+
+        <p>Continue shopping where you left off.</p>
+
+    </div>
+
+    <div class="recently-viewed-wrapper">
+
+        <button class="recent-arrow left">
+            &#10094;
+        </button>
+
+        <div
+            id="recently-viewed-container"
+            class="recent-scroll">
+        </div>
+
+        <button class="recent-arrow right">
+            &#10095;
+        </button>
+
+    </div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <img
+                src="Images/logo.png"
+                alt="Avoglow Logo">
+
+            <p>
+                Naturally nourishing hair, skin and wellness
+                through the power of avocados while creating
+                positive impact for farmers and communities.
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h4>Explore</h4>
+
+            <ul>
+
+                <li><a href="index.html">Home</a></li>
+
+                <li><a href="shop.html">Shop</a></li>
+
+                <li><a href="our-story.html">Our Story</a></li>
+
+                <li><a href="circularity.html">Circularity</a></li>
+
+                <li><a href="impact.html">Impact</a></li>
+
+                <li><a href="contact.html">Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h4>Contact</h4>
+
+            <p>Mbale, Uganda</p>
+
+            <p>+256 787 244 223</p>
+
+            <p>info@avoglow.com</p>
+
+        </div>
+
+        <div class="footer-social">
+
+            <h4>Follow Us</h4>
+
+            <a href="#">Instagram</a>
+
+            <a href="#">TikTok</a>
+
+            <a href="#">Facebook</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Avoglow. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+<script type="module"
+src="account.js"></script>
+<script src="cart-badge.js"></script>
+
+</body>
+
+</html>

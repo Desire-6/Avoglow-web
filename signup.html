@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | Avoglow</title>
+
+    <link rel="stylesheet"
+          href="signup.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<section class="signup-section">
+
+    <div class="signup-card">
+
+        <img
+            src="Images/logo.png"
+            class="signup-logo"
+            alt="Avoglow">
+
+        <h1>Create Your Account</h1>
+
+        <p class="signup-subtitle">
+
+            Join Avoglow and discover naturally nourishing hair, skin and wellness products powered by avocado.
+
+        </p>
+
+        <form id="signup-form">
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Full Name"
+                required>
+
+            <small class="error-message" id="name-error"></small>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email Address"
+                required>
+
+            <small class="error-message" id="email-error"></small>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required>
+
+                <i class="fas fa-eye toggle-password"></i>
+
+            </div>
+
+            <small class="error-message" id="password-error"></small>
+
+            <div class="password-box">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm Password"
+                    required>
+
+                <i class="fas fa-eye toggle-password"></i>
+
+            </div>
+
+            <small class="error-message" id="confirmPassword-error"></small>
+
+            <button
+                type="submit"
+                id="signup-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <p class="login-link">
+
+            Already have an account?
+
+            <a href="login.html">
+
+                Login
+
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+<script
+    type="module"
+    src="signup.js">
+
+</script>
+
+</body>
+
+</html>

@@ -93,13 +93,23 @@
         </div>
        <div class="nav-actions">
 
-    <a href="account.html"
-       class="account-icon">
+   <div class="account-dropdown">
+
+    <a href="#" class="account-icon" id="account-toggle">
 
         <i class="fas fa-user"></i>
-        <!-- <span>Account</span> -->
+
+        <span id="account-greeting">
+            Account
+        </span>
+
+        <i class="fas fa-caret-down dropdown-arrow"></i>
 
     </a>
+
+    <div class="account-menu" id="account-menu"></div>
+
+</div>
 
     <a href="cart.html"
        class="cart-icon">
@@ -324,5 +334,6 @@ window.addEventListener("load", () => {
 
 </script>
 <script src="cart-badge.js"></script>
+<script type="module" src="account-dropdown.js"></script>
 </body>
 </html>
