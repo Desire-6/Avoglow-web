@@ -144,35 +144,34 @@
     <div class="impact-grid">
 
         <div class="impact-card">
-            <h3>1,500+</h3>
-            <p>Farmers Engaged</p>
-        </div>
+    <h3 class="counter" data-target="1500">0</h3>
+    <p>Farmers Engaged</p>
+</div>
 
-        <div class="impact-card">
-            <h3>25+</h3>
-            <p>Jobs Created</p>
-        </div>
+<div class="impact-card">
+    <h3 class="counter" data-target="25">0</h3>
+    <p>Jobs Created</p>
+</div>
 
-        <div class="impact-card">
-            <h3>15,000+</h3>
-            <p>Avocados Processed</p>
-        </div>
+<div class="impact-card">
+    <h3 class="counter" data-target="15000">0</h3>
+    <p>Avocados Processed</p>
+</div>
 
-        <div class="impact-card">
-            <h3>6+</h3>
-            <p>Districts Reached</p>
-        </div>
+<div class="impact-card">
+    <h3 class="counter" data-target="6">0</h3>
+    <p>Districts Reached</p>
+</div>
 
-        <div class="impact-card">
-            <h3>Growing</h3>
-            <p>Customers Served</p>
-        </div>
+<div class="impact-card">
+    <h3>Growing</h3>
+    <p>Customers Served</p>
+</div>
 
-        <div class="impact-card">
-            <h3>9000+</h3>
-            <p>Seeds Repurposed</p>
-        </div>
-
+<div class="impact-card">
+    <h3 class="counter" data-target="9000">0</h3>
+    <p>Seeds Repurposed</p>
+</div>
     </div>
 
 </section>
@@ -421,11 +420,18 @@
 
             <h4>Follow Us</h4>
 
-            <a href="#">Instagram</a>
-
-            <a href="#">TikTok</a>
-
-            <a href="#">Facebook</a>
+            <div class="social-icons"> 
+                </a> 
+                <a href="https://www.instagram.com/avoglowuganda/"> 
+                    <i class="fab fa-instagram"></i> 
+                </a> <a href="https://www.facebook.com/profile.php?id=61582545884756"> 
+                    <i class="fab fa-facebook-f"></i> 
+                </a> <a href="https://wa.me/message/QFMWC52VG3R7B1"> 
+                    <i class="fab fa-whatsapp"></i> 
+                </a>
+                 <a href="#"> 
+                    <i class="fab fa-tiktok"></i> 
+             </div> 
 
         </div>
 
@@ -440,47 +446,8 @@
     </div>
 
 </footer>
-<script>
-
-let currentSlide = 0;
-
-const slides = document.querySelectorAll('.slide');
-
-function showSlide(index){
-
-    slides.forEach(slide =>
-        slide.classList.remove('active')
-    );
-
-    slides[index].classList.add('active');
-}
-
-function changeSlide(direction){
-
-    currentSlide += direction;
-
-    if(currentSlide >= slides.length){
-        currentSlide = 0;
-    }
-
-    if(currentSlide < 0){
-        currentSlide = slides.length - 1;
-    }
-
-    showSlide(currentSlide);
-}
-
-/* Auto Slide Every 5 Seconds */
-
-setInterval(() => {
-
-    changeSlide(1);
-
-}, 5000);
-
-</script>
 <script src="cart-badge.js"></script>
 <script type="module" src="account-dropdown.js"></script>
-
+<script src="impact.js"></script>
 </body>
 </html>

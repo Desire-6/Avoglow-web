@@ -1,49 +1,50 @@
 import { db } from "./firebase-config.js";
 
 import {
-collection,
-getDocs,
-query,
-where
+    collection,
+    getDocs,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-const params =
-new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("slug");
 
-const slug =
-params.get("slug");
-
-let productFound = null;
 
 async function loadProduct() {
 
-document.getElementById("product-skeleton").style.display = "grid";
+const skeleton =
+document.getElementById("product-skeleton");
 
-document.getElementById("product-page").style.display = "none";
+const productPage =
+document.getElementById("product-page");
 
-const querySnapshot =
-await getDocs(collection(db, "products"));
+if(skeleton) skeleton.style.display = "grid";
 
-querySnapshot.forEach((doc) => {
+if(productPage) productPage.style.display = "none";
 
-    const product = doc.data();
+const q = query(
 
-    if (product.slug === slug) {
+    collection(db, "products"),
 
-        productFound = product;
+    where("slug", "==", slug)
 
-    }
+);
 
-});
+const snapshot = await getDocs(q);
 
-if (!productFound) {
+if (snapshot.empty) {
 
-    document.body.innerHTML =
-    "<h1>Product not found</h1>";
+    document.body.innerHTML = "<h1>Product not found</h1>";
 
     return;
 
 }
+
+const productDoc = snapshot.docs[0];
+
+const productFound = productDoc.data();
+
 /* ==========================
    SAVE RECENTLY VIEWED
 ========================== */
@@ -592,10 +593,12 @@ if(relatedContainer){
 
     relatedContainer.innerHTML = "";
 
-    querySnapshot.forEach((doc) => {
+   const allProducts =
+await getDocs(collection(db, "products"));
 
-        const related =
-        doc.data();
+allProducts.forEach((doc) => {
+
+    const related = doc.data();
 
         if(
             related.slug !== productFound.slug &&

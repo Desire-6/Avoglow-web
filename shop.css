@@ -484,6 +484,83 @@ nav{
 .products-section{
     padding:40px 8% 100px;
 }
+/* ==========================
+PRODUCT SKELETON
+========================== */
+
+.skeleton-card{
+
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    padding:15px;
+
+}
+
+.skeleton-img{
+
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:15px;
+
+}
+
+.skeleton-text{
+
+    height:16px;
+    border-radius:8px;
+    margin-top:18px;
+
+}
+
+.skeleton-text.short{
+
+    width:50%;
+
+}
+
+.skeleton-text.medium{
+
+    width:70%;
+
+}
+
+.skeleton-btn{
+
+    height:45px;
+    border-radius:12px;
+    margin-top:25px;
+
+}
+
+.skeleton-img,
+.skeleton-text,
+.skeleton-btn{
+
+    background:linear-gradient(
+        90deg,
+        #ececec 25%,
+        #f7f7f7 50%,
+        #ececec 75%
+    );
+
+    background-size:200% 100%;
+
+    animation:skeleton 1.2s infinite;
+
+}
+
+@keyframes skeleton{
+
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+
+}
 
 .products-grid{
     display:grid;
@@ -670,6 +747,28 @@ nav{
 
     color:rgba(255,255,255,.8);
 
+}
+.footer-social h4{
+    color:#d6a84f;
+    font-size:1.2rem;
+    margin-bottom:18px;
+}
+.social-icons{
+    display:flex;
+    gap:28px;
+    align-items:center;
+}
+
+.social-icons a{
+    color:#fff;
+    font-size:28px;
+    text-decoration:none;
+    transition:0.3s ease;
+}
+
+.social-icons a:hover{
+    color:#d6a84f;
+    transform:translateY(-3px);
 }
 
 

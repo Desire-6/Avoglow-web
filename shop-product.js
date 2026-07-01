@@ -10,59 +10,89 @@ document.getElementById("products-grid");
 
 async function loadProducts() {
 
-  const querySnapshot =
-  await getDocs(collection(db, "products"));
+    // Show skeletons FIRST
+    productsGrid.innerHTML = "";
 
-  productsGrid.innerHTML = "";
+    for (let i = 0; i < 8; i++) {
 
-  querySnapshot.forEach((doc) => {
+        productsGrid.innerHTML += `
 
-    const product = doc.data();
+            <div class="skeleton-card">
 
-    let categoryClass = "";
+                <div class="skeleton-img"></div>
 
-    if(product.category === "Hair Care"){
-      categoryClass = "hair";
+                <div class="skeleton-text medium"></div>
+
+                <div class="skeleton-text short"></div>
+
+                <div class="skeleton-text short"></div>
+
+                <div class="skeleton-btn"></div>
+
+            </div>
+
+        `;
+
     }
 
-    if(product.category === "Skin Care"){
-      categoryClass = "skin";
-    }
+    // NOW fetch Firestore
+    const querySnapshot =
+    await getDocs(collection(db, "products"));
 
-    if(product.category === "Wellness"){
-      categoryClass = "wellness";
-    }
+    // Remove skeletons
+    productsGrid.innerHTML = "";
 
-    if(product.category === "Gift Sets"){
-      categoryClass = "gift";
-    }
+    querySnapshot.forEach((doc) => {
 
-    productsGrid.innerHTML += `
+        const product = doc.data();
 
-      <div class="product-card ${categoryClass}">
+        let categoryClass = "";
 
-        <img src="${product.image}" alt="${product.name}">
+        if(product.category === "Hair Care"){
+            categoryClass = "hair";
+        }
 
-        <h3>${product.name}</h3>
+        if(product.category === "Skin Care"){
+            categoryClass = "skin";
+        }
 
-        <p>${product.category}</p>
+        if(product.category === "Wellness"){
+            categoryClass = "wellness";
+        }
 
-        <span class="price">
-          UGX ${product.price.toLocaleString()}
-        </span>
+        if(product.category === "Gift Sets"){
+            categoryClass = "gift";
+        }
 
-        <a
-          href="product.html?id=${doc.id}"
-          class="product-btn">
+        productsGrid.innerHTML += `
 
-          View Product
+            <div class="product-card ${categoryClass}">
 
-        </a>
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy">
 
-      </div>
+                <h3>${product.name}</h3>
 
-    `;
-  });
+                <p>${product.category}</p>
+
+                <span class="price">
+                    UGX ${product.price.toLocaleString()}
+                </span>
+
+                <a
+                    href="product.html?id=${doc.id}"
+                    class="product-btn">
+
+                    View Product
+
+                </a>
+
+            </div>
+
+        `;
+    });
+
 }
-
 loadProducts();

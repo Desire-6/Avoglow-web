@@ -13,22 +13,28 @@ let currentPage = 1;
 const reviewsPerPage = 10;
 async function loadReviews(productSlug){
 
-    const reviewsRef = collection(db, "reviews");
+    document.getElementById("reviews-skeleton").style.display = "block";
+    document.getElementById("reviews-content").style.display = "none";
+
+    const reviewsRef = collection(db,"reviews");
 
     const q = query(
         reviewsRef,
-        where("productSlug", "==", productSlug)
+        where("productSlug","==",productSlug)
     );
 
     const snapshot = await getDocs(q);
 
     const reviews = [];
 
-    snapshot.forEach(doc => {
+    snapshot.forEach(doc=>{
 
         reviews.push(doc.data());
 
     });
+
+    document.getElementById("reviews-skeleton").style.display = "none";
+    document.getElementById("reviews-content").style.display = "block";
 
     displayReviews(reviews);
 
@@ -234,7 +240,6 @@ nextBtn.onclick = () => {
 };
 
 }
-loadReviews(productSlug);
 loadReviews(productSlug);
 
 // =======================

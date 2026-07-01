@@ -1011,4 +1011,26 @@ nav{
     color:rgba(255,255,255,.8);
 
 }
+.footer-social h4{
+    color:#d6a84f;
+    font-size:1.2rem;
+    margin-bottom:18px;
+}
+.social-icons{
+    display:flex;
+    gap:28px;
+    align-items:center;
+}
+
+.social-icons a{
+    color:#fff;
+    font-size:28px;
+    text-decoration:none;
+    transition:0.3s ease;
+}
+
+.social-icons a:hover{
+    color:#d6a84f;
+    transform:translateY(-3px);
+}
 
