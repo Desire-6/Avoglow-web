@@ -1,11 +1,26 @@
-import { db } from "./firebase-config.js";
+import { db, auth } from "./firebase-config.js";
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
 collection,
+doc,
+getDoc,
+setDoc,
 getDocs,
 query,
 where
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+
+    currentUser = user;
+
+    console.log("Current user:", user);
+
+});
 
 const params =
 new URLSearchParams(window.location.search);
@@ -478,20 +493,13 @@ window.open(
 // ADD TO CART
 
 const addToCartBtn =
-document.getElementById(
-    "addToCart"
-);
+document.getElementById("addToCart");
 
-if (addToCartBtn) {
+if(addToCartBtn){
 
-    addToCartBtn.addEventListener(
-    "click",
-    () => {
-
+    addToCartBtn.addEventListener("click", async ()=>{
         const activeSize =
-        document.querySelector(
-            ".size-btn.active"
-        );
+        document.querySelector(".size-btn.active");
 
         const selectedSize =
         activeSize
@@ -500,85 +508,109 @@ if (addToCartBtn) {
 
         const selectedPrice =
         activeSize
-        ? Number(
-            activeSize.dataset.price
-          )
+        ? Number(activeSize.dataset.price)
         : productFound.price;
 
         const quantity =
         Number(
-            document.getElementById(
-                "quantity"
-            ).textContent
+            document.getElementById("quantity").textContent
         );
 
-        let cart =
-        JSON.parse(
-            localStorage.getItem(
-                "cart"
-            )
-        ) || [];
+        const cartItem = {
 
-        const existingItem =
-        cart.find(item =>
+            name: productFound.name,
 
-            item.name ===
-            productFound.name &&
+            subtitle: productFound.paragraph,
 
-            item.size ===
-            selectedSize
+            image: productFound.image,
 
-        );
+            slug: productFound.slug,
 
-        if (existingItem) {
+            size: selectedSize,
 
-            existingItem.quantity +=
-            quantity;
+            price: selectedPrice,
 
-        } else {
+            quantity
 
-            cart.push({
+        };
 
-                name:
-                productFound.name,
+        // ==========================
+        // LOGGED IN USER
+        // ==========================
 
-                subtitle:
-                productFound.paragraph,
+       if(currentUser){
 
-                image:
-                productFound.image,
+try{
 
-                price:
-                selectedPrice,
+    const cartRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "cart",
+        productFound.slug + "_" + selectedSize
+    );
 
-                size:
-                selectedSize,
+    const existing = await getDoc(cartRef);
 
-                quantity:
-                quantity,
+    if(existing.exists()){
 
-                slug:
-                productFound.slug
+        const data = existing.data();
 
-            });
+        cartItem.quantity += data.quantity;
+
+    }
+
+    await setDoc(cartRef, cartItem);
+    await updateCartBadge();
+
+}catch(error){
+
+    console.error("Firestore Error:", error);
+
+}
+
+}
+
+        // ==========================
+        // GUEST USER
+        // ==========================
+
+        else{
+
+            let cart =
+            JSON.parse(
+                localStorage.getItem("cart")
+            ) || [];
+
+            const existing =
+            cart.find(item=>
+
+                item.slug === productFound.slug &&
+
+                item.size === selectedSize
+
+            );
+
+            if(existing){
+
+                existing.quantity += quantity;
+
+            }else{
+
+                cart.push(cartItem);
+
+            }
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
 
         }
 
-     localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-);
+        updateCartBadge();
 
-console.log("Cart saved:", cart);
-
-updateCartBadge();
-
-console.log(
-    "Badge now:",
-    document.getElementById("cart-count").textContent
-);
-
-showToast("Product added successfully");
+        showToast("Product added successfully");
 
     });
 

@@ -1,16 +1,26 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+import {
+
+    collection,
+    doc,
+    getDocs,
+    getDoc,
+    setDoc,
+    deleteDoc
+
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 /* ==========================
    LOAD CART
 ========================== */
 
-let cart =
-JSON.parse(
-    localStorage.getItem("cart")
-) || [];
+let cart = [];
+
+let currentUser = null;
 
 /* ==========================
    ELEMENTS
@@ -77,14 +87,89 @@ function updateCartBadge(){
 
 function saveCart(){
 
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
+    if(!currentUser){
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+    }
 
     updateCartBadge();
 
     renderCart();
+
+}
+async function mergeGuestCart(){
+
+    const guestCart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+    if(guestCart.length === 0) return;
+
+    for(const item of guestCart){
+
+        const cartRef = doc(
+
+            db,
+            "users",
+            currentUser.uid,
+            "cart",
+            item.slug + "_" + item.size
+
+        );
+
+        const existing =
+        await getDoc(cartRef);
+
+        if(existing.exists()){
+
+            const data =
+            existing.data();
+
+            item.quantity +=
+            data.quantity;
+
+        }
+
+        await setDoc(cartRef,item);
+
+    }
+
+    localStorage.removeItem("cart");
+
+}
+/* ==========================
+   LOAD FIRESTORE CART
+========================== */
+
+async function loadFirestoreCart(){
+
+    cart = [];
+
+    const snapshot = await getDocs(
+
+        collection(
+            db,
+            "users",
+            currentUser.uid,
+            "cart"
+        )
+
+    );
+
+    console.log("Firestore docs:", snapshot.size);
+
+    snapshot.forEach(doc=>{
+
+        console.log(doc.data());
+
+        cart.push(doc.data());
+
+    });
 
 }
 
@@ -92,11 +177,41 @@ function saveCart(){
    INCREASE QTY
 ========================== */
 
-function increaseQty(index){
+async function increaseQty(index){
 
-    cart[index].quantity++;
+    if(currentUser){
 
-    saveCart();
+        const item = cart[index];
+
+        item.quantity++;
+
+        await setDoc(
+
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "cart",
+                item.slug + "_" + item.size
+            ),
+
+            item
+
+        );
+
+        await loadFirestoreCart();
+
+        updateCartBadge();
+
+        renderCart();
+
+    }else{
+
+        cart[index].quantity++;
+
+        saveCart();
+
+    }
 
 }
 
@@ -104,15 +219,49 @@ function increaseQty(index){
    DECREASE QTY
 ========================== */
 
-function decreaseQty(index){
+async function decreaseQty(index){
 
-    if(cart[index].quantity > 1){
+    if(currentUser){
 
-        cart[index].quantity--;
+        const item = cart[index];
+
+        if(item.quantity > 1){
+
+            item.quantity--;
+
+            await setDoc(
+
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid,
+                    "cart",
+                    item.slug + "_" + item.size
+                ),
+
+                item
+
+            );
+
+            await loadFirestoreCart();
+
+            updateCartBadge();
+
+            renderCart();
+
+        }
+
+    }else{
+
+        if(cart[index].quantity > 1){
+
+            cart[index].quantity--;
+
+        }
+
+        saveCart();
 
     }
-
-    saveCart();
 
 }
 
@@ -130,6 +279,7 @@ function removeItem(index){
         .classList.add("show");
 
 }
+
 /* ==========================
    RENDER CART
 ========================== */
@@ -138,11 +288,15 @@ function renderCart(){
 
     cartItems.innerHTML = "";
 
-  if(cart.length === 0){
+if(cart.length === 0){
+
+    cartItems.style.display = "none";
 
     emptyCart.style.display = "block";
 
-    summaryBox.style.display = "none";
+    document.getElementById("summary-box").style.display = "none";
+
+    document.getElementById("summary-skeleton").style.display = "none";
 
     document
         .querySelector(".cart-layout")
@@ -158,9 +312,13 @@ function renderCart(){
 
 }
 
-   emptyCart.style.display = "none";
+  cartItems.style.display = "block";
 
-summaryBox.style.display = "block";
+emptyCart.style.display = "none";
+
+document.getElementById("summary-box").style.display = "block";
+
+document.getElementById("summary-skeleton").style.display = "none";
 
 document
     .querySelector(".cart-layout")
@@ -280,10 +438,6 @@ formatUGX(subtotal);
 /* ==========================
    INITIAL LOAD
 ========================== */
-
-updateCartBadge();
-
-renderCart();
 function loadRecentlyViewed(){
 
     const container =
@@ -420,17 +574,43 @@ if(cancelRemove){
 
 if(confirmRemove){
 
-    confirmRemove.addEventListener("click",()=>{
+    confirmRemove.addEventListener("click", async ()=>{
 
-        if(removeIndex !== null){
+   if(removeIndex !== null){
 
-            cart.splice(removeIndex,1);
+    if(currentUser){
 
-            saveCart();
+        const item = cart[removeIndex];
 
-            removeIndex = null;
+        await deleteDoc(
 
-        }
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "cart",
+                item.slug + "_" + item.size
+            )
+
+        );
+
+        await loadFirestoreCart();
+
+        updateCartBadge();
+
+        renderCart();
+
+    }else{
+
+        cart.splice(removeIndex,1);
+
+        saveCart();
+
+    }
+
+    removeIndex = null;
+
+}
 
         removeModal.classList.remove("show");
 
@@ -455,6 +635,42 @@ function showToast(message){
     },3000);
 
 }
+onAuthStateChanged(auth, async (user) => {
+
+    currentUser = user;
+
+    // Show loading
+    document.getElementById("cart-loading").style.display = "block";
+    document.getElementById("summary-loading").style.display = "block";
+
+    document.getElementById("cart-content").style.display = "none";
+    document.getElementById("summary-content").style.display = "none";
+
+    if(user){
+
+        await mergeGuestCart();
+
+        await loadFirestoreCart();
+
+    }else{
+
+        cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+    }
+
+    updateCartBadge();
+
+    renderCart();
+
+    // Hide loading
+    document.getElementById("cart-loading").style.display = "none";
+    document.getElementById("summary-loading").style.display = "none";
+
+    document.getElementById("cart-content").style.display = "block";
+    document.getElementById("summary-content").style.display = "block";
+
+});
 
 /* ==========================
    MAKE FUNCTIONS GLOBAL

@@ -135,9 +135,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
                 <i class="fas fa-shopping-cart"></i>
 
-                <span class="cart-count" id="cart-count">
-                    0
-                </span>
+               <span class="cart-count" id="cart-count" style="display:none;"></span>
 
             </a>
 
@@ -168,90 +166,187 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <div class="cart-layout">
 
         <!-- LEFT SIDE -->
-
         <div class="cart-products">
 
-            <div id="cart-items">
+            <!-- LOADING -->
+            <div id="cart-loading">
+
+                <div id="cart-skeleton">
+
+                    <div class="cart-skeleton-item">
+
+                        <div class="skeleton-left">
+
+                            <div class="skeleton-image"></div>
+
+                            <div class="skeleton-text">
+
+                                <div class="skeleton-line large"></div>
+                                <div class="skeleton-line medium"></div>
+                                <div class="skeleton-line small"></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="skeleton-right">
+
+                            <div class="skeleton-price"></div>
+                            <div class="skeleton-qty"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="cart-skeleton-item">
+
+                        <div class="skeleton-left">
+
+                            <div class="skeleton-image"></div>
+
+                            <div class="skeleton-text">
+
+                                <div class="skeleton-line large"></div>
+                                <div class="skeleton-line medium"></div>
+                                <div class="skeleton-line small"></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="skeleton-right">
+
+                            <div class="skeleton-price"></div>
+                            <div class="skeleton-qty"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="cart-skeleton-item">
+
+                        <div class="skeleton-left">
+
+                            <div class="skeleton-image"></div>
+
+                            <div class="skeleton-text">
+
+                                <div class="skeleton-line large"></div>
+                                <div class="skeleton-line medium"></div>
+                                <div class="skeleton-line small"></div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="skeleton-right">
+
+                            <div class="skeleton-price"></div>
+                            <div class="skeleton-qty"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <!-- EMPTY CART -->
+            <!-- ACTUAL CONTENT -->
+            <div id="cart-content" style="display:none;">
 
-            <div id="empty-cart"
-                 class="empty-cart">
+                <div id="cart-items"></div>
 
-                <i class="fa-solid fa-cart-shopping"></i>
+                <div id="empty-cart" class="empty-cart" style="display:none;">
 
-                <h2>
-                    Your cart is empty
-                </h2>
+                    <i class="fa-solid fa-cart-shopping"></i>
 
-                <p>
-                    Looks like you haven't added anything yet. Explore our avocado-powered skincare, haircare and wellness collection.
-                </p>
+                    <h2>Your cart is empty</h2>
 
-                <a href="shop.html"
-                   class="continue-shopping">
+                    <p>
+                        Looks like you haven't added anything yet. Explore our avocado-powered skincare, haircare and wellness collection.
+                    </p>
 
-                    Continue Shopping
+                    <a href="shop.html" class="continue-shopping">
+                        Continue Shopping
+                    </a>
 
-                </a>
+                </div>
 
             </div>
 
         </div>
-        
 
         <!-- RIGHT SIDE -->
+        <div class="cart-summary-wrapper">
 
-        <div id="summary-box"
-             class="cart-summary">
+            <!-- LOADING -->
+            <div id="summary-loading">
 
-            <h2>
-                Order Summary
-            </h2>
+                <div id="summary-skeleton" class="cart-summary">
 
-            <div class="summary-row">
+                    <div class="skeleton-line large"></div>
 
-                <span>
-                    Subtotal
-                </span>
+                    <br>
 
-                <span id="subtotal">
-                    UGX 0
-                </span>
+                    <div class="skeleton-line medium"></div>
 
-            </div>
+                    <br>
 
+                    <div class="skeleton-line medium"></div>
 
-            <div class="summary-divider">
+                    <br><br>
 
-            </div>
+                    <div class="skeleton-line large"></div>
 
-            <div class="summary-total">
+                    <br><br>
 
-                <span>
-                    Total
-                </span>
+                    <div class="skeleton-qty"></div>
 
-                <span id="total">
-                    UGX 0
-                </span>
+                </div>
 
             </div>
-<a href="#"
-   id="checkout-btn"
-   class="checkout-btn">
 
-    Proceed to Checkout
+            <!-- ACTUAL SUMMARY -->
+            <div id="summary-content" style="display:none;">
 
-</a>
+                <div id="summary-box" class="cart-summary">
 
-            <div class="secure-checkout">
+                    <h2>Order Summary</h2>
 
-                <i class="fa-solid fa-lock"></i>
+                    <div class="summary-row">
 
-                Secure Checkout
+                        <span>Subtotal</span>
+
+                        <span id="subtotal">UGX 0</span>
+
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-total">
+
+                        <span>Total</span>
+
+                        <span id="total">UGX 0</span>
+
+                    </div>
+
+                    <a href="#" id="checkout-btn" class="checkout-btn">
+
+                        Proceed to Checkout
+
+                    </a>
+
+                    <div class="secure-checkout">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        Secure Checkout
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -410,6 +505,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 </footer>
 
 <script type="module" src="cart.js"></script>
+<script type="module" src="cart-badge.js"></script>
 <script type="module" src="account-dropdown.js"></script>
 
 </body>
