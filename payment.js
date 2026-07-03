@@ -1,115 +1,130 @@
 import { auth, db } from "./firebase-config.js";
 
-import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
     doc,
     getDoc,
     setDoc,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 /* =========================
-   ELEMENTS
+ELEMENTS
 ========================= */
 
 const modal = document.getElementById("paymentModal");
 
 const chooseBtn = document.getElementById("choosePaymentBtn");
-
 const changeBtn = document.getElementById("changePaymentBtn");
 
 const closeBtn = document.getElementById("closePaymentModal");
-
 const cancelBtn = document.getElementById("cancelPayment");
 
 const form = document.getElementById("paymentForm");
 
 const savedTitle = document.getElementById("saved-payment-title");
-
 const savedDescription = document.getElementById("saved-payment-description");
+const savedIcon = document.getElementById("saved-payment-icon");
 
 const mtnInput = document.getElementById("mtnInput");
-
 const airtelInput = document.getElementById("airtelInput");
 
 const mtnPhone = document.getElementById("mtnPhone");
-
 const airtelPhone = document.getElementById("airtelPhone");
 
+const paymentCards = document.querySelectorAll(".payment-card");
+
 /* =========================
-   MODAL
+MODAL
 ========================= */
 
-chooseBtn.addEventListener("click", () => {
+chooseBtn.onclick = () => modal.classList.add("show");
+changeBtn.onclick = () => modal.classList.add("show");
 
-    modal.classList.add("show");
+closeBtn.onclick = () => modal.classList.remove("show");
+cancelBtn.onclick = () => modal.classList.remove("show");
 
-});
+window.onclick = (e) => {
 
-changeBtn.addEventListener("click", () => {
-
-    modal.classList.add("show");
-
-});
-
-closeBtn.addEventListener("click", () => {
-
-    modal.classList.remove("show");
-
-});
-
-cancelBtn.addEventListener("click", () => {
-
-    modal.classList.remove("show");
-
-});
-
-window.addEventListener("click", e => {
-
-    if(e.target === modal){
+    if (e.target === modal) {
 
         modal.classList.remove("show");
 
     }
 
+};
+
+/* =========================
+PAYMENT CARD SELECTION
+========================= */
+
+paymentCards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        paymentCards.forEach(c => c.classList.remove("selected"));
+
+        card.classList.add("selected");
+
+        const radio = card.querySelector("input[type='radio']");
+
+        radio.checked = true;
+
+        mtnInput.style.display = "none";
+        airtelInput.style.display = "none";
+
+        if (radio.value === "mtn") {
+
+            mtnInput.style.display = "block";
+
+        }
+
+        if (radio.value === "airtel") {
+
+            airtelInput.style.display = "block";
+
+        }
+
+    });
+
 });
 
 /* =========================
-   LOAD PAYMENT
+LOAD PAYMENT
 ========================= */
 
-async function loadPayment(user){
+async function loadPayment(user) {
 
     const paymentRef = doc(
-
         db,
-
         "users",
-
         user.uid,
-
         "profile",
-
         "payment"
-
     );
 
     const snap = await getDoc(paymentRef);
 
-    if(!snap.exists()){
+    paymentCards.forEach(c => c.classList.remove("selected"));
 
-        savedTitle.textContent =
-        "No payment method selected";
+    mtnInput.style.display = "none";
+    airtelInput.style.display = "none";
+
+    if (!snap.exists()) {
+
+        savedTitle.textContent = "No payment method selected";
 
         savedDescription.textContent =
         "Choose how you'd like to pay.";
 
-        chooseBtn.style.display="inline-flex";
+        savedIcon.innerHTML =
+        `<i class="fa-solid fa-wallet"></i>`;
 
-        changeBtn.style.display="none";
+        chooseBtn.style.display = "inline-flex";
+        changeBtn.style.display = "none";
 
         return;
 
@@ -117,91 +132,81 @@ async function loadPayment(user){
 
     const data = snap.data();
 
-    chooseBtn.style.display="none";
+    chooseBtn.style.display = "none";
+    changeBtn.style.display = "inline-flex";
 
-    changeBtn.style.display="inline-flex";
+    const radio = document.querySelector(
+        `input[name="payment"][value="${data.method}"]`
+    );
 
-    document
-    .querySelectorAll(".payment-option")
-    .forEach(card=>card.classList.remove("selected"));
+    if (radio) {
 
-    mtnInput.style.display="none";
-    airtelInput.style.display="none";
+        radio.checked = true;
 
-    if(data.method==="cash"){
-
-        savedTitle.textContent =
-        "Cash on Delivery";
-
-        savedDescription.textContent =
-        "Pay when your order arrives.";
-
-        document.querySelector(
-            "input[value='cash']"
-        ).checked=true;
-
-        document
-        .querySelector("input[value='cash']")
-        .closest(".payment-option")
+        radio.closest(".payment-card")
         .classList.add("selected");
 
     }
 
-    if(data.method==="mtn"){
+    switch (data.method) {
 
-        savedTitle.textContent =
-        "MTN Mobile Money";
+        case "cash":
 
-        savedDescription.textContent =
-        data.phone;
+            savedTitle.textContent = "Cash on Delivery";
 
-        document.querySelector(
-            "input[value='mtn']"
-        ).checked=true;
+            savedDescription.textContent =
+            "Pay when your order arrives.";
 
-        document
-        .querySelector("input[value='mtn']")
-        .closest(".payment-option")
-        .classList.add("selected");
+            savedIcon.innerHTML =
+            `<i class="fa-solid fa-money-bill-wave"></i>`;
 
-        mtnPhone.value=data.phone || "";
+            break;
 
-    }
+        case "mtn":
 
-    if(data.method==="airtel"){
+            savedTitle.textContent = "MTN Mobile Money";
 
-        savedTitle.textContent =
-        "Airtel Money";
+            savedDescription.textContent = data.phone;
 
-        savedDescription.textContent =
-        data.phone;
+            savedIcon.innerHTML =
+            `<img src="Images/mtn.png" alt="MTN">`;
 
-        document.querySelector(
-            "input[value='airtel']"
-        ).checked=true;
+            mtnPhone.value = data.phone || "";
 
-        document
-        .querySelector("input[value='airtel']")
-        .closest(".payment-option")
-        .classList.add("selected");
+            mtnInput.style.display = "block";
 
-        airtelPhone.value=data.phone || "";
+            break;
+
+        case "airtel":
+
+            savedTitle.textContent = "Airtel Money";
+
+            savedDescription.textContent = data.phone;
+
+            savedIcon.innerHTML =
+            `<img src="Images/airtel.png" alt="Airtel">`;
+
+            airtelPhone.value = data.phone || "";
+
+            airtelInput.style.display = "block";
+
+            break;
 
     }
 
 }
 
 /* =========================
-   SAVE PAYMENT
+SAVE PAYMENT
 ========================= */
 
-form.addEventListener("submit",async(e)=>{
+form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
     const user = auth.currentUser;
 
-    if(!user){
+    if (!user) {
 
         alert("Please login first.");
 
@@ -209,19 +214,27 @@ form.addEventListener("submit",async(e)=>{
 
     }
 
-    const method=document.querySelector(
-
+    const selected = document.querySelector(
         "input[name='payment']:checked"
+    );
 
-    ).value;
+    if (!selected) {
 
-    let phone="";
+        alert("Select a payment method.");
 
-    if(method==="mtn"){
+        return;
 
-        phone=mtnPhone.value.trim();
+    }
 
-        if(phone===""){
+    const method = selected.value;
+
+    let phone = "";
+
+    if (method === "mtn") {
+
+        phone = mtnPhone.value.trim();
+
+        if (!phone) {
 
             alert("Please enter your MTN number.");
 
@@ -231,11 +244,11 @@ form.addEventListener("submit",async(e)=>{
 
     }
 
-    if(method==="airtel"){
+    if (method === "airtel") {
 
-        phone=airtelPhone.value.trim();
+        phone = airtelPhone.value.trim();
 
-        if(phone===""){
+        if (!phone) {
 
             alert("Please enter your Airtel number.");
 
@@ -248,27 +261,17 @@ form.addEventListener("submit",async(e)=>{
     await setDoc(
 
         doc(
-
             db,
-
             "users",
-
             user.uid,
-
             "profile",
-
             "payment"
-
         ),
 
         {
-
             method,
-
             phone,
-
-            updatedAt:serverTimestamp()
-
+            updatedAt: serverTimestamp()
         }
 
     );
@@ -280,12 +283,12 @@ form.addEventListener("submit",async(e)=>{
 });
 
 /* =========================
-   INIT
+INIT
 ========================= */
 
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(auth, user => {
 
-    if(user){
+    if (user) {
 
         loadPayment(user);
 

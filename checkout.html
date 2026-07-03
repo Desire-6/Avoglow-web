@@ -325,29 +325,35 @@
     <div class="card-content">
 
         <!-- Saved payment -->
-        <div id="saved-payment-card">
+<div id="saved-payment-card" class="payment-summary-card">
 
-            <h3 id="saved-payment-title">
+   <div class="payment-summary-icon" id="saved-payment-icon">
 
-                No payment method selected
+    <i class="fa-solid fa-wallet"></i>
 
-            </h3>
+</div>
 
-            <p id="saved-payment-description">
+    <div class="payment-summary-details">
 
-                Choose how you'd like to pay.
+        <h3 id="saved-payment-title">
+            No payment method selected
+        </h3>
 
-            </p>
+        <p id="saved-payment-description">
+            Choose how you'd like to pay.
+        </p>
 
-            <button
-                id="choosePaymentBtn"
-                class="primary-btn">
+        <button
+            id="choosePaymentBtn"
+            class="primary-btn">
 
-                Choose Payment Method
+            Choose Payment Method
 
-            </button>
+        </button>
 
-        </div>
+    </div>
+
+</div>
 
     </div>
 
@@ -645,158 +651,152 @@
 
 <div id="paymentModal" class="modal">
 
-   <div class="modal-box">
+    <div class="modal-box">
 
         <div class="modal-header">
 
-            <h2>
+            <h2>Select Payment Method</h2>
 
-                Select Payment Method
-
-            </h2>
-
-            <button id="closePaymentModal">
-
-                ×
-
-            </button>
+            <button id="closePaymentModal" type="button">&times;</button>
 
         </div>
 
-       <div class="payment-list">
+        <!-- IMPORTANT -->
+        <form id="paymentForm">
 
-    <!-- CASH -->
-    <label class="payment-card">
+            <div class="payment-list">
 
-        <input
-            type="radio"
-            name="payment"
-            value="cash"
-            checked>
-
-        <div class="payment-content">
-
-            <div class="payment-icon">
-                💵
-            </div>
-
-            <div class="payment-info">
-
-                <h3>Cash on Delivery</h3>
-
-                <p>Pay when your order arrives.</p>
-
-            </div>
-
-        </div>
-
-    </label>
-
-
-    <!-- MTN -->
-
-    <label class="payment-card">
-
-        <input
-            type="radio"
-            name="payment"
-            value="mtn">
-
-        <div class="payment-content">
-
-            <img
-                src="Images/mtn.png"
-                class="payment-logo">
-
-            <div class="payment-info">
-
-                <h3>MTN Mobile Money</h3>
-
-                <p>Pay using MTN MoMo.</p>
-
-                <div
-                    id="mtnInput"
-                    class="payment-phone">
-
-                    <label>Phone Number</label>
+                <!-- CASH -->
+                <label class="payment-card">
 
                     <input
-                        id="mtnPhone"
-                        type="tel"
-                        placeholder="+256 7XXXXXXXX">
+                        type="radio"
+                        name="payment"
+                        value="cash"
+                        checked>
 
-                </div>
+                    <div class="payment-content">
 
-            </div>
+                        <div class="payment-icon">
+                            💵
+                        </div>
 
-        </div>
+                        <div class="payment-info">
 
-    </label>
+                            <h3>Cash on Delivery</h3>
 
+                            <p>Pay when your order arrives.</p>
 
-    <!-- AIRTEL -->
+                        </div>
 
-    <label class="payment-card">
+                    </div>
 
-        <input
-            type="radio"
-            name="payment"
-            value="airtel">
+                </label>
 
-        <div class="payment-content">
+                <!-- MTN -->
 
-            <img
-                src="Images/airtel.png"
-                class="payment-logo">
-
-            <div class="payment-info">
-
-                <h3>Airtel Money</h3>
-
-                <p>Pay using Airtel Money.</p>
-
-                <div
-                    id="airtelInput"
-                    class="payment-phone">
-
-                    <label>Phone Number</label>
+                <label class="payment-card">
 
                     <input
-                        id="airtelPhone"
-                        type="tel"
-                        placeholder="+256 7XXXXXXXX">
+                        type="radio"
+                        name="payment"
+                        value="mtn">
 
-                </div>
+                    <div class="payment-content">
+
+                        <img
+                            src="Images/mtn.png"
+                            class="payment-logo">
+
+                        <div class="payment-info">
+
+                            <h3>MTN Mobile Money</h3>
+
+                            <p>Pay using MTN Mobile Money.</p>
+
+                            <div
+                                id="mtnInput"
+                                class="payment-phone">
+
+                                <label>Phone Number</label>
+
+                                <input
+                                    id="mtnPhone"
+                                    type="tel"
+                                    placeholder="+256 7XXXXXXXX">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </label>
+
+                <!-- AIRTEL -->
+
+                <label class="payment-card">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="airtel">
+
+                    <div class="payment-content">
+
+                        <img
+                            src="Images/airtel.png"
+                            class="payment-logo">
+
+                        <div class="payment-info">
+
+                            <h3>Airtel Money</h3>
+
+                            <p>Pay using Airtel Money.</p>
+
+                            <div
+                                id="airtelInput"
+                                class="payment-phone">
+
+                                <label>Phone Number</label>
+
+                                <input
+                                    id="airtelPhone"
+                                    type="tel"
+                                    placeholder="+256 7XXXXXXXX">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </label>
 
             </div>
 
-        </div>
+            <div class="payment-actions">
 
-    </label>
+                <button
+                    type="button"
+                    id="cancelPayment"
+                    class="secondary-btn">
 
-</div>
+                    Cancel
 
+                </button>
 
-<div class="payment-actions">
+                <button
+                    type="submit"
+                    class="primary-btn">
 
-    <button
-        type="button"
-        id="cancelPayment"
-        class="secondary-btn">
+                    Save Payment
 
-        Cancel
+                </button>
 
-    </button>
+            </div>
 
-    <button
-        type="submit"
-        class="primary-btn">
-
-        Save Payment
-
-    </button>
-
-</div>
+        </form>
 
     </div>
 

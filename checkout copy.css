@@ -386,32 +386,56 @@ nav{
     color:#c62828;
 
 }
-/*=====================================
+/* ===========================
 CHECKOUT PAGE
-======================================*/
+=========================== */
 
 .checkout-page{
 
+    padding:50px 8% 80px;
+
     background:#f7f6f2;
+
     min-height:100vh;
-
-    padding:40px 7% 70px;
-
-    margin-top:50px;
+    margin-top: 50px;
 
 }
 
-/*=====================================
+.checkout-header{
+
+    margin-bottom:40px;
+
+}
+
+.checkout-header h1{
+
+    font-size:42px;
+
+    color:#006838;
+
+    margin-bottom:10px;
+
+}
+
+.checkout-header p{
+
+    color:#666;
+
+    font-size:18px;
+
+}
+
+/* ===========================
 LAYOUT
-======================================*/
+=========================== */
 
 .checkout-layout{
 
     display:grid;
 
-    grid-template-columns:1.8fr 1fr;
+    grid-template-columns:2fr 1fr;
 
-    gap:28px;
+    gap:35px;
 
     align-items:start;
 
@@ -423,7 +447,7 @@ LAYOUT
 
     flex-direction:column;
 
-    gap:20px;
+    gap:28px;
 
 }
 
@@ -431,13 +455,13 @@ LAYOUT
 
     position:sticky;
 
-    top:100px;
+    top:110px;
 
 }
 
-/*=====================================
+/* ===========================
 CARDS
-======================================*/
+=========================== */
 
 .checkout-card,
 .summary-card{
@@ -446,11 +470,9 @@ CARDS
 
     border-radius:18px;
 
-    border:1px solid #ececec;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
 
-    box-shadow:
-
-        0 6px 18px rgba(0,0,0,.04);
+    overflow:hidden;
 
 }
 
@@ -462,9 +484,9 @@ CARDS
 
     align-items:center;
 
-    padding:18px 24px;
+    padding:22px 28px;
 
-    border-bottom:1px solid #efefef;
+    border-bottom:1px solid #ececec;
 
 }
 
@@ -474,15 +496,15 @@ CARDS
 
     align-items:center;
 
-    gap:14px;
+    gap:16px;
 
 }
 
 .step{
 
-    width:34px;
+    width:38px;
 
-    height:34px;
+    height:38px;
 
     border-radius:50%;
 
@@ -492,21 +514,18 @@ CARDS
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
 
-    font-size:15px;
+    justify-content:center;
 
     font-weight:700;
+    font-size:18px;
 
 }
 
 .card-title h2{
 
-    font-size:19px;
-
-    font-weight:700;
+    font-size:20px;
 
     color:#222;
 
@@ -514,69 +533,13 @@ CARDS
 
 .card-content{
 
-    padding:22px 24px;
+    padding:20px 24px;
 
 }
 
-/*=====================================
+/* ===========================
 BUTTONS
-======================================*/
-
-.primary-btn{
-
-    background:#006838;
-
-    color:#fff;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:13px 24px;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    transition:.25s;
-
-}
-
-.primary-btn:hover{
-
-    background:#00542d;
-
-}
-
-.secondary-btn{
-
-    background:#f4f4f4;
-
-    color:#333;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:13px 24px;
-
-    cursor:pointer;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    transition:.25s;
-
-}
-
-.secondary-btn:hover{
-
-    background:#e7e7e7;
-
-}
+=========================== */
 
 .change-btn{
 
@@ -586,102 +549,93 @@ BUTTONS
 
     color:#006838;
 
-    font-size:14px;
-
     font-weight:600;
 
     cursor:pointer;
 
-}
-
-/*=====================================
-ADDRESS CARD
-======================================*/
-
-.address-card{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:16px;
+    font-size:15px;
 
 }
 
-.address-icon{
+.primary-btn{
 
-    width:48px;
+    /* margin-top:20px; */
 
-    height:48px;
+    background:#006838;
 
-    background:#eef8f2;
+    color:#fff;
 
-    color:#006838;
+    border:none;
 
-    border-radius:50%;
+    padding:15px 28px;
 
-    display:flex;
+    border-radius:10px;
 
-    justify-content:center;
+    cursor:pointer;
 
-    align-items:center;
+    font-size:16px;
 
-    font-size:20px;
-
-    flex-shrink:0;
-
-}
-
-.address-details{
-
-    flex:1;
+    font-weight:600;
+    margin-bottom: 8px;
+    margin-right: 10px;
 
 }
 
-.address-details h3{
+.primary-btn:hover{
 
-    font-size:17px;
+    background:#00542d;
+
+}
+.secondary-btn{
+
+    padding:15px 28px;
+
+    background:#f5f5f5;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+     margin-bottom: 8px;
+
+}
+
+.secondary-btn:hover{
+
+    background:#ececec;
+
+}
+
+/* ===========================
+ADDRESS
+=========================== */
+
+.address-info h3{
+
+    font-size:22px;
+
+    margin-bottom:10px;
 
     color:#222;
 
-    margin-bottom:4px;
-
-    font-weight:700;
-
 }
 
-.address-details p{
-
-    font-size:14px;
+.address-info p{
 
     color:#666;
 
-    line-height:1.45;
+    margin-bottom:8px;
 
-    margin-bottom:6px;
-
-}
-
-.address-details span{
-
-    display:block;
-
-    font-size:14px;
-
-    color:#006838;
-
-    font-weight:600;
+    line-height:1.6;
 
 }
 
-#addAddressBtn{
-
-    margin-top:18px;
-
-}
-/*=====================================
-DELIVERY OPTIONS
-======================================*/
+/* ===========================
+OPTIONS
+=========================== */
 
 .option{
 
@@ -689,11 +643,11 @@ DELIVERY OPTIONS
 
     align-items:center;
 
-    gap:15px;
+    gap:18px;
 
-    padding:16px 0;
+    padding:14px 0;
 
-    border-bottom:1px solid #efefef;
+    border-bottom:1px solid #eee;
 
     cursor:pointer;
 
@@ -707,7 +661,7 @@ DELIVERY OPTIONS
 
 .option input{
 
-    transform:scale(1.1);
+    transform:scale(1.2);
 
     accent-color:#006838;
 
@@ -723,9 +677,9 @@ DELIVERY OPTIONS
 
     display:block;
 
-    font-size:15px;
+    margin-bottom:6px;
 
-    margin-bottom:3px;
+    font-size:18px;
 
     color:#222;
 
@@ -733,19 +687,19 @@ DELIVERY OPTIONS
 
 .option-text span{
 
-    font-size:13px;
+    color:#666;
 
-    color:#777;
+    font-size:15px;
 
 }
 
 .option-price{
 
-    font-size:15px;
+    color:#006838;
 
     font-weight:700;
 
-    color:#006838;
+    font-size:18px;
 
 }
 
@@ -950,18 +904,15 @@ PAYMENT INPUTS
     font-weight:600;
 
 }
-/*=====================================
-SAVED PAYMENT
-======================================*/
+/* ==========================
+   SAVED PAYMENT CARD
+========================== */
 
 .payment-summary-card{
-
     display:flex;
-
     align-items:center;
-
-    gap:16px;
-
+    gap:20px;
+    padding:20px;
 }
 
 .payment-summary-icon{
@@ -969,9 +920,9 @@ SAVED PAYMENT
     width:64px;
     height:64px;
 
-    border-radius:50%;
-
     background:#eef7f2;
+
+    border-radius:50%;
 
     display:flex;
 
@@ -979,14 +930,12 @@ SAVED PAYMENT
 
     align-items:center;
 
-    overflow:hidden;
 }
 
 .payment-summary-icon img{
 
     width:40px;
     height:40px;
-
     object-fit:contain;
 
 }
@@ -995,40 +944,29 @@ SAVED PAYMENT
 
     font-size:28px;
 
-    color:#0b7a42;
+    color:#0b7a43;
 
 }
 
 .payment-summary-details{
-
     flex:1;
-
 }
 
 .payment-summary-details h3{
-
-    font-size:17px;
-
-    margin-bottom:4px;
-
-    color:#222;
-
+    font-size:24px;
+    margin-bottom:6px;
+    color:#1d1d1d;
 }
 
 .payment-summary-details p{
-
-    font-size:14px;
-
     color:#666;
-
-    margin-bottom:14px;
-
+    margin-bottom:18px;
+    font-size:17px;
 }
 
 .payment-summary-details .primary-btn{
-
-    min-width:210px;
-
+    width:auto;
+    min-width:280px;
 }
 
 /* ===========================
@@ -1069,35 +1007,9 @@ SUMMARY
 
 }
 
-/*=====================================
-ORDER SUMMARY
-======================================*/
-
-.summary-card{
-
-    padding:22px;
-
-}
-
-.summary-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:18px;
-
-}
-
-.summary-header h2{
-
-    font-size:22px;
-
-    color:#006838;
-
-}
+/* ===========================
+PRODUCTS
+=========================== */
 
 .summary-products{
 
@@ -1105,9 +1017,7 @@ ORDER SUMMARY
 
     flex-direction:column;
 
-    gap:14px;
-
-    margin:20px 0;
+    gap:12px;
 
 }
 
@@ -1117,29 +1027,21 @@ ORDER SUMMARY
 
     align-items:center;
 
-    gap:12px;
-
-    padding-bottom:14px;
-
-    border-bottom:1px solid #f0f0f0;
-
-}
-
-.summary-product:last-child{
-
-    border-bottom:none;
+    gap:15px;
 
 }
 
 .summary-product img{
 
-    width:56px;
+    width:65px;
 
-    height:56px;
+    height:65px;
+
+    border-radius:12px;
 
     object-fit:cover;
 
-    border-radius:10px;
+    background:#f3f3f3;
 
 }
 
@@ -1151,107 +1053,27 @@ ORDER SUMMARY
 
 .summary-product-info h4{
 
-    font-size:14px;
+    font-size:16px;
 
-    margin-bottom:3px;
+    margin-bottom:5px;
+
+    color:#222;
 
 }
 
 .summary-product-info p{
 
-    font-size:12px;
-
     color:#777;
-
-}
-
-.summary-product-price{
 
     font-size:14px;
 
+}
+
+.summary-product span{
+
     font-weight:700;
 
     color:#006838;
-
-}
-
-.view-more-btn{
-
-    border:none;
-
-    background:none;
-
-    color:#006838;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-}
-
-.summary-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin:12px 0;
-
-    font-size:15px;
-
-}
-
-.summary-total{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin-top:18px;
-
-    padding-top:16px;
-
-    border-top:1px solid #ececec;
-
-    font-size:20px;
-
-    font-weight:700;
-
-}
-
-.checkout-btn{
-
-    width:100%;
-
-    margin-top:18px;
-
-    height:48px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#006838;
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-}
-
-.checkout-note{
-
-    margin-top:14px;
-
-    text-align:center;
-
-    color:#777;
-
-    font-size:12px;
 
 }
 
@@ -1412,27 +1234,25 @@ height:55px;
 }
 
 }
-/*=====================================
-MODALS
-======================================*/
+/* ===========================
+   ADDRESS MODAL
+=========================== */
 
 .modal{
 
     position:fixed;
+
     inset:0;
 
     background:rgba(0,0,0,.45);
 
-    backdrop-filter:blur(6px);
-
     display:none;
 
     justify-content:center;
+
     align-items:center;
 
-    z-index:9999;
-
-    padding:25px;
+    z-index:1000;
 
 }
 
@@ -1444,162 +1264,147 @@ MODALS
 
 .modal-box{
 
-    width:100%;
-    max-width:650px;
+    width:90%;
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    max-width:700px;
 
     background:#fff;
 
-    border-radius:22px;
+    border-radius:18px;
 
     overflow:hidden;
 
     animation:popup .25s ease;
 
-    box-shadow:0 20px 60px rgba(0,0,0,.18);
-
 }
 
 @keyframes popup{
 
-    from{
+from{
 
-        transform:translateY(20px) scale(.96);
+transform:scale(.9);
 
-        opacity:0;
+opacity:0;
 
-    }
+}
 
-    to{
+to{
 
-        transform:translateY(0) scale(1);
+transform:scale(1);
 
-        opacity:1;
+opacity:1;
 
-    }
+}
 
 }
 
 .modal-header{
 
-    display:flex;
+display:flex;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    align-items:center;
+align-items:center;
 
-    padding:20px 24px;
+padding:24px 30px;
 
-    border-bottom:1px solid #ececec;
+border-bottom:1px solid #eee;
 
 }
 
 .modal-header h2{
 
-    font-size:20px;
+font-size:24px;
 
-    color:#006838;
+color:#0b7a42;
 
 }
 
 .modal-header button{
 
-    width:38px;
+background:none;
 
-    height:38px;
+border:none;
 
-    border:none;
+font-size:28px;
 
-    border-radius:50%;
-
-    background:#f5f5f5;
-
-    cursor:pointer;
-
-    font-size:20px;
+cursor:pointer;
 
 }
-
-.modal-header button:hover{
-
-    background:#ececec;
-
-}
-
-/*========================*/
 
 #addressForm{
 
-    padding:24px;
+padding:30px;
 
 }
 
 .form-grid{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:1fr 1fr;
+grid-template-columns:1fr 1fr;
 
-    gap:18px;
+gap:20px;
 
-    margin-bottom:18px;
+margin-bottom:20px;
 
 }
 
 .form-group{
 
-    display:flex;
+display:flex;
 
-    flex-direction:column;
+flex-direction:column;
 
 }
 
 .form-group label{
 
-    margin-bottom:7px;
+margin-bottom:8px;
 
-    font-size:14px;
+font-weight:600;
 
-    font-weight:600;
-
-    color:#444;
+color:#444;
 
 }
 
 .form-group input,
+
 .form-group select,
+
 .form-group textarea{
 
-    width:100%;
+padding:14px 16px;
 
-    box-sizing:border-box;
+border:1px solid #ddd;
 
-    padding:13px 15px;
+border-radius:10px;
 
-    border:1px solid #dcdcdc;
+font-size:15px;
 
-    border-radius:12px;
-
-    font-size:15px;
-
-    transition:.25s;
+font-family:inherit;
 
 }
 
 .form-group textarea{
 
-    resize:vertical;
+resize:vertical;
 
 }
 
 .form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus{
 
-    outline:none;
+.form-group textarea:focus,
 
-    border-color:#006838;
+.form-group select:focus{
 
-    box-shadow:0 0 0 3px rgba(0,104,56,.08);
+outline:none;
+
+border-color:#0b7a42;
 
 }
 
@@ -1609,74 +1414,286 @@ MODALS
 
     justify-content:flex-end;
 
-    gap:14px;
+    align-items:center;
 
-    margin-top:25px;
+    gap:18px;
+
+    padding:25px 30px;
+
+    border-top:1px solid #e8e8e8;
+
+}
+.modal-actions .secondary-btn,
+.modal-actions .primary-btn{
+
+    height:56px;
+
+    min-width:180px;
+
+    padding:0 30px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:16px;
+
+    font-size:1.1rem;
+
+    font-weight:600;
+
+    line-height:1;
+
+    box-sizing:border-box;
+
+}
+.address-card{
+
+    display:flex;
+    align-items:center;
+    gap:18px;
 
 }
 
-.modal-actions button{
+.address-icon{
 
-    min-width:150px;
-
-    height:48px;
+    width:46px;
+    height:58px;
 
 }
-/*=====================================
-PAYMENT MODAL
-======================================*/
 
-.payment-list{
+.address-details h3{
+
+    font-size:20px;
+    margin-bottom:4px;
+
+}
+
+.address-details p{
+
+    margin:2px 0;
+    color:#666;
+    line-height:1.4;
+
+}
+
+.address-details span{
+
+    font-weight:600;
+
+    color:#0b7a42;
+
+}
+.summary-products{
 
     display:flex;
 
     flex-direction:column;
 
-    gap:14px;
+    gap:18px;
 
-    padding:24px;
+    margin:25px 0;
 
 }
 
-.payment-card{
+.summary-product{
 
-    border:1px solid #e5e5e5;
+    display:flex;
 
-    border-radius:16px;
+    gap:15px;
+
+    align-items:center;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.summary-product:last-child{
+
+    border-bottom:none;
+
+}
+
+.summary-product img{
+
+    width:56px;
+
+    height:72px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    background:#f5f5f5;
+
+}
+
+.summary-product-info{
+
+    flex:1;
+
+}
+
+.summary-product-info h4{
+
+    font-size:15px;
+
+    margin-bottom:6px;
+
+    color:#222;
+
+}
+
+.summary-product-info p{
+
+    font-size:13px;
+
+    color:#777;
+
+}
+
+.summary-product-price{
+
+    text-align:right;
+
+    font-weight:700;
+
+    color:#0b7a42;
+
+    font-size:15px;
+
+}
+
+.view-more-btn{
+
+    width:100%;
+
+    margin-top:10px;
+
+    background:none;
+
+    border:none;
+
+    color:#0b7a42;
+
+    font-weight:600;
 
     cursor:pointer;
 
+}
+/* ===========================
+   PAYMENT MODAL
+=========================== */
+
+#paymentModal .modal-content{
+
+    max-width:650px;
+
+}
+
+#paymentForm{
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+}
+
+#paymentForm .option{
+
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+
+    padding:18px 5px;
+
+    border-bottom:1px solid #ececec;
+
+    cursor:pointer;
+
+}
+
+#paymentForm .option:last-of-type{
+
+    border-bottom:none;
+
+}
+
+#paymentForm input[type="radio"]{
+
+    margin-top:6px;
+
+    accent-color:#0b6b3a;
+
+    transform:scale(1.2);
+
+}
+
+#paymentForm strong{
+
+    display:block;
+
+    font-size:16px;
+
+    color:#222;
+
+    margin-bottom:4px;
+
+}
+
+#paymentForm p{
+
+    color:#666;
+
+    font-size:14px;
+
+    margin:0;
+
+}
+
+.payment-input{
+
+    margin-left:42px;
+
+    margin-top:-5px;
+
+    margin-bottom:12px;
+
+}
+
+.payment-input input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    outline:none;
+
     transition:.25s;
 
-    overflow:hidden;
+}
+
+.payment-input input:focus{
+
+    border-color:#0b6b3a;
 
 }
 
-.payment-card:hover{
+/* ===========================
+   PAYMENT OPTIONS
+=========================== */
 
-    border-color:#006838;
-
-}
-
-.payment-card input{
-
-    display:none;
-
-}
-
-.payment-card input:checked + .payment-content{
-
-    background:#f7fcf9;
-
-}
-
-.payment-card:has(input:checked){
-
-    border:2px solid #006838;
-
-}
-
-.payment-content{
+.payment-option{
 
     display:flex;
 
@@ -1684,59 +1701,57 @@ PAYMENT MODAL
 
     gap:18px;
 
-    padding:18px;
+    padding:22px;
+
+    border:1px solid #e6e6e6;
+
+    border-radius:14px;
+
+    margin-bottom:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
 
 }
 
-.payment-logo{
+.payment-option:hover{
 
-    width:44px;
-
-    height:44px;
-
-    object-fit:contain;
+    border-color:#0a6a3d;
 
 }
 
-.payment-icon{
+.payment-option input[type="radio"]{
 
-    width:44px;
+    margin-top:6px;
 
-    height:44px;
+    accent-color:#0a6a3d;
 
-    border-radius:50%;
-
-    background:#eef8f2;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:20px;
+    transform:scale(1.2);
 
 }
 
-.payment-info{
+.option-text{
 
     flex:1;
 
 }
 
-.payment-info h3{
+.option-text strong{
 
-    font-size:16px;
+    display:block;
 
-    margin-bottom:4px;
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
 
 }
 
-.payment-info p{
+.option-text p{
 
-    font-size:13px;
-
-    color:#777;
+    color:#666;
 
     margin-bottom:12px;
 
@@ -1746,26 +1761,8 @@ PAYMENT MODAL
 
     display:none;
 
-    margin-top:12px;
+    margin-top:18px;
 
-}
-
-.payment-phone label{
-
-    display:block;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    margin-bottom:6px;
-
-}
-
-.payment-phone{
-
-    display:none;
-    margin-top:15px;
     width:100%;
 
 }
@@ -1773,137 +1770,45 @@ PAYMENT MODAL
 .payment-phone label{
 
     display:block;
+
     font-size:14px;
+
     font-weight:600;
+
     margin-bottom:8px;
 
 }
 
 .payment-phone input{
 
-    display:block;
     width:100%;
-    max-width:100%;
-    padding:14px 16px;
-    border:1px solid #d9d9d9;
-    border-radius:10px;
-    background:#fff;
-    font-size:15px;
+
     box-sizing:border-box;
 
-}
+    padding:14px 16px;
 
-.payment-card:has(input[value="mtn"]:checked) #mtnInput{
+    border-radius:10px;
 
-    display:block;
+    border:1px solid #d8d8d8;
 
-}
-
-.payment-card:has(input[value="airtel"]:checked) #airtelInput{
-
-    display:block;
+    font-size:16px;
 
 }
 
-.payment-actions{
+.payment-phone input:focus{
 
-    display:flex;
+    outline:none;
 
-    justify-content:flex-end;
+    border-color:#0a6a3d;
 
-    gap:14px;
-
-    padding:20px 24px;
-
-    border-top:1px solid #ececec;
+    box-shadow:0 0 0 3px rgba(10,106,61,.12);
 
 }
 
-.payment-actions button{
+.payment-option.selected{
 
-    min-width:150px;
+    border:2px solid #0a6a3d;
 
-    height:48px;
-
-}
-@media(max-width:900px){
-
-.checkout-layout{
-
-    grid-template-columns:1fr;
-
-}
-
-.checkout-right{
-
-    position:relative;
-
-    top:0;
-
-}
-
-}
-
-@media(max-width:650px){
-
-.checkout-page{
-
-    padding:20px;
-
-}
-
-.form-grid{
-
-    grid-template-columns:1fr;
-
-}
-
-.card-header{
-
-    padding:16px;
-
-}
-
-.card-content{
-
-    padding:18px;
-
-}
-
-.summary-card{
-
-    padding:18px;
-
-}
-
-.payment-content{
-
-    flex-direction:column;
-
-}
-
-.payment-actions{
-
-    flex-direction:column;
-
-}
-
-.payment-actions button{
-
-    width:100%;
-
-}
-
-.modal-actions{
-
-    flex-direction:column;
-
-}
-
-.modal-actions button{
-
-    width:100%;
-
-}
+    background:#f7fcf9;
 
 }
