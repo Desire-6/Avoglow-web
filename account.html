@@ -154,97 +154,60 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         <div class="user-summary">
 
             <div class="avatar">
-
                 <i class="fa-regular fa-user"></i>
-
             </div>
 
-            <h3 id="user-name">
+            <h3 id="user-name">Loading...</h3>
 
-                Loading...
-
-            </h3>
-
-            <p id="user-email">
-
-                Loading...
-
-            </p>
+            <p id="user-email">Loading...</p>
 
         </div>
 
         <nav aria-label="Account Navigation">
 
-            <a href="account.html" class="active">
-
+            <a href="#" id="nav-dashboard" class="active">
                 <i class="fa-solid fa-house"></i>
-
                 Dashboard
-
             </a>
 
-            <a href="orders.html">
-
+            <a href="#" id="nav-orders">
                 <i class="fa-solid fa-box"></i>
-
                 My Orders
-
             </a>
 
-            <a href="wishlist.html">
-
+            <a href="#" id="nav-wishlist">
                 <i class="fa-regular fa-heart"></i>
-
                 Wishlist
-
             </a>
 
-            <a href="recently-viewed.html">
-
+            <a href="#" id="nav-recent">
                 <i class="fa-regular fa-clock"></i>
-
                 Recently Viewed
-
             </a>
 
-            <a href="inbox.html">
-
+            <a href="#" id="nav-inbox">
                 <i class="fa-regular fa-envelope"></i>
-
                 Inbox
-
             </a>
 
-            <a href="addresses.html">
-
+            <a href="#" id="nav-address">
                 <i class="fa-solid fa-location-dot"></i>
-
                 Address Book
-
             </a>
 
-            <a href="settings.html">
-
+            <a href="#" id="nav-settings">
                 <i class="fa-solid fa-gear"></i>
-
                 Account Settings
-
             </a>
 
             <a href="shop.html">
-
                 <i class="fa-solid fa-bag-shopping"></i>
-
                 Continue Shopping
-
             </a>
 
             <button id="logout-btn">
-
                 <i class="fa-solid fa-right-from-bracket"></i>
-
                 Logout
-
             </button>
 
         </nav>
@@ -257,198 +220,232 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
     <main class="account-content">
 
-        <h1>
+        <!-- ======================
+             DASHBOARD
+        ======================= -->
 
-            Account Overview
+        <section id="dashboard-section">
 
-        </h1>
+            <h1>Account Overview</h1>
 
-        <p class="subtitle">
+            <p class="subtitle">
 
-            Welcome back,
+                Welcome back,
 
-            <strong id="welcome-name">
+                <strong id="welcome-name">
 
-                Customer
+                    Customer
 
-            </strong>
+                </strong>
 
-        </p>
+            </p>
 
-        <div class="account-grid">
+            <div class="account-grid">
 
-            <!-- ACCOUNT DETAILS -->
+                <!-- ACCOUNT DETAILS -->
 
-            <div class="info-card">
+                <div class="info-card">
 
-                <h3>
+                    <h3>Account Details</h3>
 
-                    Account Details
+                    <div class="card-content">
 
-                </h3>
+                        <p><strong>Name</strong></p>
 
-                <div class="card-content">
+                        <p id="detail-name">Loading...</p>
 
-                    <p>
+                        <br>
 
-                        <strong>Name</strong>
+                        <p><strong>Email</strong></p>
 
-                    </p>
+                        <p id="detail-email">Loading...</p>
 
-                    <p id="detail-name">
-
-                        Loading...
-
-                    </p>
-
-                    <br>
-
-                    <p>
-
-                        <strong>Email</strong>
-
-                    </p>
-
-                    <p id="detail-email">
-
-                        Loading...
-
-                    </p>
+                    </div>
 
                 </div>
 
-            </div>
+                <!-- ADDRESS -->
 
-            <!-- ADDRESS -->
+                <div class="info-card">
 
-            <div class="info-card">
+                    <h3>Default Address</h3>
 
-                <h3>
+                    <div class="card-content">
 
-                    Addresses
+                        <p id="saved-address">
 
-                </h3>
+                            No address saved yet.
 
-                <div class="card-content">
+                        </p>
 
-                    <p id="default-address">
+                        <button
+                            id="add-address-btn"
+                            class="primary-btn">
 
-                        No address saved yet.
-
-                    </p>
-
-                    <a href="addresses.html">
-
-                        <button>
-
-                            Add Address
+                            Manage Address
 
                         </button>
 
-                    </a>
+                    </div>
 
                 </div>
 
-            </div>
+                <!-- NEWSLETTER -->
 
-            <!-- NEWSLETTER -->
+                <div class="info-card">
 
-            <div class="info-card">
+                    <h3>Newsletter</h3>
 
-                <h3>
+                    <div class="card-content">
 
-                    Newsletter
+                        <p>
 
-                </h3>
+                            Stay updated with beauty tips, exclusive offers and new product launches.
 
-                <div class="card-content">
+                        </p>
 
-                    <p>
-
-                        Stay updated with beauty tips, exclusive offers and new product launches.
-
-                    </p>
-
-                    <a href="settings.html">
-
-                        <button>
+                        <button id="manage-newsletter">
 
                             Manage Preferences
 
                         </button>
 
-                    </a>
+                    </div>
+
+                </div>
+
+                <!-- SUPPORT -->
+
+                <div class="info-card">
+
+                    <h3>Need Help?</h3>
+
+                    <div class="card-content">
+
+                        <p>
+
+                            Need assistance with your order or have questions about our products?
+
+                        </p>
+
+                        <a href="contact.html">
+
+                            <button>
+
+                                Contact Support
+
+                            </button>
+
+                        </a>
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <!-- SUPPORT -->
+        </section>
 
-            <div class="info-card">
+        <!-- ======================
+             ADDRESS BOOK
+        ======================= -->
 
-                <h3>
+       <section id="address-section" style="display:none;">
 
-                    Need Help?
+    <div class="address-book-header">
 
-                </h3>
+        <h2>Address Book</h2>
 
-                <div class="card-content">
+        <button id="newAddressBtn" class="primary-btn">
 
-                    <p>
+            <i class="fa-solid fa-plus"></i>
 
-                        Need assistance with your order or have questions about our products?
+            Add Address
 
-                    </p>
+        </button>
 
-                    <a href="contact.html">
+    </div>
 
-                        <button>
+    <div id="addressList" class="address-list">
 
-                            Contact Support
+        <!-- Addresses appear here -->
 
-                        </button>
+    </div>
 
-                    </a>
+</section>
 
-                </div>
+        <!-- ======================
+             ORDERS
+        ======================= -->
 
-            </div>
-            
+        <section id="orders-section" style="display:none;">
 
-        </div>
+        </section>
+
+        <!-- ======================
+             WISHLIST
+        ======================= -->
+
+        <section id="wishlist-section" style="display:none;">
+
+        </section>
+
+        <!-- ======================
+             INBOX
+        ======================= -->
+
+        <section id="inbox-section" style="display:none;">
+
+        </section>
+
+        <!-- ======================
+             SETTINGS
+        ======================= -->
+
+        <section id="settings-section" style="display:none;">
+
+        </section>
 
     </main>
 
 </section>
-<section class="account-recently-viewed">
+  <!-- ======================
+             RECENTLY VIEWED
+        ======================= -->
 
-    <div class="section-heading">
+        <section id="recent-section">
 
-        <h2>Recently Viewed</h2>
+            <div class="section-heading">
 
-        <p>Continue shopping where you left off.</p>
+                <h2>Recently Viewed</h2>
 
-    </div>
+                <p>Continue shopping where you left off.</p>
 
-    <div class="recently-viewed-wrapper">
+            </div>
 
-        <button class="recent-arrow left">
-            &#10094;
-        </button>
+            <div class="recently-viewed-wrapper">
 
-        <div
-            id="recently-viewed-container"
-            class="recent-scroll">
-        </div>
+                <button class="recent-arrow left">
 
-        <button class="recent-arrow right">
-            &#10095;
-        </button>
+                    &#10094;
 
-    </div>
+                </button>
 
-</section>
+                <div
+                    id="recently-viewed-container"
+                    class="recent-scroll">
+
+                </div>
+
+                <button class="recent-arrow right">
+
+                    &#10095;
+
+                </button>
+
+            </div>
+
+        </section>
 <footer class="footer">
 
     <div class="footer-container">

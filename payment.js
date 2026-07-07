@@ -1,27 +1,26 @@
 import { auth, db } from "./firebase-config.js";
 
-import { onAuthStateChanged }
-from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
     doc,
     getDoc,
     setDoc,
     serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 /* =========================
 ELEMENTS
 ========================= */
 
-const modal = document.getElementById("paymentModal");
-
 const chooseBtn = document.getElementById("choosePaymentBtn");
 const changeBtn = document.getElementById("changePaymentBtn");
-
-const closeBtn = document.getElementById("closePaymentModal");
 const cancelBtn = document.getElementById("cancelPayment");
+
+const paymentEditor = document.getElementById("paymentEditor");
+const savedCard = document.getElementById("saved-payment-card");
 
 const form = document.getElementById("paymentForm");
 
@@ -38,53 +37,55 @@ const airtelPhone = document.getElementById("airtelPhone");
 const paymentCards = document.querySelectorAll(".payment-card");
 
 /* =========================
-MODAL
+SHOW / HIDE EDITOR
 ========================= */
 
-chooseBtn.onclick = () => modal.classList.add("show");
-changeBtn.onclick = () => modal.classList.add("show");
+function showEditor(){
 
-closeBtn.onclick = () => modal.classList.remove("show");
-cancelBtn.onclick = () => modal.classList.remove("show");
+    savedCard.style.display = "none";
+    paymentEditor.style.display = "block";
 
-window.onclick = (e) => {
+}
 
-    if (e.target === modal) {
+function hideEditor(){
 
-        modal.classList.remove("show");
+    paymentEditor.style.display = "none";
+    savedCard.style.display = "flex";
 
-    }
+}
 
-};
+chooseBtn.addEventListener("click",showEditor);
+changeBtn.addEventListener("click",showEditor);
+cancelBtn.addEventListener("click",hideEditor);
 
 /* =========================
-PAYMENT CARD SELECTION
+CARD SELECTION
 ========================= */
 
-paymentCards.forEach(card => {
+document.querySelectorAll("input[name='payment']").forEach(radio=>{
 
-    card.addEventListener("click", () => {
+    radio.addEventListener("change",()=>{
 
-        paymentCards.forEach(c => c.classList.remove("selected"));
+        paymentCards.forEach(card=>{
 
-        card.classList.add("selected");
+            card.classList.remove("selected");
 
-        const radio = card.querySelector("input[type='radio']");
+        });
 
-        radio.checked = true;
+        radio.closest(".payment-card").classList.add("selected");
 
-        mtnInput.style.display = "none";
-        airtelInput.style.display = "none";
+        mtnInput.style.display="none";
+        airtelInput.style.display="none";
 
-        if (radio.value === "mtn") {
+        if(radio.value==="mtn"){
 
-            mtnInput.style.display = "block";
+            mtnInput.style.display="block";
 
         }
 
-        if (radio.value === "airtel") {
+        else if(radio.value==="airtel"){
 
-            airtelInput.style.display = "block";
+            airtelInput.style.display="block";
 
         }
 
@@ -96,9 +97,9 @@ paymentCards.forEach(card => {
 LOAD PAYMENT
 ========================= */
 
-async function loadPayment(user) {
+async function loadPayment(user){
 
-    const paymentRef = doc(
+    const ref = doc(
         db,
         "users",
         user.uid,
@@ -106,93 +107,101 @@ async function loadPayment(user) {
         "payment"
     );
 
-    const snap = await getDoc(paymentRef);
+    const snap = await getDoc(ref);
 
-    paymentCards.forEach(c => c.classList.remove("selected"));
+    paymentCards.forEach(c=>c.classList.remove("selected"));
 
-    mtnInput.style.display = "none";
-    airtelInput.style.display = "none";
+    mtnInput.style.display="none";
+    airtelInput.style.display="none";
 
-    if (!snap.exists()) {
+    mtnPhone.value="";
+    airtelPhone.value="";
 
-        savedTitle.textContent = "No payment method selected";
+    if(!snap.exists()){
 
-        savedDescription.textContent =
-        "Choose how you'd like to pay.";
+        savedTitle.textContent="No payment method selected";
 
-        savedIcon.innerHTML =
-        `<i class="fa-solid fa-wallet"></i>`;
+        savedDescription.textContent="Choose how you'd like to pay.";
 
-        chooseBtn.style.display = "inline-flex";
-        changeBtn.style.display = "none";
+        savedIcon.innerHTML=`<i class="fa-solid fa-wallet"></i>`;
+
+        chooseBtn.style.display="inline-flex";
+        changeBtn.style.display="none";
+
+        hideEditor();
 
         return;
 
     }
 
-    const data = snap.data();
+    const data=snap.data();
 
-    chooseBtn.style.display = "none";
-    changeBtn.style.display = "inline-flex";
+    chooseBtn.style.display="none";
+    changeBtn.style.display="inline-flex";
 
-    const radio = document.querySelector(
+    const radio=document.querySelector(
         `input[name="payment"][value="${data.method}"]`
     );
 
-    if (radio) {
+    if(radio){
 
-        radio.checked = true;
+        radio.checked=true;
 
-        radio.closest(".payment-card")
-        .classList.add("selected");
+        const card=radio.closest(".payment-card");
+
+        card.classList.add("selected");
 
     }
 
-    switch (data.method) {
+    switch(data.method){
 
         case "cash":
 
-            savedTitle.textContent = "Cash on Delivery";
+            savedTitle.textContent="Cash on Delivery";
 
-            savedDescription.textContent =
-            "Pay when your order arrives.";
+            savedDescription.textContent="Pay when your order arrives.";
 
-            savedIcon.innerHTML =
-            `<i class="fa-solid fa-money-bill-wave"></i>`;
+            savedIcon.innerHTML=`
+            <i class="fa-solid fa-money-bill-wave"></i>
+            `;
 
             break;
 
         case "mtn":
 
-            savedTitle.textContent = "MTN Mobile Money";
+            savedTitle.textContent="MTN Mobile Money";
 
-            savedDescription.textContent = data.phone;
+            savedDescription.textContent=data.phone;
 
-            savedIcon.innerHTML =
-            `<img src="Images/mtn.png" alt="MTN">`;
+            savedIcon.innerHTML=`
+            <img src="Images/mtn.png" class="saved-payment-logo">
+            `;
 
-            mtnPhone.value = data.phone || "";
+            mtnPhone.value=data.phone||"";
 
-            mtnInput.style.display = "block";
+            mtnInput.style.display="block";
 
             break;
 
         case "airtel":
 
-            savedTitle.textContent = "Airtel Money";
+            savedTitle.textContent="Airtel Money";
 
-            savedDescription.textContent = data.phone;
+            savedDescription.textContent=data.phone;
 
-            savedIcon.innerHTML =
-            `<img src="Images/airtel.png" alt="Airtel">`;
+            savedIcon.innerHTML=`
+            <img src="Images/airtel.png" class="saved-payment-logo">
+            `;
 
-            airtelPhone.value = data.phone || "";
+            airtelPhone.value=data.phone||"";
 
-            airtelInput.style.display = "block";
+            airtelInput.style.display="block";
 
             break;
 
     }
+
+    hideEditor();
 
 }
 
@@ -200,13 +209,13 @@ async function loadPayment(user) {
 SAVE PAYMENT
 ========================= */
 
-form.addEventListener("submit", async (e) => {
+form.addEventListener("submit",async(e)=>{
 
     e.preventDefault();
 
-    const user = auth.currentUser;
+    const user=auth.currentUser;
 
-    if (!user) {
+    if(!user){
 
         alert("Please login first.");
 
@@ -214,11 +223,11 @@ form.addEventListener("submit", async (e) => {
 
     }
 
-    const selected = document.querySelector(
+    const selected=document.querySelector(
         "input[name='payment']:checked"
     );
 
-    if (!selected) {
+    if(!selected){
 
         alert("Select a payment method.");
 
@@ -226,15 +235,15 @@ form.addEventListener("submit", async (e) => {
 
     }
 
-    const method = selected.value;
+    const method=selected.value;
 
-    let phone = "";
+    let phone="";
 
-    if (method === "mtn") {
+    if(method==="mtn"){
 
-        phone = mtnPhone.value.trim();
+        phone=mtnPhone.value.trim();
 
-        if (!phone) {
+        if(phone===""){
 
             alert("Please enter your MTN number.");
 
@@ -244,11 +253,11 @@ form.addEventListener("submit", async (e) => {
 
     }
 
-    if (method === "airtel") {
+    if(method==="airtel"){
 
-        phone = airtelPhone.value.trim();
+        phone=airtelPhone.value.trim();
 
-        if (!phone) {
+        if(phone===""){
 
             alert("Please enter your Airtel number.");
 
@@ -269,14 +278,14 @@ form.addEventListener("submit", async (e) => {
         ),
 
         {
+
             method,
             phone,
-            updatedAt: serverTimestamp()
+            updatedAt:serverTimestamp()
+
         }
 
     );
-
-    modal.classList.remove("show");
 
     await loadPayment(user);
 
@@ -286,9 +295,9 @@ form.addEventListener("submit", async (e) => {
 INIT
 ========================= */
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth,user=>{
 
-    if (user) {
+    if(user){
 
         loadPayment(user);
 

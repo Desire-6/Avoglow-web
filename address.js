@@ -11,273 +11,193 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-/* ==========================
+/* ============================
    ELEMENTS
-========================== */
-
-const modal = document.getElementById("addressModal");
+============================ */
 
 const form = document.getElementById("addressForm");
 
 const addBtn = document.getElementById("addAddressBtn");
-
 const editBtn = document.getElementById("changeAddressBtn");
-
-const closeBtn = document.getElementById("closeModal");
-
 const cancelBtn = document.getElementById("cancelAddress");
 
+const addressEditor = document.getElementById("addressEditor");
 const savedCard = document.getElementById("saved-address-card");
 
 const savedName = document.getElementById("saved-name");
-
 const savedLocation = document.getElementById("saved-location");
-
 const savedPhone = document.getElementById("saved-phone");
 
-/* ==========================
-   OPEN MODAL
-========================== */
+/* ============================
+   SHOW / HIDE FORM
+============================ */
 
-function openModal(){
+function showEditor() {
 
-    modal.classList.add("show");
-
-}
-
-function closeModal(){
-
-    modal.classList.remove("show");
+    savedCard.style.display = "none";
+    addressEditor.style.display = "block";
 
 }
 
-addBtn?.addEventListener("click", openModal);
+function hideEditor() {
 
-editBtn?.addEventListener("click", openModal);
+    addressEditor.style.display = "none";
+    savedCard.style.display = "block";
 
-closeBtn?.addEventListener("click", closeModal);
+}
 
-cancelBtn?.addEventListener("click", closeModal);
+addBtn?.addEventListener("click", showEditor);
+editBtn?.addEventListener("click", showEditor);
 
-window.addEventListener("click",(e)=>{
+cancelBtn?.addEventListener("click", hideEditor);
 
-    if(e.target===modal){
-
-        closeModal();
-
-    }
-
-});
-
-/* ==========================
+/* ============================
    RESET FORM
-========================== */
+============================ */
 
-function resetAddressForm(){
+function resetAddressForm() {
 
     form.reset();
 
 }
 
-/* ==========================
+/* ============================
    LOAD ADDRESS
-========================== */
+============================ */
 
-async function loadAddress(user){
+async function loadAddress(user) {
 
-    try{
+    try {
 
-        const addressRef = doc(
-
+        const ref = doc(
             db,
-
             "users",
-
             user.uid,
-
             "profile",
-
             "address"
-
         );
 
-        const snapshot = await getDoc(addressRef);
+        const snap = await getDoc(ref);
 
-        if(!snapshot.exists()){
+        if (!snap.exists()) {
 
-            savedName.textContent = "";
+            savedName.textContent = "No address saved";
 
             savedLocation.textContent =
-            "You haven't added a delivery address yet.";
+                "Add your delivery address to continue.";
 
             savedPhone.textContent = "";
 
             addBtn.style.display = "inline-flex";
-
             editBtn.style.display = "none";
+
+            addressEditor.style.display = "none";
+            savedCard.style.display = "block";
 
             return;
 
         }
 
-        const data = snapshot.data();
+        const data = snap.data();
 
-        savedName.textContent =
-        data.fullName;
+        savedName.textContent = data.fullName;
 
         savedLocation.innerHTML = `
-
             ${data.address}<br>
-
             ${data.city}, ${data.district}
-
         `;
 
-        savedPhone.innerHTML = `
-
-            <i class="fa-solid fa-phone"></i>
-
-            ${data.phone}
-
-        `;
+       savedPhone.innerHTML = `
+    <i class="fa-solid fa-phone"></i>
+    ${data.phone}
+`;
 
         addBtn.style.display = "none";
-
         editBtn.style.display = "inline-flex";
 
-        document.getElementById("fullName").value =
-        data.fullName;
+        document.getElementById("fullName").value = data.fullName;
+        document.getElementById("phone").value = data.phone;
+        document.getElementById("district").value = data.district;
+        document.getElementById("city").value = data.city;
+        document.getElementById("address").value = data.address;
+        document.getElementById("notes").value = data.notes || "";
 
-        document.getElementById("phone").value =
-        data.phone;
-
-        document.getElementById("district").value =
-        data.district;
-
-        document.getElementById("city").value =
-        data.city;
-
-        document.getElementById("address").value =
-        data.address;
-
-        document.getElementById("notes").value =
-        data.notes || "";
+        hideEditor();
 
     }
 
-    catch(error){
+    catch (err) {
 
-        console.error(error);
+        console.error(err);
 
     }
 
 }
 
-/* ==========================
+/* ============================
    SAVE ADDRESS
-========================== */
+============================ */
 
-form.addEventListener("submit", async(e)=>{
+form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
     const user = auth.currentUser;
 
-    if(!user){
+    if (!user) {
 
         alert("Please login first.");
-
         return;
 
     }
 
-    const fullName =
-    document.getElementById("fullName");
+    const fullName = document.getElementById("fullName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const district = document.getElementById("district").value;
+    const city = document.getElementById("city").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const notes = document.getElementById("notes").value.trim();
 
-    const phone =
-    document.getElementById("phone");
-
-    const district =
-    document.getElementById("district");
-
-    const city =
-    document.getElementById("city");
-
-    const address =
-    document.getElementById("address");
-
-    const notes =
-    document.getElementById("notes");
-
-    if(
-
-        !fullName.value.trim() ||
-
-        !phone.value.trim() ||
-
-        !district.value ||
-
-        !city.value.trim() ||
-
-        !address.value.trim()
-
-    ){
+    if (!fullName || !phone || !district || !city || !address) {
 
         alert("Please complete all required fields.");
-
         return;
 
     }
 
-    try{
+    try {
 
         await setDoc(
 
             doc(
-
                 db,
-
                 "users",
-
                 user.uid,
-
                 "profile",
-
                 "address"
-
             ),
 
             {
 
-                fullName: fullName.value,
-
-                phone: phone.value,
-
-                district: district.value,
-
-                city: city.value,
-
-                address: address.value,
-
-                notes: notes.value,
-
+                fullName,
+                phone,
+                district,
+                city,
+                address,
+                notes,
                 updatedAt: serverTimestamp()
 
             }
 
         );
 
-        closeModal();
-
         await loadAddress(user);
-
-        resetAddressForm();
 
     }
 
-    catch(error){
+    catch (err) {
 
-        console.error(error);
+        console.error(err);
 
         alert("Failed to save address.");
 
@@ -285,30 +205,15 @@ form.addEventListener("submit", async(e)=>{
 
 });
 
-/* ==========================
-   AUTH
-========================== */
+/* ============================
+   INIT
+============================ */
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, (user) => {
 
-    if(user){
+    if (user) {
 
         loadAddress(user);
-
-    }
-
-    else{
-
-        savedName.textContent = "";
-
-        savedLocation.textContent =
-        "Please login to continue.";
-
-        savedPhone.textContent = "";
-
-        addBtn.style.display = "none";
-
-        editBtn.style.display = "none";
 
     }
 

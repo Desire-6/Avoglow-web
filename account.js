@@ -1,227 +1,267 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
-/* ==========================
-   NAV ELEMENTS
-========================== */
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+/* ======================================================
+GLOBALS
+====================================================== */
+
+let currentUser = null;
+
+/* ======================================================
+NAVIGATION ELEMENTS
+====================================================== */
 
 const greeting = document.getElementById("account-greeting");
 const accountMenu = document.getElementById("account-menu");
 
-/* ==========================
-   AUTH STATE
-========================== */
+/* ======================================================
+ACCOUNT PAGE ELEMENTS
+====================================================== */
 
-onAuthStateChanged(auth, (user) => {
+const userName = document.getElementById("user-name");
+const userEmail = document.getElementById("user-email");
 
-    if (user) {
+const welcomeName = document.getElementById("welcome-name");
 
-        const fullName = user.displayName || "Avoglow Customer";
-        const firstName = fullName.split(" ")[0];
+const detailName = document.getElementById("detail-name");
+const detailEmail = document.getElementById("detail-email");
 
-        /* ==========================
-           Update Navigation
-        ========================== */
+const savedAddress = document.getElementById("saved-address");
+const addAddressBtn = document.getElementById("add-address-btn");
 
-        if (greeting) {
+/* ======================================================
+SIDEBAR NAVIGATION
+====================================================== */
 
-            greeting.textContent = `Hi, ${firstName}`;
+const sidebarLinks =
+document.querySelectorAll(".account-sidebar nav a[data-section]");
 
-        }
+const sections =
+document.querySelectorAll(".account-section");
 
-        if (accountMenu) {
+/* ======================================================
+SECTION SWITCHER
+====================================================== */
 
-            accountMenu.innerHTML = `
+function openSection(sectionId){
 
-                <a href="account.html">
-                    <i class="fas fa-user"></i>
-                    My Account
-                </a>
+    sections.forEach(section=>{
 
-                <a href="orders.html">
-                    <i class="fas fa-box"></i>
-                    My Orders
-                </a>
+        section.style.display="none";
 
-                <a href="wishlist.html">
-                    <i class="fas fa-heart"></i>
-                    Wishlist
-                </a>
+    });
 
-                <a href="#" id="logout-link" class="logout-link">
-                    <i class="fas fa-right-from-bracket"></i>
-                    Logout
-                </a>
+    sidebarLinks.forEach(link=>{
 
-            `;
+        link.classList.remove("active");
 
-            document
-                .getElementById("logout-link")
-                .addEventListener("click", logoutUser);
+    });
 
-        }
+    const activeSection =
+    document.getElementById(sectionId);
 
-        /* ==========================
-           Account Page Details
-        ========================== */
+    if(activeSection){
 
-        const userName =
-            document.getElementById("user-name");
-
-        const userEmail =
-            document.getElementById("user-email");
-
-        const welcomeName =
-            document.getElementById("welcome-name");
-
-        const detailName =
-            document.getElementById("detail-name");
-
-        const detailEmail =
-            document.getElementById("detail-email");
-
-        if (userName)
-            userName.textContent = fullName;
-
-        if (userEmail)
-            userEmail.textContent = user.email;
-
-        if (welcomeName)
-            welcomeName.textContent = firstName;
-
-        if (detailName)
-            detailName.textContent = fullName;
-
-        if (detailEmail)
-            detailEmail.textContent = user.email;
+        activeSection.style.display="block";
 
     }
 
-    else {
+    const activeLink =
+    document.querySelector(
 
-        /* ==========================
-           Guest Navigation
-        ========================== */
+        `.account-sidebar nav a[data-section="${sectionId}"]`
 
-        if (greeting) {
+    );
 
-            greeting.textContent = "Account";
+    if(activeLink){
 
-        }
-
-        if (accountMenu) {
-
-            accountMenu.innerHTML = `
-
-                <a href="login.html">
-                    <i class="fas fa-right-to-bracket"></i>
-                    Login
-                </a>
-
-                <a href="signup.html">
-                    <i class="fas fa-user-plus"></i>
-                    Create Account
-                </a>
-
-            `;
-
-        }
-
-        /* ==========================
-           Protect Account Page
-        ========================== */
-
-        if (window.location.pathname.includes("account.html")) {
-
-            window.location.href = "login.html";
-
-        }
+        activeLink.classList.add("active");
 
     }
-
-});
-
-/* ==========================
-   Sidebar Logout Button
-========================== */
-
-const sidebarLogout =
-document.getElementById("logout-btn");
-
-if (sidebarLogout) {
-
-    sidebarLogout.addEventListener("click", logoutUser);
 
 }
 
-/* ==========================
-   Logout Function
-========================== */
+/* ======================================================
+SIDEBAR EVENTS
+====================================================== */
 
-function logoutUser(e) {
+sidebarLinks.forEach(link=>{
 
-    if (e) {
+    link.addEventListener("click",(e)=>{
+
+        e.preventDefault();
+
+        openSection(link.dataset.section);
+
+    });
+
+});
+
+/* ======================================================
+LOGOUT
+====================================================== */
+
+function logoutUser(e){
+
+    if(e){
 
         e.preventDefault();
 
     }
 
     signOut(auth)
-        .then(() => {
 
-            localStorage.removeItem("loggedIn");
-            localStorage.removeItem("userEmail");
-            localStorage.removeItem("redirectAfterLogin");
+    .then(()=>{
 
-            window.location.href = "index.html";
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("redirectAfterLogin");
 
-        })
-        .catch((error) => {
+        window.location.href="index.html";
 
-            console.error("Logout failed:", error);
+    })
 
-        });
+    .catch(err=>{
+
+        console.error(err);
+
+    });
 
 }
+
+const logoutBtn =
+document.getElementById("logout-btn");
+
+if(logoutBtn){
+
+    logoutBtn.addEventListener("click",logoutUser);
+
+}
+
+/* ======================================================
+AUTH STATE
+====================================================== */
+
+onAuthStateChanged(auth,async(user)=>{
+
+    if(!user){
+
+        if(window.location.pathname.includes("account.html")){
+
+            window.location.href="login.html";
+
+        }
+
+        return;
+
+    }
+
+    currentUser=user;
+
+    const fullName=
+    user.displayName || "Avoglow Customer";
+
+    const firstName=
+    fullName.split(" ")[0];
+
+    /* ---------- NAV ---------- */
+
+    if(greeting){
+
+        greeting.textContent=`Hi, ${firstName}`;
+
+    }
+
+    if(accountMenu){
+
+        accountMenu.innerHTML=`
+
+        <a href="account.html">
+            <i class="fas fa-user"></i>
+            My Account
+        </a>
+
+        <a href="orders.html">
+            <i class="fas fa-box"></i>
+            My Orders
+        </a>
+
+        <a href="wishlist.html">
+            <i class="fas fa-heart"></i>
+            Wishlist
+        </a>
+
+        <a href="#" id="logout-link">
+            <i class="fas fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+        `;
+
+        document
+        .getElementById("logout-link")
+        .addEventListener("click",logoutUser);
+
+    }
+
+    /* ---------- DASHBOARD ---------- */
+
+    if(userName) userName.textContent=fullName;
+    if(userEmail) userEmail.textContent=user.email;
+
+    if(detailName) detailName.textContent=fullName;
+    if(detailEmail) detailEmail.textContent=user.email;
+
+    if(welcomeName) welcomeName.textContent=firstName;
+
+    /* ---------- LOAD DATA ---------- */
+
+   await loadSavedAddress(user);
+
+    loadRecentlyViewed();
+
+    openSection("dashboard");
+
+});
 /* ==========================
    RECENTLY VIEWED
 ========================== */
 
 function loadRecentlyViewed(){
 
-    const container =
-    document.getElementById(
-        "recently-viewed-container"
-    );
+    const section =
+        document.getElementById("recent-section");
 
-    if(!container) return;
+    const container =
+        document.getElementById("recently-viewed-container");
+
+    if(!container || !section) return;
 
     const viewed =
-    JSON.parse(
-        localStorage.getItem(
-            "recentlyViewed"
-        )
-    ) || [];
+        JSON.parse(localStorage.getItem("recentlyViewed")) || [];
 
     container.innerHTML = "";
 
     if(viewed.length === 0){
 
-        container.innerHTML = `
-            <p style="padding:20px;text-align:center;">
-                No recently viewed products yet.
-            </p>
-        `;
+        section.style.display = "none";
 
         return;
 
     }
 
-    viewed.forEach(product => {
+    section.style.display = "block";
+
+    viewed.forEach(product=>{
 
         container.innerHTML += `
 
@@ -229,8 +269,7 @@ function loadRecentlyViewed(){
 
             <a href="${product.link}">
 
-                <img src="${product.image}"
-                     alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}">
 
             </a>
 
@@ -238,15 +277,11 @@ function loadRecentlyViewed(){
 
                 <h3>${product.name}</h3>
 
-                <p class="recent-category">
-
-                    ${product.category}
-
-                </p>
+                <p class="recent-category">${product.category}</p>
 
                 <div class="recent-price">
 
-                    UGX ${product.price.toLocaleString()}
+                    UGX ${Number(product.price).toLocaleString()}
 
                 </div>
 
@@ -277,29 +312,23 @@ loadRecentlyViewed();
 ========================== */
 
 const recentContainer =
-document.getElementById(
-    "recently-viewed-container"
-);
+    document.getElementById("recently-viewed-container");
 
 const leftArrow =
-document.querySelector(
-    ".recent-arrow.left"
-);
+    document.querySelector(".recent-arrow.left");
 
 const rightArrow =
-document.querySelector(
-    ".recent-arrow.right"
-);
+    document.querySelector(".recent-arrow.right");
 
-if(recentContainer && leftArrow && rightArrow){
+if (recentContainer && leftArrow && rightArrow) {
 
     rightArrow.addEventListener("click", () => {
 
         recentContainer.scrollBy({
 
-            left:350,
+            left: 350,
 
-            behavior:"smooth"
+            behavior: "smooth"
 
         });
 
@@ -309,11 +338,95 @@ if(recentContainer && leftArrow && rightArrow){
 
         recentContainer.scrollBy({
 
-            left:-350,
+            left: -350,
 
-            behavior:"smooth"
+            behavior: "smooth"
 
         });
+
+    });
+
+}
+/* ==========================
+   LOAD SAVED ADDRESS
+========================== */
+
+async function loadSavedAddress(user){
+
+    const addressCard =
+        document.getElementById("saved-address");
+
+    const addBtn =
+        document.getElementById("add-address-btn");
+
+    if(!addressCard) return;
+
+    try{
+
+        const ref = doc(
+            db,
+            "users",
+            user.uid,
+            "profile",
+            "address"
+        );
+
+        const snap = await getDoc(ref);
+
+        if(!snap.exists()){
+
+            addressCard.innerHTML = `
+                <p>No address saved yet.</p>
+            `;
+
+            if(addBtn){
+
+                addBtn.textContent = "Add Address";
+
+            }
+
+            return;
+
+        }
+
+        const data = snap.data();
+
+        addressCard.innerHTML = `
+            <div class="saved-address-card">
+                <h4>${data.fullName}</h4>
+                <p>${data.address}</p>
+                <p>${data.city}, ${data.district}</p>
+                <p>${data.phone}</p>
+            </div>
+        `;
+
+        if(addBtn){
+
+            addBtn.textContent = "Manage Addresses";
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+/* ==========================
+   ADDRESS BUTTON
+========================== */
+
+const addressButton =
+document.getElementById("add-address-btn");
+
+if(addressButton){
+
+    addressButton.addEventListener("click",()=>{
+
+        window.location.href="addresses-book.html";
 
     });
 

@@ -649,11 +649,11 @@ nav{
 
     grid-template-columns:1fr 1fr;
 
-    gap:80px;
+    gap:70px;
 
     align-items:center;
 
-    margin-bottom:120px;
+    margin-bottom:100px;
 
 }
 
@@ -685,7 +685,7 @@ nav{
 
 .founder-content h2{
 
-    font-size:3.5rem;
+    font-size:3rem;
 
     color:#0b6b3f;
 
@@ -699,7 +699,7 @@ nav{
 
     color:#555;
 
-    line-height:2;
+    line-height:1.8;
 
     font-size:1.1rem;
 
@@ -709,7 +709,7 @@ nav{
 
 .founder-quote{
 
-    margin-top:30px;
+    margin-top:15px;
 
     padding:25px;
 

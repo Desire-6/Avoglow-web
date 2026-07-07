@@ -6,9 +6,12 @@ import {
 
 import {
     collection,
-    getDocs
+    getDocs,
+    doc,
+    getDoc,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-
+import { placeOrder } from "./orders.js";
 /* ==========================
    GLOBALS
 ========================== */
@@ -48,6 +51,43 @@ function formatUGX(value){
     return "UGX " + Number(value).toLocaleString();
 
 }
+async function mergeGuestCart(user){
+
+    const guestCart =
+    JSON.parse(localStorage.getItem("cart")) || [];
+
+    if(guestCart.length === 0) return;
+
+    for(const item of guestCart){
+
+        const id =
+        (item.slug || item.name) + "_" + (item.size || "default");
+
+        const cartRef = doc(
+            db,
+            "users",
+            user.uid,
+            "cart",
+            id
+        );
+
+        const existing = await getDoc(cartRef);
+
+        if(existing.exists()){
+
+            const data = existing.data();
+
+            item.quantity += data.quantity;
+
+        }
+
+        await setDoc(cartRef,item);
+
+    }
+
+    localStorage.removeItem("cart");
+
+}
 
 /* ==========================
    LOAD CART
@@ -58,10 +98,12 @@ async function loadCart(){
     cart = [];
 
     const user = auth.currentUser;
+if(user){
 
-    if(user){
+    await mergeGuestCart(user);
+    updateCartBadge();
 
-        const snapshot = await getDocs(
+    const snapshot = await getDocs(
 
             collection(
 
@@ -208,30 +250,12 @@ else{
 function updateTotals(sub){
 
     const deliveryOption =
-
     document.querySelector(
-
         "input[name='delivery']:checked"
-
     );
 
-    let fee = 5000;
-
-    if(deliveryOption){
-
-        fee =
-
-        deliveryOption.value==="express"
-
-        ?
-
-        10000
-
-        :
-
-        5000;
-
-    }
+    // Standard transport fee
+    const fee = 5000;
 
     deliveryFee.textContent =
     formatUGX(fee);
@@ -282,62 +306,65 @@ document
 });
 
 /* ==========================
-   PAYMENT METHOD
-========================== */
-
-const mtnBox =
-document.getElementById("mtnBox");
-
-const airtelBox =
-document.getElementById("airtelBox");
-
-document
-
-.querySelectorAll("input[name='payment']")
-
-.forEach(option=>{
-
-    option.addEventListener("change",()=>{
-
-        mtnBox.style.display="none";
-
-        airtelBox.style.display="none";
-
-        if(option.checked){
-
-            if(option.value==="mtn"){
-
-                mtnBox.style.display="block";
-
-            }
-
-            if(option.value==="airtel"){
-
-                airtelBox.style.display="block";
-
-            }
-
-        }
-
-    });
-
-});
-
-/* ==========================
    PLACE ORDER
 ========================== */
 
 document
-
 .getElementById("placeOrder")
+.addEventListener("click", async ()=>{
 
-.addEventListener("click",()=>{
+    // Address
+    const addressSaved =
+    document.getElementById("saved-name");
 
-    alert(
+    if(!addressSaved || addressSaved.textContent === "No address saved"){
+        showToast("Please add a delivery address first.");
 
-        "Order placement will be implemented next."
+        return;
 
+    }
+
+    // Payment
+    const paymentSaved =
+    document.getElementById("saved-payment-title");
+
+    if(!paymentSaved ||
+       paymentSaved.textContent === "No payment method selected"){
+
+        showToast("Please choose a payment method.");
+
+        return;
+
+    }
+
+    // Delivery
+    const deliverySelected =
+    document.querySelector(
+        "input[name='delivery']:checked"
     );
+
+    if(!deliverySelected){
+
+       showToast("Please select a delivery method.");
+
+        return;
+
+    }
+
+   // Everything complete
+try{
+
+    await placeOrder();
+
+}
+
+catch(error){
+
+    console.error(error);
+
+    showToast(error.message);
+
+}
 
 });
 
@@ -350,3 +377,30 @@ onAuthStateChanged(auth,()=>{
     loadCart();
 
 });
+/* ==========================
+   TOAST
+========================== */
+
+function showToast(message){
+
+    const toast =
+    document.getElementById("toast");
+
+    const text =
+    document.getElementById("toast-message");
+
+    text.textContent = message;
+
+    toast.classList.remove("hidden");
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+        toast.classList.add("hidden");
+
+    },3000);
+
+}

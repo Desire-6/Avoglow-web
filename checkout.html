@@ -151,17 +151,14 @@
     <div class="card-header">
 
         <div class="card-title">
-
             <span class="step">1</span>
-
             <h2>Delivery Address</h2>
-
         </div>
 
         <button
             id="changeAddressBtn"
             class="change-btn"
-            style="display:none;">
+            style="display:none">
 
             Edit
 
@@ -169,133 +166,304 @@
 
     </div>
 
-    <div
-        id="saved-address-card"
-        class="card-content">
+    <div class="card-content">
 
-        <div class="address-card">
+        <!-- Saved Address -->
 
-            <div class="address-icon">
+        <div id="saved-address-card">
 
-                <i class="fa-solid fa-location-dot"></i>
+            <div class="address-card">
 
-            </div>
+                <div class="address-details">
 
-            <div class="address-details">
+                    <h3 id="saved-name">
+                        No Address
+                    </h3>
 
-                <h3 id="saved-name">
+                    <p id="saved-location">
+                        You haven't added an address yet.
+                    </p>
 
-                    No address saved
+                    <span id="saved-phone"></span>
 
-                </h3>
-
-                <p id="saved-location">
-
-                    Add your delivery address to continue.
-
-                </p>
-
-                <span id="saved-phone"></span>
+                </div>
 
             </div>
+
+            <button
+                id="addAddressBtn"
+                class="primary-btn">
+
+                Add Delivery Address
+
+            </button>
 
         </div>
 
-        <button
-            id="addAddressBtn"
-            class="primary-btn">
+        <!-- Inline Form -->
 
-            Add Delivery Address
+        <div
+            id="addressEditor"
+            class="address-editor"
+            style="display:none">
 
-        </button>
+            <form id="addressForm">
 
-    </div>
+                <div class="form-grid">
 
-</section>
-            <!-- DELIVERY -->
+                    <div class="form-group">
 
-            <section class="checkout-card">
+                        <label>Full Name</label>
 
-                <div class="card-header">
+                        <input
+                            id="fullName"
+                            type="text"
+                            required>
 
-                    <div class="card-title">
+                    </div>
 
-                        <span class="step">2</span>
+                    <div class="form-group">
 
-                        <h2>Delivery Method</h2>
+                        <label>Phone Number</label>
+
+                        <input
+                            id="phone"
+                            type="tel"
+                            required>
 
                     </div>
 
                 </div>
 
-                <div class="card-content">
+                <div class="form-grid">
 
-                    <label class="option">
+                    <div class="form-group">
 
-                        <input
-                            type="radio"
-                            name="delivery"
-                            value="standard"
-                            checked>
+                        <label>District</label>
 
-                        <div class="option-text">
+                        <select id="district">
 
-                            <strong>
+                            <option value="">Select District</option>
 
-                                Standard Delivery
+                            <option>Kampala</option>
+                            <option>Wakiso</option>
+                            <option>Mukono</option>
+                            <option>Mbale</option>
+                            <option>Jinja</option>
+                            <option>Gulu</option>
+                            <option>Mbarara</option>
+                            <option>Soroti</option>
 
-                            </strong>
+                        </select>
 
-                            <span>
+                    </div>
 
-                                Delivered within 2–4 business days
+                    <div class="form-group">
 
-                            </span>
-
-                        </div>
-
-                        <div class="option-price">
-
-                            UGX 5,000
-
-                        </div>
-
-                    </label>
-
-                    <label class="option">
+                        <label>City</label>
 
                         <input
-                            type="radio"
-                            name="delivery"
-                            value="express">
+                            id="city"
+                            type="text">
 
-                        <div class="option-text">
-
-                            <strong>
-
-                                Express Delivery
-
-                            </strong>
-
-                            <span>
-
-                                Same-day delivery (selected areas)
-
-                            </span>
-
-                        </div>
-
-                        <div class="option-price">
-
-                            UGX 10,000
-
-                        </div>
-
-                    </label>
+                    </div>
 
                 </div>
 
-            </section>
+                <div class="form-group">
+
+                    <label>Address</label>
+
+                    <textarea
+                        id="address"
+                        rows="3"></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Delivery Notes</label>
+
+                    <textarea
+                        id="notes"
+                        rows="2"></textarea>
+
+                </div>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="cancelAddress"
+                        class="secondary-btn">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn">
+
+                        Save Address
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+           <!-- DELIVERY -->
+
+<section class="checkout-card">
+
+    <div class="card-header">
+
+        <div class="card-title">
+
+            <span class="step">2</span>
+
+            <h2>Delivery Method</h2>
+
+        </div>
+
+        <button
+            id="changeDeliveryBtn"
+            class="change-btn"
+            style="display:none;">
+
+            Change
+
+        </button>
+
+    </div>
+
+    <!-- DELIVERY OPTIONS -->
+
+    <div id="deliveryOptions" class="card-content">
+
+    <!-- Standard Transport -->
+
+    <div class="delivery-notice">
+
+        <h3>
+            Transport to Kampala Hub
+        </h3>
+
+        <p>
+
+            Every order is first transported from our Mbale facility
+            to our Kampala Pickup Hub.
+
+        </p>
+
+        <div class="hub-fee">
+
+            Standard Transport Fee:
+            <strong>UGX 5,000</strong>
+
+        </div>
+
+    </div>
+
+    <!-- Pickup -->
+
+    <label class="delivery-card">
+
+        <input
+            type="radio"
+            name="delivery"
+            value="pickup">
+
+        <div class="delivery-info">
+
+            <h3>
+
+                Pickup Station
+
+            </h3>
+
+            <p>
+
+                Oxepress Office,
+                Mega Supermarket Building,
+                Opposite Old Taxi Park.
+
+            </p>
+
+            <span class="delivery-price">
+
+                Total Delivery Fee:
+                UGX 5,000
+
+            </span>
+
+        </div>
+
+    </label>
+
+    <!-- Home -->
+
+    <label class="delivery-card">
+
+        <input
+            type="radio"
+            name="delivery"
+            value="home">
+
+        <div class="delivery-info">
+
+            <h3>
+
+                Home Delivery
+
+            </h3>
+
+            <p>
+
+                Your order will first be transported to our Kampala pickup Hub
+                (UGX 5,000). <br> <br>
+
+                Home delivery from the hub to your exact location is charged separately. We'll contact you after your order is placed to confirm the local delivery cost.
+
+            </p>
+
+            <!-- <span class="delivery-price">
+
+                UGX 5,000
+                + Local delivery fee
+
+            </span> -->
+
+        </div>
+
+    </label>
+
+</div>
+
+    <!-- SAVED DELIVERY -->
+
+    <div
+        id="savedDeliveryCard"
+        class="delivery-summary"
+        style="display:none;">
+
+        <div class="delivery-summary-details">
+
+            <h3 id="savedDeliveryTitle"></h3>
+
+            <p id="savedDeliveryDescription"></p>
+
+        </div>
+
+    </div>
+
+</section>
 
             <!-- PAYMENT -->
 
@@ -322,40 +490,192 @@
 
     </div>
 
-    <div class="card-content">
+    <!-- PAYMENT SUMMARY -->
 
-        <!-- Saved payment -->
-<div id="saved-payment-card" class="payment-summary-card">
+    <div id="saved-payment-card" class="payment-summary-card">
 
-   <div class="payment-summary-icon" id="saved-payment-icon">
+        <div
+            class="payment-summary-icon"
+            id="saved-payment-icon">
 
-    <i class="fa-solid fa-wallet"></i>
+            <i class="fa-solid fa-wallet"></i>
 
-</div>
+        </div>
 
-    <div class="payment-summary-details">
+        <div class="payment-summary-details">
 
-        <h3 id="saved-payment-title">
-            No payment method selected
-        </h3>
+            <h3 id="saved-payment-title">
 
-        <p id="saved-payment-description">
-            Choose how you'd like to pay.
-        </p>
+                No payment method selected
 
-        <button
-            id="choosePaymentBtn"
-            class="primary-btn">
+            </h3>
 
-            Choose Payment Method
+            <p id="saved-payment-description">
 
-        </button>
+                Choose how you'd like to pay.
+
+            </p>
+
+            <button
+                id="choosePaymentBtn"
+                class="primary-btn">
+
+                Choose Payment Method
+
+            </button>
+
+        </div>
 
     </div>
 
-</div>
+    <!-- PAYMENT EDITOR -->
+<div id="paymentEditor" class="payment-editor" style="display:none;">
 
-    </div>
+    <form id="paymentForm">
+
+        <div class="payment-list">
+
+            <!-- CASH -->
+            <div class="payment-card">
+
+                <label class="payment-content">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="cash"
+                        checked>
+
+                    <div class="payment-icon">
+                        💵
+                    </div>
+
+                    <div class="payment-info">
+
+                        <h3>Cash on Delivery</h3>
+
+                        <p>Pay when your order arrives.</p>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+            <!-- MTN -->
+            <div class="payment-card">
+
+                <label class="payment-content">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="mtn">
+
+                    <img
+                        src="Images/mtn.png"
+                        class="payment-logo"
+                        alt="MTN">
+
+                    <div class="payment-info">
+
+                        <h3>MTN Mobile Money</h3>
+
+                        <p>Pay using MTN Mobile Money.</p>
+
+                    </div>
+
+                </label>
+
+                <div
+                    id="mtnInput"
+                    class="payment-phone">
+
+                    <label for="mtnPhone">
+
+                        Phone Number
+
+                    </label>
+
+                    <input
+                        id="mtnPhone"
+                        type="tel"
+                        placeholder="+256 7XXXXXXXX">
+
+                </div>
+
+            </div>
+
+            <!-- AIRTEL -->
+            <div class="payment-card">
+
+                <label class="payment-content">
+
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="airtel">
+
+                    <img
+                        src="Images/airtel.png"
+                        class="payment-logo"
+                        alt="Airtel">
+
+                    <div class="payment-info">
+
+                        <h3>Airtel Money</h3>
+
+                        <p>Pay using Airtel Money.</p>
+
+                    </div>
+
+                </label>
+
+                <div
+                    id="airtelInput"
+                    class="payment-phone">
+
+                    <label for="airtelPhone">
+
+                        Phone Number
+
+                    </label>
+
+                    <input
+                        id="airtelPhone"
+                        type="tel"
+                        placeholder="+256 7XXXXXXXX">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="payment-actions">
+
+            <button
+                type="button"
+                id="cancelPayment"
+                class="secondary-btn">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Save Payment
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
 
 </section>
 </section>
@@ -455,17 +775,13 @@
                     id="placeOrder"
                     class="checkout-btn">
 
-                    Place Order
+                    Confirm Order
 
                 </button>
 
                 <div class="checkout-note">
 
                     🔒 Secure Checkout
-
-                    <br>
-
-                    All payments are securely processed.
 
                 </div>
 
@@ -476,335 +792,15 @@
     </div>
 
 </main>
-<!-- ADDRESS MODAL -->
-
-<div id="addressModal" class="modal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>Delivery Address</h2>
-
-            <button
-                id="closeModal"
-                type="button">
-
-                &times;
-
-            </button>
-
-        </div>
-
-        <form id="addressForm">
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-
-                        Full Name
-
-                    </label>
-
-                    <input
-                        type="text"
-                        id="fullName"
-                        placeholder="John Doe"
-                        required>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-
-                        Phone Number
-
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="phone"
-                        placeholder="+256 7XXXXXXXX"
-                        required>
-
-                </div>
-
-            </div>
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-
-                        District
-
-                    </label>
-
-                    <select
-                        id="district"
-                        required>
-
-                        <option value="">
-                            Select District
-                        </option>
-
-                        <option>Kampala</option>
-
-                        <option>Wakiso</option>
-
-                        <option>Mukono</option>
-
-                        <option>Jinja</option>
-
-                        <option>Gulu</option>
-
-                        <option>Mbarara</option>
-
-                        <option>Soroti</option>
-
-                        <option>Mbale</option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-
-                        City / Town
-
-                    </label>
-
-                    <input
-                        type="text"
-                        id="city"
-                        placeholder="Town"
-                        required>
-
-                </div>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Full Address
-
-                </label>
-
-                <textarea
-                    id="address"
-                    rows="4"
-                    placeholder="Estate, Apartment, Road, Landmark..."
-                    required></textarea>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Delivery Notes (Optional)
-
-                </label>
-
-                <textarea
-                    id="notes"
-                    rows="3"
-                    placeholder="Near gate, call on arrival..."></textarea>
-
-            </div>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    id="cancelAddress"
-                    class="secondary-btn">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    type="submit"
-                    class="primary-btn">
-
-                    Save Address
-
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-<!-- PAYMENT MODAL -->
-
-<div id="paymentModal" class="modal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>Select Payment Method</h2>
-
-            <button id="closePaymentModal" type="button">&times;</button>
-
-        </div>
-
-        <!-- IMPORTANT -->
-        <form id="paymentForm">
-
-            <div class="payment-list">
-
-                <!-- CASH -->
-                <label class="payment-card">
-
-                    <input
-                        type="radio"
-                        name="payment"
-                        value="cash"
-                        checked>
-
-                    <div class="payment-content">
-
-                        <div class="payment-icon">
-                            💵
-                        </div>
-
-                        <div class="payment-info">
-
-                            <h3>Cash on Delivery</h3>
-
-                            <p>Pay when your order arrives.</p>
-
-                        </div>
-
-                    </div>
-
-                </label>
-
-                <!-- MTN -->
-
-                <label class="payment-card">
-
-                    <input
-                        type="radio"
-                        name="payment"
-                        value="mtn">
-
-                    <div class="payment-content">
-
-                        <img
-                            src="Images/mtn.png"
-                            class="payment-logo">
-
-                        <div class="payment-info">
-
-                            <h3>MTN Mobile Money</h3>
-
-                            <p>Pay using MTN Mobile Money.</p>
-
-                            <div
-                                id="mtnInput"
-                                class="payment-phone">
-
-                                <label>Phone Number</label>
-
-                                <input
-                                    id="mtnPhone"
-                                    type="tel"
-                                    placeholder="+256 7XXXXXXXX">
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </label>
-
-                <!-- AIRTEL -->
-
-                <label class="payment-card">
-
-                    <input
-                        type="radio"
-                        name="payment"
-                        value="airtel">
-
-                    <div class="payment-content">
-
-                        <img
-                            src="Images/airtel.png"
-                            class="payment-logo">
-
-                        <div class="payment-info">
-
-                            <h3>Airtel Money</h3>
-
-                            <p>Pay using Airtel Money.</p>
-
-                            <div
-                                id="airtelInput"
-                                class="payment-phone">
-
-                                <label>Phone Number</label>
-
-                                <input
-                                    id="airtelPhone"
-                                    type="tel"
-                                    placeholder="+256 7XXXXXXXX">
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </label>
-
-            </div>
-
-            <div class="payment-actions">
-
-                <button
-                    type="button"
-                    id="cancelPayment"
-                    class="secondary-btn">
-
-                    Cancel
-
-                </button>
-
-                <button
-                    type="submit"
-                    class="primary-btn">
-
-                    Save Payment
-
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
+<div id="toast" class="toast hidden">
+    <i class="fas fa-circle-exclamation"></i>
+    <span id="toast-message"></span>
 </div>
 <script type="module" src="checkout.js"></script>
 <script type="module" src="cart-badge.js"></script>
 <script type="module" src="account-dropdown.js"></script>
 <script type="module" src="address.js"></script>
 <script type="module" src="payment.js"></script>
+<script type="module" src="delivery.js"></script>
 </body>
 </html>
