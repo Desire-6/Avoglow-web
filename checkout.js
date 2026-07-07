@@ -309,27 +309,26 @@ document
    PLACE ORDER
 ========================== */
 
-document
-.getElementById("placeOrder")
-.addEventListener("click", async ()=>{
+document.getElementById("placeOrder").addEventListener("click", async () => {
 
-    // Address
+    // Address validation
     const addressSaved =
     document.getElementById("saved-name");
 
-    if(!addressSaved || addressSaved.textContent === "No address saved"){
+    if(!addressSaved || addressSaved.textContent==="No address saved"){
+
         showToast("Please add a delivery address first.");
 
         return;
 
     }
 
-    // Payment
+    // Payment validation
     const paymentSaved =
     document.getElementById("saved-payment-title");
 
     if(!paymentSaved ||
-       paymentSaved.textContent === "No payment method selected"){
+       paymentSaved.textContent==="No payment method selected"){
 
         showToast("Please choose a payment method.");
 
@@ -337,34 +336,57 @@ document
 
     }
 
-    // Delivery
+    // Delivery validation
     const deliverySelected =
-    document.querySelector(
-        "input[name='delivery']:checked"
-    );
+    document.querySelector("input[name='delivery']:checked");
 
     if(!deliverySelected){
 
-       showToast("Please select a delivery method.");
+        showToast("Please select a delivery method.");
 
         return;
 
     }
 
-   // Everything complete
-try{
+    const button =
+    document.getElementById("placeOrder");
 
-    await placeOrder();
+    button.disabled = true;
+
+    button.innerHTML = `
+        <i class="fas fa-spinner fa-spin"></i>
+        Processing Order...
+    `;
+
+    try{
+
+      const orderNumber = await placeOrder();
+
+localStorage.removeItem("cartCount");
+
+if(window.updateCartBadge){
+
+    await window.updateCartBadge();
 
 }
 
-catch(error){
+window.location.href =
+`order-success.html?order=${orderNumber}`;
 
-    console.error(error);
+    }
 
-    showToast(error.message);
+    catch(error){
 
-}
+        console.error(error);
+
+        showToast("Failed to place order.");
+
+        button.disabled = false;
+
+        button.innerHTML =
+        "Confirm Order";
+
+    }
 
 });
 

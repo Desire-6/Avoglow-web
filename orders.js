@@ -295,6 +295,6 @@ console.log("Order Saved Successfully");
 
 console.log(order);
 
-return order;
+return order.orderNumber;
 
 }

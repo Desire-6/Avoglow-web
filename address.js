@@ -84,7 +84,7 @@ async function loadAddress(user) {
             savedName.textContent = "No address saved";
 
             savedLocation.textContent =
-                "Add your delivery address to continue.";
+                "You haven't added an address yet.";
 
             savedPhone.textContent = "";
 

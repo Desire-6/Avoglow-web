@@ -1,0 +1,479 @@
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f7f8fa;
+    color:#222;
+
+}
+
+/* ==========================
+   PAGE
+========================== */
+
+.order-success-container{
+
+    max-width:1200px;
+
+    margin:40px auto;
+
+    padding:0 20px;
+
+}
+
+/* ==========================
+   SUCCESS CARD
+========================== */
+
+.success-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:25px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    margin-bottom:30px;
+
+}
+
+.success-icon{
+
+    width:95px;
+
+    height:95px;
+
+    border-radius:50%;
+
+    background:#0a8f4d;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:46px;
+
+    flex-shrink:0;
+
+}
+
+.success-info h1{
+
+    font-size:42px;
+
+    color:#222;
+
+    margin-bottom:8px;
+
+}
+
+.success-info h3{
+
+    font-size:24px;
+
+    margin-bottom:10px;
+
+}
+
+.success-info p{
+
+    color:#666;
+
+    margin-bottom:15px;
+
+}
+
+/* ==========================
+   STATUS BADGE
+========================== */
+
+.status-badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    background:#fff3d8;
+
+    color:#c57a00;
+
+    font-weight:600;
+
+    border-radius:25px;
+
+}
+
+/* ==========================
+   GRID
+========================== */
+
+.order-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+
+    margin-bottom:25px;
+
+}
+
+/* ==========================
+   CARDS
+========================== */
+
+.info-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.info-card h2{
+
+    color:#0a8f4d;
+
+    margin-bottom:25px;
+
+    font-size:30px;
+
+}
+
+.info-card h2 i{
+
+    margin-right:10px;
+
+}
+
+.info-card hr{
+
+    border:none;
+
+    border-top:1px solid #ececec;
+
+    margin:25px 0;
+
+}
+
+/* ==========================
+   SUMMARY
+========================== */
+
+.summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+    font-size:19px;
+
+}
+
+.summary-row.total{
+
+    font-size:30px;
+
+    color:#0a8f4d;
+
+    font-weight:700;
+
+}
+
+/* ==========================
+   DELIVERY
+========================== */
+
+.delivery-section h3{
+
+    font-size:25px;
+
+    margin-bottom:10px;
+
+}
+
+.delivery-section p{
+
+    color:#555;
+
+    line-height:1.7;
+
+}
+
+/* ==========================
+   PAYMENT
+========================== */
+
+.payment-section h3{
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+.payment-section p{
+
+    margin-bottom:10px;
+
+    color:#555;
+
+    font-size:18px;
+
+}
+
+/* ==========================
+   ITEMS
+========================== */
+
+.ordered-items-card{
+
+    margin-bottom:25px;
+
+}
+
+.ordered-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:18px;
+
+    border:1px solid #ececec;
+
+    border-radius:14px;
+
+    margin-bottom:15px;
+
+}
+
+.ordered-item{
+
+    display:flex;
+
+    gap:18px;
+
+    align-items:center;
+
+}
+
+.ordered-item img{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+}
+
+.item-info h3{
+
+    font-size:22px;
+
+    margin-bottom:8px;
+
+}
+
+.item-info p{
+
+    color:#666;
+
+    margin-bottom:5px;
+
+}
+
+.item-price{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#222;
+
+}
+
+/* ==========================
+   IMPORTANT
+========================== */
+
+.important-list{
+
+    padding-left:20px;
+
+}
+
+.important-list li{
+
+    margin-bottom:15px;
+
+    line-height:1.7;
+
+    color:#555;
+
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.action-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    margin:40px 0;
+
+}
+
+.btn-primary{
+
+    background:#0a8f4d;
+
+    color:#fff;
+
+    padding:16px 35px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-primary:hover{
+
+    background:#08733d;
+
+}
+
+.btn-secondary{
+
+    border:2px solid #0a8f4d;
+
+    color:#0a8f4d;
+
+    padding:16px 35px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-secondary:hover{
+
+    background:#0a8f4d;
+
+    color:#fff;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+    .order-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .success-card{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .summary-row{
+
+        font-size:17px;
+
+    }
+
+    .summary-row.total{
+
+        font-size:24px;
+
+    }
+
+    .order-item{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .item-price{
+
+        margin-top:15px;
+
+    }
+
+    .action-buttons{
+
+        flex-direction:column;
+
+    }
+
+    .btn-primary,
+
+    .btn-secondary{
+
+        text-align:center;
+
+    }
+
+}

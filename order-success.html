@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Avoglow</title>
+
+    <link rel="stylesheet" href="order-success.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<main class="order-success-container">
+
+    <!-- SUCCESS HEADER -->
+
+    <section class="success-card">
+
+        <div class="success-icon">
+
+            <i class="fas fa-check"></i>
+
+        </div>
+
+        <div class="success-info">
+
+            <h1>Order Confirmed</h1>
+
+            <h3 id="customerName">
+                Thank you, Customer
+            </h3>
+
+            <p>
+                Your order has been placed successfully.
+            </p>
+
+            <span
+                id="orderStatus"
+                class="status-badge">
+
+                Pending
+
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- SUMMARY + DELIVERY -->
+
+    <section class="order-grid">
+
+        <!-- LEFT -->
+
+        <div class="info-card">
+
+            <h2>
+
+                <i class="fas fa-receipt"></i>
+
+                Order Summary
+
+            </h2>
+
+            <div class="summary-row">
+
+                <span>Order No.</span>
+
+                <strong id="orderNumber">
+
+                    AVG-XXXXXXXX
+
+                </strong>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>Items</span>
+
+                <span id="itemCount">0</span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <span id="subtotal">
+
+                    UGX 0
+
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>Delivery Fee</span>
+
+                <span id="deliveryFee">
+
+                    UGX 0
+
+                </span>
+
+            </div>
+
+            <hr>
+
+            <div class="summary-row total">
+
+                <strong>Total</strong>
+
+                <strong id="grandTotal">
+
+                    UGX 0
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT -->
+
+        <div class="info-card">
+
+            <h2>
+
+                <i class="fas fa-truck"></i>
+
+                Delivery Information
+
+            </h2>
+
+            <div class="delivery-section">
+
+                <h3 id="deliveryMethod">
+
+                    Pickup Station
+
+                </h3>
+
+                <p id="deliveryDescription">
+
+                    Pickup from your selected Avoglow Pickup Station.
+
+                </p>
+
+            </div>
+
+            <hr>
+
+            <div class="payment-section">
+
+                <h3>
+
+                    Payment Method
+
+                </h3>
+
+                <p id="paymentMethod">
+
+                    Airtel Money
+
+                </p>
+
+                <p id="paymentPhone">
+
+                    +256700000000
+
+                </p>
+
+                <span
+                    id="paymentStatus"
+                    class="status-badge">
+
+                    Pending
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ORDER ITEMS -->
+
+    <section class="info-card items-card">
+
+        <h2>
+
+            <i class="fas fa-box-open"></i>
+
+            Ordered Items
+
+        </h2>
+
+        <div id="orderedItems">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- INFORMATION -->
+
+    <section class="info-card">
+
+        <h2>
+
+            <i class="fas fa-info-circle"></i>
+
+            Important Information
+
+        </h2>
+
+        <ul class="important-list">
+
+            <p>
+
+                You'll be informed when your package is ready for pickup.
+
+            </p>
+
+        </ul>
+
+    </section>
+
+
+
+    <!-- BUTTONS -->
+
+    <div class="action-buttons">
+
+        <a
+            href="orders.html"
+            class="btn-primary">
+
+            <i class="fas fa-list"></i>
+
+            View My Orders
+
+        </a>
+
+        <a
+            href="shop.html"
+            class="btn-secondary">
+
+            <i class="fas fa-shopping-bag"></i>
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+</main>
+
+<script type="module" src="order-success.js"></script>
+
+</body>
+</html>
