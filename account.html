@@ -165,37 +165,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
         <nav aria-label="Account Navigation">
 
-            <a href="#" id="nav-dashboard" class="active">
+            <a href="#" id="nav-dashboard" class="active" data-section="dashboard-section">
                 <i class="fa-solid fa-house"></i>
                 Dashboard
             </a>
 
-            <a href="#" id="nav-orders">
+            <a href="#" id="nav-orders" data-section="orders-section">
                 <i class="fa-solid fa-box"></i>
                 My Orders
             </a>
 
-            <a href="#" id="nav-wishlist">
+            <a href="#" id="nav-wishlist" data-section="wishlist-section">
                 <i class="fa-regular fa-heart"></i>
                 Wishlist
             </a>
 
-            <a href="#" id="nav-recent">
+            <a href="#" id="nav-recent" data-section="recent-section">
                 <i class="fa-regular fa-clock"></i>
                 Recently Viewed
             </a>
 
-            <a href="#" id="nav-inbox">
+            <a href="#" id="nav-inbox" data-section="inbox-section">
                 <i class="fa-regular fa-envelope"></i>
                 Inbox
             </a>
 
-            <a href="#" id="nav-address">
+            <a href="#" id="nav-address" data-section="address-section">
                 <i class="fa-solid fa-location-dot"></i>
                 Address Book
             </a>
 
-            <a href="#" id="nav-settings">
+            <a href="#" id="nav-settings" data-section="settings-section">
                 <i class="fa-solid fa-gear"></i>
                 Account Settings
             </a>
@@ -224,7 +224,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
              DASHBOARD
         ======================= -->
 
-        <section id="dashboard-section">
+        <section
+id="dashboard-section"
+class="account-section">
 
             <h1>Account Overview</h1>
 
@@ -378,15 +380,94 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
              ORDERS
         ======================= -->
 
-        <section id="orders-section" style="display:none;">
+    <section id="orders-section"
+         class="account-section"
+         style="display:none;">
 
-        </section>
+    <div class="orders-page">
 
+        <div class="orders-header">
+
+            <div>
+
+                <h1>My Orders</h1>
+
+                <p>Track and manage your purchases.</p>
+
+            </div>
+
+            <div class="orders-search">
+
+                <i class="fas fa-search"></i>
+
+                <input
+                    type="text"
+                    id="orderSearch"
+                    placeholder="Search Order Number...">
+
+            </div>
+
+        </div>
+
+        <div class="orders-toolbar">
+
+    <div class="order-filters">
+
+        <button class="filter-pill active" data-filter="all">
+            All
+            <span id="count-all">0</span>
+        </button>
+
+        <button class="filter-pill" data-filter="Pending">
+            Pending
+            <span id="count-pending">0</span>
+        </button>
+
+        <button class="filter-pill" data-filter="Ready for Pickup">
+            Ready
+            <span id="count-ready">0</span>
+        </button>
+
+        <button class="filter-pill" data-filter="Completed">
+            Completed
+            <span id="count-completed">0</span>
+        </button>
+
+    </div>
+
+</div>
+
+        <div id="ordersContainer"></div>
+
+    </div>
+
+</section>
+
+        <!-- ======================
+             ORDER DETAILS
+        ======================= -->
+<section id="order-details-section" style="display:none;">
+
+    <button
+        id="backToOrders"
+        class="back-btn">
+
+        <i class="fas fa-arrow-left"></i>
+
+        Back to Orders
+
+    </button>
+
+    <div id="orderDetailsContent">
+
+    </div>
+
+</section>
         <!-- ======================
              WISHLIST
         ======================= -->
 
-        <section id="wishlist-section" style="display:none;">
+        <section id="wishlist-section" class="account-section" style="display:none;">
 
         </section>
 
@@ -394,7 +475,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
              INBOX
         ======================= -->
 
-        <section id="inbox-section" style="display:none;">
+        <section id="inbox-section" class="account-section" style="display:none;">
 
         </section>
 
@@ -402,7 +483,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
              SETTINGS
         ======================= -->
 
-        <section id="settings-section" style="display:none;">
+        <section id="settings-section" class="account-section" style="display:none;">
 
         </section>
 

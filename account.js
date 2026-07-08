@@ -7,8 +7,14 @@ import {
 
 import {
     doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+    getDoc,
+    collection,
+    query,
+    where,
+    getDocs,
+    orderBy
+}
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 /* ======================================================
 GLOBALS
@@ -54,33 +60,45 @@ SECTION SWITCHER
 
 function openSection(sectionId){
 
-    sections.forEach(section=>{
+    document
+    .querySelectorAll(".account-section")
+    .forEach(section=>{
 
         section.style.display="none";
 
     });
 
-    sidebarLinks.forEach(link=>{
+    document
+    .querySelectorAll(".account-sidebar nav a[data-section]")
+    .forEach(link=>{
 
         link.classList.remove("active");
 
     });
 
-    const activeSection =
+    const section =
     document.getElementById(sectionId);
 
-    if(activeSection){
+    if(section){
 
-        activeSection.style.display="block";
+        section.style.display="block";
+
+    }
+
+    /* ==========================
+       LOAD DATA FOR SECTIONS
+    ========================== */
+
+    if(sectionId==="orders-section"){
+
+        loadOrders();
 
     }
 
     const activeLink =
-    document.querySelector(
-
-        `.account-sidebar nav a[data-section="${sectionId}"]`
-
-    );
+document.querySelector(
+    `a[data-section="${sectionId}"]`
+);
 
     if(activeLink){
 
@@ -190,10 +208,14 @@ onAuthStateChanged(auth,async(user)=>{
             My Account
         </a>
 
-        <a href="orders.html">
-            <i class="fas fa-box"></i>
-            My Orders
-        </a>
+        <a
+href="account.html?view=orders">
+
+    <i class="fas fa-box"></i>
+
+    My Orders
+
+</a>
 
         <a href="wishlist.html">
             <i class="fas fa-heart"></i>
@@ -226,10 +248,25 @@ onAuthStateChanged(auth,async(user)=>{
     /* ---------- LOAD DATA ---------- */
 
    await loadSavedAddress(user);
+   await loadOrders();
 
     loadRecentlyViewed();
 
-    openSection("dashboard");
+    const params = new URLSearchParams(window.location.search);
+
+const requestedSection = params.get("section");
+
+if(requestedSection === "orders"){
+
+    openSection("orders-section");
+
+    loadOrders();
+
+}else{
+
+    openSection("dashboard-section");
+
+}
 
 });
 /* ==========================
@@ -415,6 +452,396 @@ async function loadSavedAddress(user){
     }
 
 }
+async function loadOrders(){
+
+    const container =
+    document.getElementById("ordersContainer");
+
+    if(!container || !currentUser) return;
+
+    container.innerHTML = "";
+    let totalOrders = 0;
+let pendingOrders = 0;
+let readyOrders = 0;
+let completedOrders = 0;
+
+    const q = query(
+
+        collection(db,"orders"),
+
+        where("userId","==",currentUser.uid),
+
+        orderBy("createdAt","desc")
+
+    );
+
+    const snapshot = await getDocs(q);
+
+    if(snapshot.empty){
+
+        container.innerHTML = `
+
+        <div class="no-orders">
+
+            <i class="fas fa-box-open fa-3x"></i>
+
+            <h3>No Orders Yet</h3>
+
+            <p>
+
+                You haven't placed any orders yet.
+
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+    snapshot.forEach(doc=>{
+
+        const order = doc.data();
+        totalOrders++;
+
+switch(order.status){
+
+    case "Pending":
+        pendingOrders++;
+        break;
+
+    case "Ready for Pickup":
+        readyOrders++;
+        break;
+
+    case "Completed":
+        completedOrders++;
+        break;
+
+}
+
+        const created =
+        order.createdAt.toDate();
+
+       const firstItem = order.items[0];
+       const extraProducts = order.items.length - 1;
+     const estimatedFrom = addWorkingDays(created, 2);
+const estimatedTo = addWorkingDays(created, 3);
+
+const deliveryText =
+
+order.status === "Completed"
+
+? `Delivered on
+<strong>
+${
+    order.deliveredAt
+        ? formatDeliveryDate(new Date(order.deliveredAt))
+        : formatDeliveryDate(created)
+}
+</strong>`
+
+: `Delivered between
+<strong>
+${formatDeliveryDate(estimatedFrom)}
+and
+${formatDeliveryDate(estimatedTo)}
+</strong>`;
+
+container.innerHTML += `
+
+<div
+    class="order-card"
+    data-status="${order.status}"
+    data-order="${order.orderNumber}"
+    data-product="${order.items.map(item => item.name).join(" ")}">
+
+    <div class="order-image">
+
+        <img src="${firstItem.image}" alt="${firstItem.name}">
+
+    </div>
+
+    <div class="order-details">
+
+        <h3>${firstItem.name}</h3>
+
+        <p>Size: ${firstItem.size}</p>
+
+        <p>Order # ${order.orderNumber}</p>
+
+        <span class="status-badge">
+
+            ${order.status}
+
+        </span>
+
+     <p class="delivery-date">
+
+${
+    order.status === "Completed"
+
+    ?
+
+    `Delivered on
+    <strong>
+        ${
+            order.deliveredAt
+            ? new Date(order.deliveredAt).toLocaleDateString("en-GB",{
+                weekday:"long",
+                day:"numeric",
+                month:"long"
+            })
+            : ""
+        }
+    </strong>`
+
+    :
+
+    `Delivered between
+    <strong>
+        ${
+            order.estimatedFrom && order.estimatedTo
+
+            ?
+
+            `${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`
+
+            :
+
+            "Calculating..."
+        }
+    </strong>`
+}
+
+</p>
+${
+    extraProducts > 0
+
+    ?
+
+    `<button
+        class="more-items-btn"
+        data-order="${order.orderNumber}">
+
+        +${extraProducts} more product${extraProducts > 1 ? "s" : ""}
+
+    </button>
+
+    <div
+        class="more-items-list"
+        id="items-${order.orderNumber}"
+        style="display:none;">
+
+        <div class="hidden-products">
+
+    <div class="hidden-products-title">
+
+        Other Products In This Order
+
+    </div>
+
+    ${order.items.slice(1).map(item => `
+
+            <div class="mini-product">
+
+                <img
+                    src="${item.image}"
+                    alt="${item.name}"
+                >
+
+                <div class="mini-product-info">
+
+                    <strong>${item.name}</strong>
+
+                    <p>${item.size}</p>
+
+                    <span>Qty: ${item.quantity}</span>
+
+                </div>
+
+            </div>
+
+        `).join("")}
+        </div>
+
+    </div>`
+
+    :
+
+    ""
+
+}
+    </div>
+
+    <div class="order-side">
+
+        <button
+            class="view-order-btn"
+            data-order="${order.orderNumber}">
+
+            View Details
+
+            <i class="fas fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</div>
+
+`;
+    });
+    document.getElementById("count-all").textContent =
+totalOrders;
+
+document.getElementById("count-pending").textContent =
+pendingOrders;
+
+document.getElementById("count-ready").textContent =
+readyOrders;
+
+document.getElementById("count-completed").textContent =
+completedOrders;
+
+}
+function addWorkingDays(startDate, days) {
+
+    const date = new Date(startDate);
+    let added = 0;
+
+    while (added < days) {
+
+        date.setDate(date.getDate() + 1);
+
+        // Skip Sunday (0 = Sunday)
+        if (date.getDay() !== 0) {
+            added++;
+        }
+
+    }
+
+    return date;
+
+}
+function formatDeliveryDate(dateString){
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("en-GB",{
+
+        weekday:"long",
+
+        day:"numeric",
+
+        month:"long"
+
+    });
+
+}
+document.addEventListener("click", (e) => {
+
+    if (!e.target.classList.contains("more-items-btn")) return;
+
+    const button = e.target;
+
+    const order = button.dataset.order;
+
+    const list = document.getElementById(`items-${order}`);
+
+    if (!list) return;
+
+    if (list.style.display === "none" || list.style.display === "") {
+
+        list.style.display = "block";
+
+        button.textContent = "Hide Items";
+
+    } else {
+
+        list.style.display = "none";
+
+        const extraProducts = list.querySelectorAll(".mini-product").length;
+
+        button.textContent =
+            `+${extraProducts} more product${extraProducts > 1 ? "s" : ""}`;
+
+    }
+
+});
+
+const searchInput =
+document.getElementById("orderSearch");
+
+searchInput.addEventListener("input",()=>{
+
+    const value =
+    searchInput.value.toLowerCase();
+
+    document
+    .querySelectorAll(".order-card")
+    .forEach(card=>{
+
+       const searchable =
+(
+    card.dataset.order +
+    " " +
+    card.dataset.product
+).toLowerCase();
+
+card.style.display =
+searchable.includes(value)
+? "grid"
+: "none";
+
+    });
+
+});
+const filterButtons =
+document.querySelectorAll(".filter-pill");
+
+filterButtons.forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        filterButtons.forEach(btn=>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        const filter =
+        button.dataset.filter;
+
+        document
+        .querySelectorAll(".order-card")
+        .forEach(card=>{
+
+            const status =
+            card.dataset.status;
+
+            if(filter==="all"){
+
+                card.style.display="grid";
+
+            }
+
+            else{
+
+                card.style.display =
+                status===filter
+                ? "grid"
+                : "none";
+
+            }
+
+        });
+
+    });
+
+});
 /* ==========================
    ADDRESS BUTTON
 ========================== */

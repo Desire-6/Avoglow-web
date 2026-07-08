@@ -13,6 +13,21 @@ if (!orderNumber) {
     window.location.href = "shop.html";
 
 }
+function formatDeliveryDate(dateString){
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("en-GB",{
+
+        weekday:"long",
+
+        day:"numeric",
+
+        month:"long"
+
+    });
+
+}
 
 async function loadOrder() {
 
@@ -31,45 +46,18 @@ async function loadOrder() {
     }
 
     const order = snap.data();
-    /* =====================
-   ESTIMATED PICKUP
-===================== */
-function addBusinessDays(date, days) {
+    if(order.status === "Completed"){
 
-    let result = new Date(date);
+    document.getElementById("estimatedDate").textContent =
+    `Delivered on ${formatDeliveryDate(order.deliveredAt)}`;
 
-    while (days > 0) {
+}else{
 
-        result.setDate(result.getDate() + 1);
-
-        const day = result.getDay();
-
-        // Skip Sunday
-        if (day !== 0) {
-            days--;
-        }
-
-    }
-
-    return result;
+    document.getElementById("estimatedDate").textContent =
+    `Delivered between ${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`;
 
 }
-
-const createdDate = order.createdAt.toDate();
-
-const startDate = addBusinessDays(createdDate, 2);
-
-const endDate = addBusinessDays(createdDate, 3);
-
-const options = {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-};
-
-document.getElementById("estimatedDate").textContent =
-`Between ${startDate.toLocaleDateString("en-UG", options)} and ${endDate.toLocaleDateString("en-UG", options)}`;
-
+    
     /* =====================
        HEADER
     ===================== */

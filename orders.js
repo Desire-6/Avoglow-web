@@ -24,6 +24,49 @@ function generateOrderNumber(){
     return `AVG-${year}${month}${day}-${random}`;
 
 }
+function calculateDeliveryDates(){
+
+    const from = new Date();
+
+    let workingDays = 0;
+
+    while(workingDays < 2){
+
+        from.setDate(from.getDate() + 1);
+
+        if(from.getDay() !== 0){ // Skip Sunday
+
+            workingDays++;
+
+        }
+
+    }
+
+    const to = new Date(from);
+
+    workingDays = 0;
+
+    while(workingDays < 1){
+
+        to.setDate(to.getDate() + 1);
+
+        if(to.getDay() !== 0){
+
+            workingDays++;
+
+        }
+
+    }
+
+    return{
+
+        estimatedFrom: from.toISOString().split("T")[0],
+
+        estimatedTo: to.toISOString().split("T")[0]
+
+    };
+
+}
 
 export async function placeOrder(){
 
@@ -200,6 +243,7 @@ else if(payment.method === "cash"){
     ========================== */
 
     const total = subtotal + 5000;
+    const deliveryDates = calculateDeliveryDates();
 
     /* ==========================
    CREATE ORDER
@@ -215,13 +259,13 @@ const order = {
 
     address,
 
- payment:{
+    payment:{
 
-    method: paymentMethod,
+        method: paymentMethod,
 
-    phone: payment.phone
+        phone: payment.phone
 
-},
+    },
 
     delivery,
 
@@ -237,10 +281,17 @@ const order = {
 
     paymentStatus:"Pending",
 
+    estimatedFrom: deliveryDates.estimatedFrom,
+
+    estimatedTo: deliveryDates.estimatedTo,
+
+    deliveredAt: null,
+
+    trackingNumber: "",
+
     createdAt: serverTimestamp()
 
 };
-
 /* ==========================
    SAVE ORDER
 ========================== */
