@@ -1640,6 +1640,127 @@ SEARCH
     margin-top:12px;
 
 }
+.pagination{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin:35px 0;
+
+}
+
+.pagination button{
+
+    background:#0b9444;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:10px 22px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.pagination button:disabled{
+
+    background:#e8e8e8;
+    color:#999;
+    cursor:not-allowed;
+
+}
+
+#pageInfo{
+
+    font-weight:700;
+
+}
+.no-orders{
+
+    width:100%;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:70px 30px;
+
+    margin:90px 0;
+
+    text-align:center;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+
+    animation:fadeIn .3s ease;
+
+}
+
+.no-orders i{
+
+    font-size:70px;
+
+    color:#159947;
+
+    margin-bottom:25px;
+
+}
+
+.no-orders h3{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+    color:#111;
+
+}
+
+.no-orders p{
+
+    font-size:19px;
+
+    color:#777;
+
+    margin-bottom:0;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+.orders-pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    margin:40px 0;
+}
 /* FOOTER */
 
 .footer{

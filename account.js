@@ -21,6 +21,17 @@ GLOBALS
 ====================================================== */
 
 let currentUser = null;
+/* ======================================================
+PAGINATION
+====================================================== */
+
+const ORDERS_PER_PAGE = 5;
+
+let allOrders = [];
+
+let filteredOrders = [];
+
+let currentPage = 1;
 
 /* ======================================================
 NAVIGATION ELEMENTS
@@ -248,7 +259,6 @@ href="account.html?view=orders">
     /* ---------- LOAD DATA ---------- */
 
    await loadSavedAddress(user);
-   await loadOrders();
 
     loadRecentlyViewed();
 
@@ -259,8 +269,6 @@ const requestedSection = params.get("section");
 if(requestedSection === "orders"){
 
     openSection("orders-section");
-
-    loadOrders();
 
 }else{
 
@@ -460,6 +468,8 @@ async function loadOrders(){
     if(!container || !currentUser) return;
 
     container.innerHTML = "";
+    allOrders = [];
+filteredOrders = [];
     let totalOrders = 0;
 let pendingOrders = 0;
 let readyOrders = 0;
@@ -504,6 +514,7 @@ let completedOrders = 0;
     snapshot.forEach(doc=>{
 
         const order = doc.data();
+        allOrders.push(order);
         totalOrders++;
 
 switch(order.status){
@@ -550,7 +561,232 @@ and
 ${formatDeliveryDate(estimatedTo)}
 </strong>`;
 
-container.innerHTML += `
+// container.innerHTML += `
+
+// <div
+//     class="order-card"
+//     data-status="${order.status}"
+//     data-order="${order.orderNumber}"
+//     data-product="${order.items.map(item => item.name).join(" ")}">
+
+//     <div class="order-image">
+
+//         <img src="${firstItem.image}" alt="${firstItem.name}">
+
+//     </div>
+
+//     <div class="order-details">
+
+//         <h3>${firstItem.name}</h3>
+
+//         <p>Size: ${firstItem.size}</p>
+
+//         <p>Order # ${order.orderNumber}</p>
+
+//         <span class="status-badge">
+
+//             ${order.status}
+
+//         </span>
+
+//      <p class="delivery-date">
+
+// ${
+//     order.status === "Completed"
+
+//     ?
+
+//     `Delivered on
+//     <strong>
+//         ${
+//             order.deliveredAt
+//             ? new Date(order.deliveredAt).toLocaleDateString("en-GB",{
+//                 weekday:"long",
+//                 day:"numeric",
+//                 month:"long"
+//             })
+//             : ""
+//         }
+//     </strong>`
+
+//     :
+
+//     `Delivered between
+//     <strong>
+//         ${
+//             order.estimatedFrom && order.estimatedTo
+
+//             ?
+
+//             `${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`
+
+//             :
+
+//             "Calculating..."
+//         }
+//     </strong>`
+// }
+
+// </p>
+// ${
+//     extraProducts > 0
+
+//     ?
+
+//     `<button
+//         class="more-items-btn"
+//         data-order="${order.orderNumber}">
+
+//         +${extraProducts} more product${extraProducts > 1 ? "s" : ""}
+
+//     </button>
+
+//     <div
+//         class="more-items-list"
+//         id="items-${order.orderNumber}"
+//         style="display:none;">
+
+//         <div class="hidden-products">
+
+//     <div class="hidden-products-title">
+
+//         Other Products In This Order
+
+//     </div>
+
+//     ${order.items.slice(1).map(item => `
+
+//             <div class="mini-product">
+
+//                 <img
+//                     src="${item.image}"
+//                     alt="${item.name}"
+//                 >
+
+//                 <div class="mini-product-info">
+
+//                     <strong>${item.name}</strong>
+
+//                     <p>${item.size}</p>
+
+//                     <span>Qty: ${item.quantity}</span>
+
+//                 </div>
+
+//             </div>
+
+//         `).join("")}
+//         </div>
+
+//     </div>`
+
+//     :
+
+//     ""
+
+// }
+//     </div>
+
+//     <div class="order-side">
+
+//         <button
+//             class="view-order-btn"
+//             data-order="${order.orderNumber}">
+
+//             View Details
+
+//             <i class="fas fa-arrow-right"></i>
+
+//         </button>
+
+//     </div>
+
+// </div>
+
+// `;
+    });
+    document.getElementById("count-all").textContent =
+totalOrders;
+
+document.getElementById("count-pending").textContent =
+pendingOrders;
+
+document.getElementById("count-ready").textContent =
+readyOrders;
+
+document.getElementById("count-completed").textContent =
+completedOrders;
+filteredOrders = [...allOrders];
+
+renderOrders();
+
+}
+function renderOrders(){
+
+    const container =
+    document.getElementById("ordersContainer");
+
+    container.innerHTML = "";
+    if(filteredOrders.length === 0){
+
+    container.innerHTML = `
+
+    <div class="no-orders">
+
+        <i class="fas fa-box-open fa-3x"></i>
+
+        <h3>No Orders Found</h3>
+
+        <p>
+
+            There are no orders matching this filter.
+
+        </p>
+
+    </div>
+
+    `;
+
+    updatePagination();
+
+    return;
+
+}
+
+    const start =
+    (currentPage - 1) * ORDERS_PER_PAGE;
+
+    const end =
+    start + ORDERS_PER_PAGE;
+
+    const pageOrders =
+    filteredOrders.slice(start, end);
+
+    pageOrders.forEach(order=>{
+
+        renderOrderCard(order, container);
+
+    });
+
+    updatePagination();
+
+}
+function renderOrderCard(order, container){
+
+    const created = order.createdAt.toDate();
+
+    const firstItem = order.items[0];
+
+    const extraProducts =
+    order.items.length - 1;
+
+    const estimatedFrom =
+    addWorkingDays(created,2);
+
+    const estimatedTo =
+    addWorkingDays(created,3);
+
+    container.innerHTML += `
 
 <div
     class="order-card"
@@ -693,20 +929,52 @@ ${
 </div>
 
 `;
-    });
-    document.getElementById("count-all").textContent =
-totalOrders;
+}
+function updatePagination(){
 
-document.getElementById("count-pending").textContent =
-pendingOrders;
+    const totalPages =
+    Math.max(
+        1,
+        Math.ceil(filteredOrders.length / ORDERS_PER_PAGE)
+    );
 
-document.getElementById("count-ready").textContent =
-readyOrders;
+    document.getElementById("pageInfo").textContent =
+    `Page ${currentPage} of ${totalPages}`;
 
-document.getElementById("count-completed").textContent =
-completedOrders;
+    document.getElementById("prevPage").disabled =
+    currentPage === 1;
+
+    document.getElementById("nextPage").disabled =
+    currentPage >= totalPages;
 
 }
+document.getElementById("prevPage").onclick = ()=>{
+
+    if(currentPage>1){
+
+        currentPage--;
+
+        renderOrders();
+
+    }
+
+};
+
+document.getElementById("nextPage").onclick = ()=>{
+
+    const totalPages =
+
+    Math.ceil(filteredOrders.length / ORDERS_PER_PAGE);
+
+    if(currentPage<totalPages){
+
+        currentPage++;
+
+        renderOrders();
+
+    }
+
+};
 function addWorkingDays(startDate, days) {
 
     const date = new Date(startDate);
@@ -780,23 +1048,22 @@ searchInput.addEventListener("input",()=>{
     const value =
     searchInput.value.toLowerCase();
 
-    document
-    .querySelectorAll(".order-card")
-    .forEach(card=>{
+    filteredOrders =
+    allOrders.filter(order=>{
 
-       const searchable =
-(
-    card.dataset.order +
-    " " +
-    card.dataset.product
-).toLowerCase();
+        const searchable =
+        (
+            order.orderNumber + " " +
+            order.items.map(item=>item.name).join(" ")
+        ).toLowerCase();
 
-card.style.display =
-searchable.includes(value)
-? "grid"
-: "none";
+        return searchable.includes(value);
 
     });
+
+    currentPage = 1;
+
+    renderOrders();
 
 });
 const filterButtons =
@@ -815,29 +1082,22 @@ filterButtons.forEach(button=>{
         const filter =
         button.dataset.filter;
 
-        document
-        .querySelectorAll(".order-card")
-        .forEach(card=>{
+        if(filter==="all"){
 
-            const status =
-            card.dataset.status;
+            filteredOrders=[...allOrders];
 
-            if(filter==="all"){
+        }else{
 
-                card.style.display="grid";
+            filteredOrders =
+            allOrders.filter(order=>
+                order.status===filter
+            );
 
-            }
+        }
 
-            else{
+        currentPage = 1;
 
-                card.style.display =
-                status===filter
-                ? "grid"
-                : "none";
-
-            }
-
-        });
+        renderOrders();
 
     });
 
