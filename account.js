@@ -264,7 +264,7 @@ href="account.html?view=orders">
 
     const params = new URLSearchParams(window.location.search);
 
-const requestedSection = params.get("view");
+const requestedSection = params.get("section");
 
 if(requestedSection === "orders"){
 
