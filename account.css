@@ -1761,6 +1761,33 @@ SEARCH
     gap:25px;
     margin:40px 0;
 }
+.status-badge.pending{
+
+    background:#FFF4D6;
+    color:#D48806;
+
+}
+
+.status-badge.ready-for-pickup{
+
+    background:#E6F7FF;
+    color:#1890FF;
+
+}
+
+.status-badge.completed{
+
+    background:#E8F8EF;
+    color:#0B8B43;
+
+}
+
+.status-badge.cancelled{
+
+    background:#FFEAEA;
+    color:#D92D20;
+
+}
 /* FOOTER */
 
 .footer{

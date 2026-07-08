@@ -264,7 +264,7 @@ href="account.html?view=orders">
 
     const params = new URLSearchParams(window.location.search);
 
-const requestedSection = params.get("section");
+const requestedSection = params.get("view");
 
 if(requestedSection === "orders"){
 
@@ -470,6 +470,7 @@ async function loadOrders(){
     container.innerHTML = "";
     allOrders = [];
 filteredOrders = [];
+currentPage = 1;
     let totalOrders = 0;
 let pendingOrders = 0;
 let readyOrders = 0;
@@ -768,7 +769,9 @@ function renderOrders(){
 
     });
 
-    updatePagination();
+   updatePagination();
+
+return;
 
 }
 function renderOrderCard(order, container){
@@ -808,11 +811,11 @@ function renderOrderCard(order, container){
 
         <p>Order # ${order.orderNumber}</p>
 
-        <span class="status-badge">
+       <span class="status-badge ${order.status.replace(/\s+/g,"-").toLowerCase()}">
 
-            ${order.status}
+${order.status}
 
-        </span>
+</span>
 
      <p class="delivery-date">
 
@@ -823,32 +826,28 @@ ${
 
     `Delivered on
     <strong>
-        ${
-            order.deliveredAt
-            ? new Date(order.deliveredAt).toLocaleDateString("en-GB",{
-                weekday:"long",
-                day:"numeric",
-                month:"long"
-            })
-            : ""
-        }
+       ${
+    order.deliveredAt
+    ? formatDeliveryDate(order.deliveredAt)
+    : formatDeliveryDate(created)
+}
     </strong>`
 
     :
 
     `Delivered between
     <strong>
-        ${
-            order.estimatedFrom && order.estimatedTo
+       ${
+    order.estimatedFrom && order.estimatedTo
 
-            ?
+    ?
 
-            `${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`
+    `${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`
 
-            :
+    :
 
-            "Calculating..."
-        }
+    `${formatDeliveryDate(estimatedFrom)} and ${formatDeliveryDate(estimatedTo)}`
+}
     </strong>`
 }
 
@@ -971,6 +970,15 @@ document.getElementById("nextPage").onclick = ()=>{
         currentPage++;
 
         renderOrders();
+        document
+.getElementById("orders-section")
+.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"start"
+
+});
 
     }
 
