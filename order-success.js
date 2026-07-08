@@ -31,6 +31,44 @@ async function loadOrder() {
     }
 
     const order = snap.data();
+    /* =====================
+   ESTIMATED PICKUP
+===================== */
+function addBusinessDays(date, days) {
+
+    let result = new Date(date);
+
+    while (days > 0) {
+
+        result.setDate(result.getDate() + 1);
+
+        const day = result.getDay();
+
+        // Skip Sunday
+        if (day !== 0) {
+            days--;
+        }
+
+    }
+
+    return result;
+
+}
+
+const createdDate = order.createdAt.toDate();
+
+const startDate = addBusinessDays(createdDate, 2);
+
+const endDate = addBusinessDays(createdDate, 3);
+
+const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+};
+
+document.getElementById("estimatedDate").textContent =
+`Between ${startDate.toLocaleDateString("en-UG", options)} and ${endDate.toLocaleDateString("en-UG", options)}`;
 
     /* =====================
        HEADER
@@ -39,8 +77,40 @@ async function loadOrder() {
    document.getElementById("customerName").textContent =
     `Thank you, ${order.customer.name}`;
 
-    document.getElementById("orderStatus").textContent =
-        order.status;
+//    const status =
+// document.getElementById("orderStatus");
+
+// status.textContent = order.status;
+
+// status.classList.remove(
+
+//     "pending",
+//     "confirmed",
+//     "ready"
+
+// );
+
+// switch(order.status){
+
+//     case "Pending":
+
+//         status.classList.add("pending");
+
+//         break;
+
+//     case "Confirmed":
+
+//         status.classList.add("confirmed");
+
+//         break;
+
+//     case "Ready":
+
+//         status.classList.add("ready");
+
+//         break;
+
+// }
 
     document.getElementById("orderNumber").textContent =
         order.orderNumber;
@@ -99,23 +169,23 @@ order.orderNumber;
        PAYMENT
     ===================== */
 
-    document.getElementById("paymentMethod").textContent =
-        order.payment.method;
+   document.getElementById("paymentMethod").innerHTML = `
 
-    if (
-        order.payment.phone &&
-        order.payment.phone.trim() !== ""
-    ) {
+<strong>${order.payment.method}</strong>
 
-        document.getElementById("paymentPhone").textContent =
-            order.payment.phone;
+`;
 
-    } else {
+    if(order.payment.phone){
 
-        document.getElementById("paymentPhone").textContent =
-            "Pay on Pickup";
+    document.getElementById("paymentPhone").textContent =
+    order.payment.phone;
 
-    }
+}else{
+
+    document.getElementById("paymentPhone").textContent =
+    "Pay on Pickup";
+
+}
 
     document.getElementById("paymentStatus").textContent =
         order.paymentStatus;
@@ -129,39 +199,38 @@ order.orderNumber;
 
     container.innerHTML = "";
 
-    order.items.forEach(item => {
+order.items.forEach(item=>{
 
-        container.innerHTML += `
+    container.innerHTML += `
 
-        <div class="ordered-item">
+    <div class="ordered-item">
 
-            <img
-                src="${item.image}"
-                alt="${item.name}"
-            >
+        <img
+            src="${item.image}"
+            alt="${item.name}"
+        >
 
-            <div class="item-info">
+        <div class="item-info">
 
-                <h3>${item.name}</h3>
+            <h3>${item.name}</h3>
 
-                <p>Size: ${item.size}</p>
+            <p>Size: ${item.size}</p>
 
-                <p>Qty × ${item.quantity}</p>
-
-            </div>
-
-            <div class="item-price">
-
-                UGX ${(item.price * item.quantity).toLocaleString()}
-
-            </div>
+            <p>Quantity: ${item.quantity}</p>
 
         </div>
 
-        `;
+        <div class="item-price">
 
-    });
+            UGX ${(item.price * item.quantity).toLocaleString()}
 
+        </div>
+
+    </div>
+
+    `;
+
+});
 }
 
 loadOrder();

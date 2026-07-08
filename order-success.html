@@ -19,9 +19,7 @@
     <section class="success-card">
 
         <div class="success-icon">
-
             <i class="fas fa-check"></i>
-
         </div>
 
         <div class="success-info">
@@ -32,29 +30,57 @@
                 Thank you, Customer
             </h3>
 
-            <p>
-                Your order has been placed successfully.
-            </p>
+            <p>Your order has been placed successfully.</p>
 
-            <span
-                id="orderStatus"
-                class="status-badge">
+            <div class="success-meta">
 
-                Pending
+                <div class="meta-box">
 
-            </span>
+                    <small>Order Number</small>
+
+                    <strong id="orderNumber">
+                        AVG-XXXXXXXX
+                    </strong>
+
+                </div>
+
+                <!-- <div class="meta-box">
+
+                    <small>Status</small>
+
+                    <span id="orderStatus"
+                        class="status-badge">
+
+                        Pending
+
+                    </span>
+
+                </div> -->
+
+                <div class="meta-box">
+
+                    <small>Estimated Pickup</small>
+
+                    <strong id="estimatedDate">
+
+                        2 - 3 Days
+
+                    </strong>
+
+                </div>
+
+            </div>
 
         </div>
 
     </section>
 
 
-
-    <!-- SUMMARY + DELIVERY -->
+    <!-- GRID -->
 
     <section class="order-grid">
 
-        <!-- LEFT -->
+        <!-- ORDER SUMMARY -->
 
         <div class="info-card">
 
@@ -65,18 +91,6 @@
                 Order Summary
 
             </h2>
-
-            <div class="summary-row">
-
-                <span>Order No.</span>
-
-                <strong id="orderNumber">
-
-                    AVG-XXXXXXXX
-
-                </strong>
-
-            </div>
 
             <div class="summary-row">
 
@@ -127,8 +141,7 @@
         </div>
 
 
-
-        <!-- RIGHT -->
+        <!-- DELIVERY -->
 
         <div class="info-card">
 
@@ -136,11 +149,11 @@
 
                 <i class="fas fa-truck"></i>
 
-                Delivery Information
+                Delivery & Payment
 
             </h2>
 
-            <div class="delivery-section">
+            <div class="section-block">
 
                 <h3 id="deliveryMethod">
 
@@ -158,7 +171,7 @@
 
             <hr>
 
-            <div class="payment-section">
+            <div class="section-block">
 
                 <h3>
 
@@ -178,8 +191,7 @@
 
                 </p>
 
-                <span
-                    id="paymentStatus"
+                <span id="paymentStatus"
                     class="status-badge">
 
                     Pending
@@ -193,10 +205,9 @@
     </section>
 
 
+    <!-- ITEMS -->
 
-    <!-- ORDER ITEMS -->
-
-    <section class="info-card items-card">
+    <section class="info-card">
 
         <h2>
 
@@ -206,46 +217,47 @@
 
         </h2>
 
-        <div id="orderedItems">
-
-        </div>
+        <div id="orderedItems"></div>
 
     </section>
 
 
+    <!-- HELP -->
 
-    <!-- INFORMATION -->
-
-    <section class="info-card">
+    <section class="info-card help-card">
 
         <h2>
 
             <i class="fas fa-info-circle"></i>
 
-            Important Information
+            Need Help?
 
         </h2>
 
-        <ul class="important-list">
+        <ul>
 
-            <p>
+            <li>
 
-                You'll be informed when your package is ready for pickup.
+                We have received your order.
 
-            </p>
+            </li>
+
+            <li>
+
+                We'll notify you when your package is ready for pickup.
+
+            </li>
 
         </ul>
 
     </section>
 
 
-
     <!-- BUTTONS -->
 
     <div class="action-buttons">
 
-        <a
-            href="orders.html"
+        <a href="orders.html"
             class="btn-primary">
 
             <i class="fas fa-list"></i>
@@ -254,8 +266,7 @@
 
         </a>
 
-        <a
-            href="shop.html"
+        <a href="shop.html"
             class="btn-secondary">
 
             <i class="fas fa-shopping-bag"></i>
@@ -267,7 +278,6 @@
     </div>
 
 </main>
-
 <script type="module" src="order-success.js"></script>
 
 </body>
