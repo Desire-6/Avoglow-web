@@ -15,6 +15,21 @@ import {
     orderBy
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+async function getPickupStation(){
+
+    const stationRef = doc(db,"pickupStations","main");
+
+    const snap = await getDoc(stationRef);
+
+    if(snap.exists()){
+
+        return snap.data();
+
+    }
+
+    return null;
+
+}
 
 /* ======================================================
 GLOBALS
@@ -116,6 +131,52 @@ document.querySelector(
         activeLink.classList.add("active");
 
     }
+
+}
+/* =====================================
+ORDER DETAILS
+===================================== */
+
+function openOrderDetails(order){
+
+    window.selectedOrder = order;
+
+    document
+    .querySelectorAll(".account-section")
+    .forEach(section=>{
+
+        section.style.display="none";
+
+    });
+
+    document
+    .getElementById("order-details-section")
+    .style.display="block";
+
+    renderOrderDetails(order);
+
+}
+
+
+/* =====================================
+TRACK ITEM
+===================================== */
+
+function openTracking(){
+
+    document
+    .querySelectorAll(".account-section")
+    .forEach(section=>{
+
+        section.style.display="none";
+
+    });
+
+    document
+    .getElementById("tracking-section")
+    .style.display="block";
+
+    renderTracking(window.selectedOrder);
 
 }
 
@@ -929,6 +990,28 @@ ${
 
 `;
 }
+document.addEventListener("click",(e)=>{
+
+    const btn =
+    e.target.closest(".view-order-btn");
+
+    if(!btn) return;
+
+    const orderNumber =
+    btn.dataset.order;
+
+    const order =
+    allOrders.find(o=>
+        o.orderNumber===orderNumber
+    );
+
+    if(order){
+
+        openOrderDetails(order);
+
+    }
+
+});
 function updatePagination(){
 
     const totalPages =
@@ -1126,3 +1209,637 @@ if(addressButton){
     });
 
 }
+async function renderOrderDetails(order){
+
+    const section = document.getElementById("order-details-section");
+
+    const created = order.createdAt.toDate();
+
+    const estimatedFrom = addWorkingDays(created,2);
+
+    const estimatedTo = addWorkingDays(created,3);
+
+    const subtotal = order.items.reduce((sum,item)=>{
+
+        return sum + (item.price * item.quantity);
+
+    },0);
+    const pickupStation = await getPickupStation();
+
+    section.innerHTML = `
+
+<div class="order-details-page">
+
+    <div class="details-top-bar">
+
+        <button class="back-orders">
+
+            <i class="fas fa-arrow-left"></i>
+
+        </button>
+
+        <h2>Order Details</h2>
+
+    </div>
+
+    <div class="details-header">
+
+        <div>
+
+            <h1>Order #${order.orderNumber}</h1>
+
+            <span class="status-badge ${order.status.replace(/\s+/g,"-").toLowerCase()}">
+
+                ${order.status}
+
+            </span>
+
+            <p>
+
+                Placed on
+                ${created.toLocaleDateString("en-GB",{
+
+                    day:"numeric",
+
+                    month:"long",
+
+                    year:"numeric"
+
+                })}
+
+            </p>
+
+        </div>
+
+        <div class="order-total">
+
+            <span>Total</span>
+
+            <h2>
+
+                UGX ${Number(order.total).toLocaleString()}
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <hr>
+    <div class="order-action-bar">
+
+    ${
+        order.status==="Completed"
+
+        ?
+
+        `<button class="buy-again-btn">
+
+            <i class="fas fa-redo"></i>
+
+            Buy Again
+
+        </button>`
+
+        :
+
+        `<button class="track-order-btn">
+
+            Track My Order
+
+        </button>`
+
+    }
+
+</div>
+
+    <h3 class="section-title">
+
+        Items In Your Order
+
+    </h3>
+
+    ${order.items.map(item=>`
+
+    <div class="details-item">
+
+    <img
+        src="${item.image}"
+        class="details-product-image"
+    >
+
+    <div class="details-info">
+
+        <h4>${item.name}</h4>
+
+        <p>Size: ${item.size}</p>
+
+        <p>Quantity: ${item.quantity}</p>
+
+       <div class="details-price">
+
+    <div class="price-main">
+
+        UGX ${(item.price * item.quantity).toLocaleString()}
+
+    </div>
+
+    ${
+        item.quantity > 1
+        ?
+        `
+        <div class="price-sub">
+
+            UGX ${item.price.toLocaleString()} each
+
+        </div>
+        `
+        :
+        ""
+    }
+
+</div>
+
+    </div>
+
+</div>
+
+    `).join("")}
+
+    <div class="details-grid">
+
+        <div class="details-box">
+
+            <h3>
+
+                Payment Information
+
+            </h3>
+
+            <div class="details-box-content">
+
+               <div class="info-group">
+
+<span class="info-label">
+
+Payment Method
+
+</span>
+
+<span>
+
+${order.payment.method}
+
+</span>
+
+</div>
+
+${
+order.payment.phone
+?
+`
+<div class="info-group">
+
+    <span class="info-label">
+
+        Payment Phone
+
+    </span>
+
+    <span>
+
+        ${order.payment.phone}
+
+    </span>
+
+</div>
+`
+:
+""
+}
+                <br>
+
+                <hr>
+
+                <br>
+
+                <p>
+
+                    Subtotal:
+
+                    UGX ${subtotal.toLocaleString()}
+
+                </p>
+
+                <p>
+
+                    Delivery:
+
+                    UGX ${(order.deliveryFee || 0).toLocaleString()}
+
+                </p>
+
+                <br>
+
+                <h3>
+
+                    Total:
+
+                    UGX ${Number(order.total).toLocaleString()}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="details-box">
+
+<h3>Delivery Information</h3>
+
+${
+order.delivery.homeDelivery
+
+?
+
+`
+<div class="info-group">
+
+<span class="info-label">
+
+Delivery Method
+
+</span>
+
+<p>
+
+Home Delivery
+
+</p>
+
+</div>
+
+<div class="info-group">
+
+<span class="info-label">
+
+Customer
+
+</span>
+
+<p>${order.address.fullName}</p>
+
+</div>
+
+<div class="info-group">
+
+<span class="info-label">
+
+Phone
+
+</span>
+
+<p>${order.address.phone}</p>
+
+</div>
+
+<div class="info-group">
+
+<span class="info-label">
+
+Delivery Address
+
+</span>
+
+<p>
+
+${order.address.address}<br>
+
+${order.address.city},
+
+${order.address.district}
+
+</p>
+
+</div>
+
+`
+
+:
+
+`
+
+<div class="info-group">
+
+<span class="info-label">
+
+Delivery Method
+
+</span>
+
+<p>Pickup Station</p>
+
+</div>
+
+<div class="info-group">
+
+<span class="info-label">
+
+Pickup Station Address
+
+</span>
+
+<p>
+
+${pickupStation.name}<br>
+
+${pickupStation.building}<br>
+
+${pickupStation.landmark}
+
+</p>
+
+</div>
+
+<div class="info-group">
+
+<span class="info-label">
+
+Opening Hours
+
+</span>
+
+<p>
+
+${pickupStation.weekdays}<br>
+
+${pickupStation.weekend}
+
+</p>
+
+</div>
+
+`
+
+}
+
+<div class="info-group">
+
+<span class="info-label">
+
+Estimated Delivery
+
+</span>
+
+<p>
+
+${formatDeliveryDate(estimatedFrom)}
+
+-
+
+${formatDeliveryDate(estimatedTo)}
+
+</p>
+
+</div>
+
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
+
+}
+document.addEventListener("click",(e)=>{
+
+    if(e.target.closest(".back-orders")){
+
+        openSection("orders-section");
+
+    }
+
+});
+document.addEventListener("click",(e)=>{
+
+    if(e.target.closest(".track-order-btn")){
+
+        openTracking();
+
+    }
+
+});
+function renderTracking(order){
+
+    const section =
+    document.getElementById("tracking-section");
+
+    let timeline = [];
+
+    if(order.status === "Pending"){
+
+        timeline = [
+
+            {title:"Order Placed",done:true},
+            {title:"Payment Confirmed",done:true},
+            {title:"Preparing Order",done:true},
+            {title:"Ready for Pickup",done:false},
+            {title:"Delivered",done:false}
+
+        ];
+
+    }
+
+    else if(order.status === "Ready for Pickup"){
+
+        timeline = [
+
+            {title:"Order Placed",done:true},
+            {title:"Payment Confirmed",done:true},
+            {title:"Preparing Order",done:true},
+            {title:"Ready for Pickup",done:true},
+            {title:"Delivered",done:false}
+
+        ];
+
+    }
+
+    else{
+
+        timeline = [
+
+            {title:"Order Placed",done:true},
+            {title:"Payment Confirmed",done:true},
+            {title:"Preparing Order",done:true},
+            {title:"Ready for Pickup",done:true},
+            {title:"Delivered",done:true}
+
+        ];
+
+    }
+
+    section.innerHTML = `
+
+<div class="tracking-page">
+
+<button class="back-details">
+
+<i class="fas fa-arrow-left"></i>
+
+Back to Details
+
+</button>
+
+<h2>
+
+Package History
+
+</h2>
+
+<div class="tracking-timeline">
+
+${timeline.map((step,index)=>`
+
+<div class="tracking-step">
+
+<div class="tracking-icon ${step.done ? "done" : ""}">
+
+${step.done
+?
+'<i class="fas fa-check"></i>'
+:
+(index===timeline.findIndex(s=>!s.done)
+? '<i class="fas fa-clock"></i>'
+: "")
+}
+
+</div>
+
+<div class="tracking-content">
+
+<div class="tracking-title-row">
+
+<h4>
+
+${step.title}
+
+</h4>
+
+${step.done
+
+?
+
+`<span class="tracking-state completed">
+
+Completed
+
+</span>`
+
+:
+
+index===timeline.findIndex(s=>!s.done)
+
+?
+
+`<span class="tracking-state current">
+
+Current
+
+</span>`
+
+:
+
+`<span class="tracking-state waiting">
+
+Waiting
+
+</span>`
+
+}
+
+</div>
+
+<p>
+
+${getTrackingDescription(step.title)}
+
+</p>
+
+<small>
+
+${step.done
+
+?
+
+order.createdAt.toDate().toLocaleDateString("en-GB",{
+
+day:"numeric",
+
+month:"long",
+
+year:"numeric"
+
+})
+
+:
+
+"Waiting..."}
+
+</small>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+</div>
+
+`;
+
+}
+function getTrackingDescription(stage){
+
+switch(stage){
+
+case "Order Placed":
+
+return "Your order has been received successfully.";
+
+case "Payment Confirmed":
+
+return "Payment has been confirmed and your order is being processed.";
+
+case "Preparing Order":
+
+return "Our team is preparing your products for dispatch.";
+
+case "Ready for Pickup":
+
+return "Your order is ready for pickup or dispatch.";
+
+case "Delivered":
+
+return "Your package has been delivered successfully.";
+
+default:
+
+return "";
+
+}
+
+}
+document.addEventListener("click",(e)=>{
+
+    if(e.target.closest(".back-details")){
+
+        openOrderDetails(window.selectedOrder);
+
+    }
+
+});
