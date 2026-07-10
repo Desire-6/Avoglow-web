@@ -46,7 +46,7 @@ onAuthStateChanged(auth, (user) => {
 
             </a>
 
-            <a href="orders.html">
+            <a href="account.html?section=orders">
 
                 <i class="fas fa-box"></i>
 

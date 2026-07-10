@@ -1770,14 +1770,16 @@ SEARCH
 
 .back-orders{
     background:none;
+
     border:none;
-    font-size:1.2rem;
-    color:#0d7a3e;
+
     cursor:pointer;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    transition:.3s;
+
+    font-size:18px;
+
+    color:#118847;
+
+    margin-bottom:20px;
 }
 
 .back-orders:hover{
@@ -2450,26 +2452,6 @@ line-height:1.6;
     font-weight:700;
 
     color:#222;
-
-}
-
-.back-orders{
-
-    border:none;
-
-    background:none;
-
-    font-size:1.4rem;
-
-    cursor:pointer;
-
-    color:#222;
-
-}
-
-.back-orders:hover{
-
-    color:#0b7a3d;
 
 }
 

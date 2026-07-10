@@ -1091,10 +1091,9 @@ async function renderOrderDetails(order){
         <button class="back-orders">
 
             <i class="fas fa-arrow-left"></i>
+            Order Details
 
         </button>
-
-        <h2>Order Details</h2>
 
     </div>
 
@@ -1605,7 +1604,14 @@ index===timeline.findIndex(s=>!s.completed)
 
 <p>
 
-${getTrackingDescription(step.stage)}
+${
+step.completed ||
+index === timeline.findIndex(s => !s.completed)
+
+? getTrackingDescription(step.stage)
+
+: ""
+}
 
 </p>
 
@@ -1614,13 +1620,13 @@ ${getTrackingDescription(step.stage)}
 ${
 step.completed && step.date
 
-?step.date.toDate().toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
+? step.date.toDate().toLocaleDateString("en-GB",{
+    day:"numeric",
+    month:"long",
+    year:"numeric"
 })
 
-: "Waiting..."
+: ""
 
 }
 
@@ -1646,10 +1652,6 @@ switch(stage){
 case "Order Placed":
 
 return "Your order has been received successfully.";
-
-case "Payment Confirmed":
-
-return "Payment has been confirmed and your order is being processed.";
 
 case "Preparing Order":
 

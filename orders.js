@@ -293,9 +293,6 @@ const order = {
     createdAt: serverTimestamp()
 
 };
-/* ==========================
-   SAVE ORDER
-========================== */
 
 /* ==========================
    SAVE ORDER
@@ -338,15 +335,17 @@ const stages = [
 
     {
         id: "stage2",
-        stage: "Payment Confirmed",
-        completed: paymentMethod !== "Cash on Delivery",
-        updatedBy: paymentMethod !== "Cash on Delivery" ? "System" : "",
+        stage: "Preparing Order",
+        completed: false,
+        updatedBy: "",
         order: 2
     },
 
     {
         id: "stage3",
-        stage: "Preparing Order",
+        stage: delivery.homeDelivery
+            ? "Out For Delivery"
+            : "Ready For Pickup",
         completed: false,
         updatedBy: "",
         order: 3
@@ -354,20 +353,10 @@ const stages = [
 
     {
         id: "stage4",
-        stage: delivery.homeDelivery
-            ? "Out For Delivery"
-            : "Ready For Pickup",
-        completed: false,
-        updatedBy: "",
-        order: 4
-    },
-
-    {
-        id: "stage5",
         stage: "Delivered",
         completed: false,
         updatedBy: "",
-        order: 5
+        order: 4
     }
 
 ];
