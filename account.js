@@ -12,7 +12,8 @@ import {
     query,
     where,
     getDocs,
-    orderBy
+    orderBy,
+    onSnapshot
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 async function getPickupStation(){
@@ -597,7 +598,6 @@ switch(order.status){
 
         const created =
         order.createdAt.toDate();
-
        const firstItem = order.items[0];
        const extraProducts = order.items.length - 1;
      const estimatedFrom = addWorkingDays(created, 2);
@@ -613,7 +613,7 @@ ${
     order.deliveredAt
         ? formatDeliveryDate(new Date(order.deliveredAt))
         : formatDeliveryDate(created)
-}
+}stej
 </strong>`
 
 : `Delivered between
@@ -622,150 +622,6 @@ ${formatDeliveryDate(estimatedFrom)}
 and
 ${formatDeliveryDate(estimatedTo)}
 </strong>`;
-
-// container.innerHTML += `
-
-// <div
-//     class="order-card"
-//     data-status="${order.status}"
-//     data-order="${order.orderNumber}"
-//     data-product="${order.items.map(item => item.name).join(" ")}">
-
-//     <div class="order-image">
-
-//         <img src="${firstItem.image}" alt="${firstItem.name}">
-
-//     </div>
-
-//     <div class="order-details">
-
-//         <h3>${firstItem.name}</h3>
-
-//         <p>Size: ${firstItem.size}</p>
-
-//         <p>Order # ${order.orderNumber}</p>
-
-//         <span class="status-badge">
-
-//             ${order.status}
-
-//         </span>
-
-//      <p class="delivery-date">
-
-// ${
-//     order.status === "Completed"
-
-//     ?
-
-//     `Delivered on
-//     <strong>
-//         ${
-//             order.deliveredAt
-//             ? new Date(order.deliveredAt).toLocaleDateString("en-GB",{
-//                 weekday:"long",
-//                 day:"numeric",
-//                 month:"long"
-//             })
-//             : ""
-//         }
-//     </strong>`
-
-//     :
-
-//     `Delivered between
-//     <strong>
-//         ${
-//             order.estimatedFrom && order.estimatedTo
-
-//             ?
-
-//             `${formatDeliveryDate(order.estimatedFrom)} and ${formatDeliveryDate(order.estimatedTo)}`
-
-//             :
-
-//             "Calculating..."
-//         }
-//     </strong>`
-// }
-
-// </p>
-// ${
-//     extraProducts > 0
-
-//     ?
-
-//     `<button
-//         class="more-items-btn"
-//         data-order="${order.orderNumber}">
-
-//         +${extraProducts} more product${extraProducts > 1 ? "s" : ""}
-
-//     </button>
-
-//     <div
-//         class="more-items-list"
-//         id="items-${order.orderNumber}"
-//         style="display:none;">
-
-//         <div class="hidden-products">
-
-//     <div class="hidden-products-title">
-
-//         Other Products In This Order
-
-//     </div>
-
-//     ${order.items.slice(1).map(item => `
-
-//             <div class="mini-product">
-
-//                 <img
-//                     src="${item.image}"
-//                     alt="${item.name}"
-//                 >
-
-//                 <div class="mini-product-info">
-
-//                     <strong>${item.name}</strong>
-
-//                     <p>${item.size}</p>
-
-//                     <span>Qty: ${item.quantity}</span>
-
-//                 </div>
-
-//             </div>
-
-//         `).join("")}
-//         </div>
-
-//     </div>`
-
-//     :
-
-//     ""
-
-// }
-//     </div>
-
-//     <div class="order-side">
-
-//         <button
-//             class="view-order-btn"
-//             data-order="${order.orderNumber}">
-
-//             View Details
-
-//             <i class="fas fa-arrow-right"></i>
-
-//         </button>
-
-//     </div>
-
-// </div>
-
-// `;
     });
     document.getElementById("count-all").textContent =
 totalOrders;
@@ -1632,56 +1488,48 @@ document.addEventListener("click",(e)=>{
     }
 
 });
-function renderTracking(order){
+async function renderTracking(order){
 
-    const section =
-    document.getElementById("tracking-section");
+const section=document.getElementById("tracking-section");
 
-    let timeline = [];
+const trackingRef=collection(
 
-    if(order.status === "Pending"){
+db,
 
-        timeline = [
+"orders",
 
-            {title:"Order Placed",done:true},
-            {title:"Payment Confirmed",done:true},
-            {title:"Preparing Order",done:true},
-            {title:"Ready for Pickup",done:false},
-            {title:"Delivered",done:false}
+order.orderNumber,
 
-        ];
+"tracking"
 
-    }
+);
 
-    else if(order.status === "Ready for Pickup"){
+const trackingQuery=query(
 
-        timeline = [
+trackingRef,
 
-            {title:"Order Placed",done:true},
-            {title:"Payment Confirmed",done:true},
-            {title:"Preparing Order",done:true},
-            {title:"Ready for Pickup",done:true},
-            {title:"Delivered",done:false}
+orderBy("order")
 
-        ];
+);
 
-    }
+onSnapshot(trackingQuery,(snapshot)=>{
 
-    else{
+const timeline=[];
 
-        timeline = [
+snapshot.forEach(doc=>{
 
-            {title:"Order Placed",done:true},
-            {title:"Payment Confirmed",done:true},
-            {title:"Preparing Order",done:true},
-            {title:"Ready for Pickup",done:true},
-            {title:"Delivered",done:true}
+timeline.push(doc.data());
 
-        ];
+});
 
-    }
+renderTrackingTimeline(section,timeline,order);
 
-    section.innerHTML = `
+});
+
+}
+function renderTrackingTimeline(section,timeline,order){
+
+section.innerHTML = `
 
 <div class="tracking-page">
 
@@ -1693,11 +1541,7 @@ Back to Details
 
 </button>
 
-<h2>
-
-Package History
-
-</h2>
+<h2>Package History</h2>
 
 <div class="tracking-timeline">
 
@@ -1705,15 +1549,27 @@ ${timeline.map((step,index)=>`
 
 <div class="tracking-step">
 
-<div class="tracking-icon ${step.done ? "done" : ""}">
+<div class="tracking-icon ${step.completed?"done":""}">
 
-${step.done
+${
+step.completed
+
 ?
+
 '<i class="fas fa-check"></i>'
+
 :
-(index===timeline.findIndex(s=>!s.done)
-? '<i class="fas fa-clock"></i>'
-: "")
+
+(index===timeline.findIndex(s=>!s.completed)
+
+?
+
+'<i class="fas fa-clock"></i>'
+
+:
+
+"")
+
 }
 
 </div>
@@ -1722,41 +1578,26 @@ ${step.done
 
 <div class="tracking-title-row">
 
-<h4>
+<h4>${step.stage}</h4>
 
-${step.title}
-
-</h4>
-
-${step.done
+${
+step.completed
 
 ?
 
-`<span class="tracking-state completed">
-
-Completed
-
-</span>`
+`<span class="tracking-state completed">Completed</span>`
 
 :
 
-index===timeline.findIndex(s=>!s.done)
+index===timeline.findIndex(s=>!s.completed)
 
 ?
 
-`<span class="tracking-state current">
-
-Current
-
-</span>`
+`<span class="tracking-state current">Current</span>`
 
 :
 
-`<span class="tracking-state waiting">
-
-Waiting
-
-</span>`
+`<span class="tracking-state waiting">Waiting</span>`
 
 }
 
@@ -1764,29 +1605,24 @@ Waiting
 
 <p>
 
-${getTrackingDescription(step.title)}
+${getTrackingDescription(step.stage)}
 
 </p>
 
 <small>
 
-${step.done
+${
+step.completed && step.date
 
-?
-
-order.createdAt.toDate().toLocaleDateString("en-GB",{
-
-day:"numeric",
-
-month:"long",
-
-year:"numeric"
-
+?step.date.toDate().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
 })
 
-:
+: "Waiting..."
 
-"Waiting..."}
+}
 
 </small>
 

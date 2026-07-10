@@ -297,21 +297,105 @@ const order = {
    SAVE ORDER
 ========================== */
 
+/* ==========================
+   SAVE ORDER
+========================== */
+
 await setDoc(
 
     doc(
-
         db,
-
         "orders",
-
         order.orderNumber
-
     ),
 
     order
 
 );
+
+/* ==========================
+   CREATE TRACKING HISTORY
+========================== */
+
+const trackingBatch = writeBatch(db);
+
+const trackingRef = collection(
+    db,
+    "orders",
+    order.orderNumber,
+    "tracking"
+);
+
+const stages = [
+
+    {
+        id: "stage1",
+        stage: "Order Placed",
+        completed: true,
+        updatedBy: "System",
+        order: 1
+    },
+
+    {
+        id: "stage2",
+        stage: "Payment Confirmed",
+        completed: paymentMethod !== "Cash on Delivery",
+        updatedBy: paymentMethod !== "Cash on Delivery" ? "System" : "",
+        order: 2
+    },
+
+    {
+        id: "stage3",
+        stage: "Preparing Order",
+        completed: false,
+        updatedBy: "",
+        order: 3
+    },
+
+    {
+        id: "stage4",
+        stage: delivery.homeDelivery
+            ? "Out For Delivery"
+            : "Ready For Pickup",
+        completed: false,
+        updatedBy: "",
+        order: 4
+    },
+
+    {
+        id: "stage5",
+        stage: "Delivered",
+        completed: false,
+        updatedBy: "",
+        order: 5
+    }
+
+];
+
+stages.forEach(stage => {
+
+    trackingBatch.set(
+
+        doc(trackingRef, stage.id),
+
+        {
+
+            stage: stage.stage,
+            completed: stage.completed,
+            updatedBy: stage.updatedBy,
+            order: stage.order,
+
+            date: stage.completed
+                ? serverTimestamp()
+                : null
+
+        }
+
+    );
+
+});
+
+await trackingBatch.commit();
 
 /* ==========================
    CLEAR CART
