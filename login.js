@@ -1,12 +1,24 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
     signInWithEmailAndPassword,
     setPersistence,
     browserLocalPersistence,
     browserSessionPersistence,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    GoogleAuthProvider,
+    signInWithPopup,
+    fetchSignInMethodsForEmail,
+    linkWithCredential
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc,
+    arrayUnion,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 /* ==========================
    ELEMENTS
@@ -210,6 +222,37 @@ form.addEventListener("submit",async(e)=>{
 
         const user=
         userCredential.user;
+        const userDoc = await getDoc(
+    doc(
+        db,
+        "users",
+        user.uid
+    )
+);
+
+if(userDoc.exists()){
+
+    const userData =
+        userDoc.data();
+
+    if(userData.status === "Blocked"){
+
+        await auth.signOut();
+
+        showToast(
+            "Your account has been blocked by an administrator.",
+            "error"
+        );
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent = "Login";
+
+        return;
+
+    }
+
+}
 
         localStorage.setItem(
 
@@ -312,67 +355,517 @@ else{
     }
 
 });
-
 /* ==========================
    RESET PASSWORD
 ========================== */
 
-forgotPassword.addEventListener("click",async(e)=>{
+forgotPassword.addEventListener(
+    "click",
+    async (e) => {
 
-    e.preventDefault();
+        e.preventDefault();
 
-    const email=
-    document.getElementById("email").value.trim();
+        const emailInput =
+            document.getElementById("email");
 
-    if(email===""){
+        const email =
+            emailInput.value.trim();
 
-        showToast(
-            "Enter your email first.",
-            "error"
-        );
 
-        return;
+        if(email === ""){
+
+            showError(
+                "email",
+                "Enter your email address first."
+            );
+
+            showToast(
+                "Enter your email address first.",
+                "error"
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        // Basic email validation
+
+        if(!email.includes("@")){
+
+            showError(
+                "email",
+                "Enter a valid email address."
+            );
+
+            showToast(
+                "Enter a valid email address.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const originalText =
+            forgotPassword.textContent;
+
+
+        forgotPassword.style.pointerEvents =
+            "none";
+
+        forgotPassword.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Sending...
+
+        `;
+
+
+        try{
+
+            const actionCodeSettings = {
+
+    url:
+        window.location.origin +
+        "/reset-password.html",
+
+    handleCodeInApp: true
+
+};
+
+await sendPasswordResetEmail(
+
+    auth,
+
+    email,
+
+    actionCodeSettings
+
+);
+
+
+            showToast(
+
+                "Password reset link sent to your email."
+
+            );
+
+
+            forgotPassword.innerHTML = `
+
+                <i class="fas fa-check"></i>
+
+                Email Sent
+
+            `;
+
+
+            setTimeout(()=>{
+
+                forgotPassword.innerHTML =
+                    originalText;
+
+                forgotPassword.style.pointerEvents =
+                    "auto";
+
+            },4000);
+
+
+        }
+
+        catch(error){
+
+            console.error(
+
+                "Password reset error:",
+
+                error
+
+            );
+
+
+            let message =
+                "Unable to send password reset email.";
+
+
+            switch(error.code){
+
+                case "auth/user-not-found":
+
+                    message =
+                        "No account exists with this email.";
+
+                    break;
+
+
+                case "auth/invalid-email":
+
+                    message =
+                        "Invalid email address.";
+
+                    break;
+
+
+                case "auth/too-many-requests":
+
+                    message =
+                        "Too many requests. Try again later.";
+
+                    break;
+
+            }
+
+
+            showToast(
+
+                message,
+
+                "error"
+
+            );
+
+
+            forgotPassword.textContent =
+                originalText;
+
+            forgotPassword.style.pointerEvents =
+                "auto";
+
+        }
 
     }
 
-    try{
-
-        await sendPasswordResetEmail(
-
-            auth,
-
-            email
-
-        );
-
-        showToast(
-            "Password reset email sent."
-        );
-
-    }
-
-    catch{
-
-        showToast(
-            "Unable to send reset email.",
-            "error"
-        );
-
-    }
-
-});
+);
 
 /* ==========================
    GOOGLE LOGIN
 ========================== */
 
-document
-.getElementById("google-login")
-.addEventListener("click",()=>{
+const googleLoginButton =
+    document.getElementById("google-login");
 
-    showToast(
-        "Google Sign-In will be enabled next.",
-        "error"
+if(googleLoginButton){
+
+    googleLoginButton.addEventListener(
+        "click",
+        signInWithGoogle
     );
 
-});
+}
+
+
+async function signInWithGoogle(){
+
+    const originalContent =
+        googleLoginButton.innerHTML;
+
+
+    googleLoginButton.disabled = true;
+
+
+    googleLoginButton.innerHTML = `
+
+        <i class="fas fa-spinner fa-spin"></i>
+
+        Signing in...
+
+    `;
+
+
+    try{
+
+        const provider =
+            new GoogleAuthProvider();
+
+
+        const result =
+            await signInWithPopup(
+
+                auth,
+
+                provider
+
+            );
+
+
+        const user =
+            result.user;
+
+
+        /*
+        ==========================================
+        CHECK FIRESTORE USER PROFILE
+        ==========================================
+        */
+
+        const userRef =
+            doc(
+
+                db,
+
+                "users",
+
+                user.uid
+
+            );
+
+
+        const userSnap =
+            await getDoc(
+
+                userRef
+
+            );
+
+
+        /*
+        ==========================================
+        BLOCKED USER CHECK
+        ==========================================
+        */
+
+        if(userSnap.exists()){
+
+            const userData =
+                userSnap.data();
+
+
+            if(
+
+                userData.status === "Blocked"
+
+            ){
+
+                await auth.signOut();
+
+
+                showToast(
+
+                    "Your account has been blocked by an administrator.",
+
+                    "error"
+
+                );
+
+
+                googleLoginButton.disabled =
+                    false;
+
+
+                googleLoginButton.innerHTML =
+                    originalContent;
+
+
+                return;
+
+            }
+
+        }
+
+
+        /*
+        ==========================================
+        CREATE OR UPDATE USER PROFILE
+        ==========================================
+        */
+
+        if(!userSnap.exists()){
+
+            await setDoc(
+
+                userRef,
+
+                {
+
+                    uid:
+                        user.uid,
+
+                    name:
+                        user.displayName || "",
+
+                    email:
+                        user.email || "",
+
+                    phone:
+                        user.phoneNumber || "",
+
+                    photoURL:
+                        user.photoURL || "",
+
+                    status:
+                        "Active",
+
+                    providers:
+                        ["google"],
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+
+            );
+
+        }
+
+        else{
+
+            await setDoc(
+
+                userRef,
+
+                {
+
+                    name:
+                        user.displayName || "",
+
+                    email:
+                        user.email || "",
+
+                    photoURL:
+                        user.photoURL || "",
+
+                    providers:
+                        arrayUnion("google")
+
+                },
+
+                {
+
+                    merge:
+                        true
+
+                }
+
+            );
+
+        }
+
+
+        /*
+        ==========================================
+        SAVE LOGIN STATE
+        ==========================================
+        */
+
+        localStorage.setItem(
+
+            "loggedIn",
+
+            "true"
+
+        );
+
+
+        localStorage.setItem(
+
+            "userEmail",
+
+            user.email
+
+        );
+
+
+        /*
+        ==========================================
+        REDIRECT
+        ==========================================
+        */
+
+        const redirect =
+            localStorage.getItem(
+
+                "redirectAfterLogin"
+
+            );
+
+
+        if(redirect){
+
+            localStorage.removeItem(
+
+                "redirectAfterLogin"
+
+            );
+
+
+            window.location.href =
+                redirect;
+
+        }
+
+        else{
+
+            window.location.href =
+                "account.html";
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+
+            "Google sign-in error:",
+
+            error
+
+        );
+
+
+        let message =
+            "Unable to sign in with Google.";
+
+
+        switch(error.code){
+
+            case "auth/popup-closed-by-user":
+
+                message =
+                    "Google sign-in was cancelled.";
+
+                break;
+
+
+            case "auth/popup-blocked":
+
+                message =
+                    "Please allow popups to sign in with Google.";
+
+                break;
+
+
+            case "auth/unauthorized-domain":
+
+                message =
+                    "This website domain is not authorized for Google sign-in.";
+
+                break;
+
+        }
+
+
+        showToast(
+
+            message,
+
+            "error"
+
+        );
+
+
+        googleLoginButton.disabled =
+            false;
+
+
+        googleLoginButton.innerHTML =
+            originalContent;
+
+    }
+
+}

@@ -11,35 +11,35 @@ menuToggle.addEventListener("click", () => {
 
 });
 
-window.addEventListener("load", () => {
+// window.addEventListener("load", () => {
 
-    const hash = window.location.hash;
+//     const hash = window.location.hash;
 
-    const map = {
+//     const map = {
 
-        "#hair-care": "hair",
-        "#skin-care": "skin",
-        "#wellness": "wellness",
-        "#gift-sets": "gift",
-        "#all-products": "all"
+//         "#hair-care": "hair",
+//         "#skin-care": "skin",
+//         "#wellness": "wellness",
+//         "#gift-sets": "gift",
+//         "#all-products": "all"
 
-    };
+//     };
 
-    const filter = map[hash];
+//     const filter = map[hash];
 
-    if(!filter) return;
+//     if(!filter) return;
 
-    const btn = document.querySelector(
-        `.filter-btn[data-filter="${filter}"]`
-    );
+//     const btn = document.querySelector(
+//         `.filter-btn[data-filter="${filter}"]`
+//     );
 
-    if(btn){
+//     if(btn){
 
-        btn.click();
+//         btn.click();
 
-    }
+//     }
 
-});
+// });
 
     document
     .querySelectorAll(".product-card")

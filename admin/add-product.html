@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Add Product | AVOGLOW Admin</title>
+
+<link rel="stylesheet"
+href="css/add-product.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+<!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a class="active">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+                 <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+    <!-- ==========================
+    MAIN CONTENT
+    =========================== -->
+
+    <main class="content">
+
+        <!-- Page Header -->
+
+        <div class="page-header">
+
+            <div>
+
+                <a href="products.html"
+                class="back-link">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back to Products
+
+                </a>
+
+                <h1>Add New Product</h1>
+
+                <p>Create a new AVOGLOW product.</p>
+
+            </div>
+
+            <button
+            id="saveProductTop"
+            class="btn-primary">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Product
+
+            </button>
+
+        </div>
+
+       <!-- ==========================
+PRODUCT IMAGE
+========================== -->
+
+<section class="card">
+
+    <h2>
+
+        <i class="fa-solid fa-image"></i>
+
+        Product Image
+
+    </h2>
+
+    <div class="image-upload-area" id="imageUploadArea">
+
+        <div id="imagePlaceholder" class="image-placeholder">
+
+            <div class="placeholder-icon">
+
+                <i class="fa-solid fa-camera"></i>
+
+            </div>
+
+            <h3>AVOGLOW</h3>
+
+            <p>No Product Image</p>
+
+            <span>Click to Upload</span>
+
+        </div>
+
+        <img
+            id="imagePreview"
+            style="display:none;"
+            alt="Product Preview">
+            
+            <button
+type="button"
+id="removeImageBtn"
+class="remove-image-btn"
+style="display:none;">
+
+    <i class="fa-solid fa-trash"></i>
+
+</button>
+
+        <input
+            type="file"
+            id="productImageInput"
+            accept="image/*"
+            hidden>
+
+    </div>
+       <!-- <p id="selectedFileName" class="selected-file">
+
+    No image selected
+
+</p> -->
+
+</section>
+        <!-- ==========================
+BASIC INFORMATION
+========================== -->
+
+<section class="card">
+
+    <h2>
+
+        <i class="fa-solid fa-box"></i>
+
+        Basic Information
+
+    </h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Product Name *</label>
+
+            <input
+            type="text"
+            id="productName"
+            placeholder="Enter product name">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Category *</label>
+
+            <select id="category">
+
+                <option value="">Select Category</option>
+
+                <option>Hair Care</option>
+
+                <option>Skin Care</option>
+
+                <option>Wellness</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Status</label>
+
+            <select id="status">
+
+                <option selected>Active</option>
+
+                <option>Hidden</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>SKU</label>
+
+            <input
+            type="text"
+            id="sku"
+            placeholder="e.g. avocado-hair-oil">
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================
+PRICING
+========================== -->
+
+<section class="card">
+
+    <h2>
+
+        <i class="fa-solid fa-money-bill-wave"></i>
+
+        Pricing & Inventory
+
+    </h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>Base Price (UGX)</label>
+
+            <input
+            type="number"
+            id="price"
+            placeholder="0">
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Stock Quantity</label>
+
+            <input
+            type="number"
+            id="stock"
+            placeholder="0">
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================
+PRODUCT CONTENT
+========================== -->
+
+<section class="card">
+
+    <h2>
+
+        <i class="fa-solid fa-align-left"></i>
+
+        Product Content
+
+    </h2>
+
+    <div class="form-group">
+
+        <label>Description</label>
+
+        <textarea
+        id="description"
+        rows="5"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Quick Introduction</label>
+
+        <textarea
+        id="intro"
+        rows="3"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Paragraph</label>
+
+        <textarea
+        id="paragraph"
+        rows="4"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Story</label>
+
+        <textarea
+        id="story"
+        rows="6"></textarea>
+
+    </div>
+
+</section>
+<!-- ==========================================
+INGREDIENTS
+========================================== -->
+
+<section class="card">
+
+    <div class="section-header">
+
+        <h2>
+
+            <i class="fa-solid fa-leaf"></i>
+
+            Ingredients
+
+        </h2>
+
+        <button
+            type="button"
+            id="addIngredient"
+            class="small-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Ingredient
+
+        </button>
+
+    </div>
+
+    <div id="ingredientsContainer"></div>
+
+</section>
+<!-- ==========================================
+BENEFITS
+========================================== -->
+
+<section class="card">
+
+    <div class="section-header">
+
+        <h2>
+
+            <i class="fa-solid fa-star"></i>
+
+            Benefits
+
+        </h2>
+
+        <button
+            type="button"
+            id="addBenefit"
+            class="small-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Benefit
+
+        </button>
+
+    </div>
+
+    <div id="benefitsContainer"></div>
+
+</section>
+<!-- ==========================================
+HOW TO USE
+========================================== -->
+
+<section class="card">
+
+    <div class="section-header">
+
+        <h2>
+
+            <i class="fa-solid fa-book-open"></i>
+
+            How To Use
+
+        </h2>
+
+        <button
+            type="button"
+            id="addHowToUse"
+            class="small-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Step
+
+        </button>
+
+    </div>
+
+    <div id="howToUseContainer"></div>
+
+</section>
+<!-- ==========================================
+AVAILABLE SIZES
+========================================== -->
+
+<section class="card">
+
+    <div class="section-header">
+
+        <h2>
+
+            <i class="fa-solid fa-ruler-combined"></i>
+
+            Available Sizes
+
+        </h2>
+
+        <button
+            type="button"
+            id="addSize"
+            class="small-btn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Size
+
+        </button>
+
+    </div>
+
+    <div id="sizesContainer"></div>
+
+</section>
+<div class="page-footer">
+
+    <button
+    type="button"
+    id="cancelProduct"
+    class="btn-secondary">
+
+        Cancel
+
+    </button>
+
+    <button
+    type="button"
+    id="saveProductBtn"
+    class="btn-primary">
+
+        <i class="fa-solid fa-floppy-disk"></i>
+
+        Save Product
+
+    </button>
+
+</div>
+    </main>
+</div>
+<div id="toastContainer"></div>
+<!-- ==========================================
+CONFIRMATION MODAL
+========================================== -->
+
+<div id="confirmModal" class="confirm-modal">
+
+    <div class="confirm-box">
+
+        <div class="confirm-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <h2 id="confirmTitle">
+
+            Discard Product?
+
+        </h2>
+
+        <p id="confirmMessage">
+
+            Unsaved changes will be lost.
+
+        </p>
+
+        <div class="confirm-buttons">
+
+            <button
+                id="confirmCancel"
+                class="btn-secondary">
+
+                Continue Editing
+
+            </button>
+
+            <button
+                id="confirmOk"
+                class="btn-danger">
+
+                Discard
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="module" src="js/add-product.js"></script>
+</body>
+</html>

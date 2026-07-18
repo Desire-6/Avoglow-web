@@ -10,6 +10,7 @@ import {
     writeBatch,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import { createNotification } from "./notification.js";
 function generateOrderNumber(){
 
     const now = new Date();
@@ -94,6 +95,27 @@ export async function placeOrder(){
     );
 
     const userSnap = await getDoc(userRef);
+    if(
+
+userSnap.exists()
+
+&&
+
+userSnap.data().status==="Blocked"
+
+){
+
+    await auth.signOut();
+
+    alert(
+
+"Your account has been blocked. Please contact support."
+
+    );
+
+    return;
+
+}
 
     if(!userSnap.exists()){
 
@@ -307,6 +329,40 @@ await setDoc(
     ),
 
     order
+
+);
+
+await createNotification(
+
+    user.uid,
+
+    "Order Confirmed",
+
+    `Your order #${order.orderNumber} has been received and is now being processed.`,
+
+    "order",
+
+    {
+
+        page: "orders",
+
+        orderNumber: order.orderNumber,
+
+        productName: order.items[0].name,
+
+        productImage: order.items[0].image,
+
+        quantity: order.items[0].quantity,
+
+        totalItems: order.items.length,
+
+        items: order.items,
+
+        estimatedFrom: order.estimatedFrom,
+
+        estimatedTo: order.estimatedTo
+
+    }
 
 );
 

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AVOGLOW Admin Portal</title>
+
+<link rel="stylesheet" href="css/admin-login.css">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="login-card">
+
+    <div class="login-header">
+
+        <img
+        src="images/logo.png"
+        class="logo">
+
+        <h1>AVOGLOW</h1>
+
+        <p>Administrator Portal</p>
+
+    </div>
+
+<form id="adminLoginForm">
+
+<div class="input-group">
+
+<label>Email Address</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input
+type="email"
+id="adminEmail"
+placeholder="Enter admin email"
+required>
+
+</div>
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Enter password"
+required>
+
+<i
+class="fa-solid fa-eye toggle-password"
+id="togglePassword">
+</i>
+
+</div>
+
+</div>
+
+<div class="remember">
+
+<label>
+
+<input type="checkbox">
+
+Remember this device
+
+</label>
+
+</div>
+
+<button type="submit" class="login-btn" id="loginBtn">
+
+    <span class="btn-text">
+
+        Login to Dashboard
+
+    </span>
+
+    <div class="loader" id="loader"></div>
+
+</button>
+
+<p
+id="loginError"
+class="login-error">
+</p>
+
+</form>
+
+<div class="footer">
+
+© 2026 AVOGLOW Cosmetics
+
+</div>
+
+</div>
+
+<script
+type="module"
+src="js/admin-login.js">
+</script>
+
+</body>
+</html>

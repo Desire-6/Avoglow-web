@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Orders | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/orders.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                   <a href="dashboard.html">
+        <i class="fas fa-chart-pie"></i>
+        Dashboard
+    </a>
+
+    <a href="orders.html" class="active">
+        <i class="fas fa-box"></i>
+        Orders
+    </a>
+
+    <a href="products.html">
+        <i class="fas fa-cube"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="analytics.html">
+        <i class="fas fa-chart-line"></i>
+        Analytics
+    </a>
+
+               <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+            <a href="settings.html">
+                <i class="fas fa-gear"></i>
+                Settings
+            </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+       <!-- Page Header -->
+<div class="orders-header">
+
+    <div>
+        <h1>Orders Management</h1>
+        <p>Manage all customer orders from one place</p>
+    </div>
+
+    <div class="orders-actions">
+
+        <button class="btn-secondary" id="refreshOrders">
+            <i class="fas fa-rotate"></i>
+            Refresh
+        </button>
+
+        <button class="btn-primary" id="exportOrders">
+            <i class="fas fa-file-export"></i>
+            Export
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Tabs -->
+<div class="orders-tabs">
+
+    <button class="tab active" data-status="all">
+        All
+        <span id="countAll">0</span>
+    </button>
+
+    <button class="tab" data-status="Pending">
+        Pending
+        <span id="countPending">0</span>
+    </button>
+
+    <button class="tab" data-status="Processing">
+        Processing
+        <span id="countProcessing">0</span>
+    </button>
+
+    <button class="tab" data-status="Ready for Pickup">
+        Ready
+        <span id="countReady">0</span>
+    </button>
+
+    <button class="tab" data-status="Out for Delivery">
+        Delivery
+        <span id="countDelivery">0</span>
+    </button>
+
+    <button class="tab" data-status="Completed">
+        Delivered
+        <span id="countCompleted">0</span>
+    </button>
+
+    <button class="tab" data-status="Cancelled">
+        Cancelled
+        <span id="countCancelled">0</span>
+    </button>
+
+</div>
+
+<!-- Filters -->
+<div class="orders-toolbar">
+
+    <div class="search-box">
+
+        <i class="fas fa-search"></i>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by Order Number, Customer">
+
+    </div>
+
+    <select id="paymentFilter">
+
+        <option value="">Payment</option>
+
+        <option>Airtel Money</option>
+
+        <option>MTN MoMo</option>
+
+        <option>Cash on Delivery</option>
+
+    </select>
+
+   <select id="statusFilter">
+
+<option value="All">All Statuses</option>
+
+<option value="Pending">Pending</option>
+
+<option value="Processing">Processing</option>
+
+<option value="Ready for Pickup">Ready for Pickup</option>
+
+<option value="Out for Delivery">Out for Delivery</option>
+
+<option value="Delivered">Delivered</option>
+
+<option value="Cancelled">Cancelled</option>
+
+</select>
+
+    <select id="dateFilter">
+
+        <option value="">Date</option>
+
+        <option value="today">Today</option>
+
+        <option value="week">This Week</option>
+
+        <option value="month">This Month</option>
+
+    </select>
+
+    <select id="sortFilter">
+
+        <option value="Latest">Latest</option>
+
+        <option value="Oldest">Oldest</option>
+
+        <option value="Highest">Highest Value</option>
+
+        <option value="Lowest">Lowest Value</option>
+
+    </select>
+
+</div>
+<div class="bulk-actions" id="bulkActions">
+
+    <span id="selectedCount">0 Selected</span>
+
+    <button id="bulkProcessing">Processing</button>
+
+    <button id="bulkReady">Ready</button>
+
+    <button id="bulkDelivered">Delivered</button>
+
+    <button id="bulkExport">Export</button>
+
+</div>
+<div class="bulk-toolbar" id="bulkToolbar">
+
+    <span id="selectedCount">
+
+        0 selected
+
+    </span>
+
+    <button id="bulkStatus">
+
+        Update Status
+
+    </button>
+
+    <button id="bulkPrint">
+
+        Print
+
+    </button>
+
+    <button id="bulkExport">
+
+        Export
+
+    </button>
+
+    <button id="bulkDelete">
+
+        Delete
+
+    </button>
+
+</div>
+
+        <!-- Orders Table -->
+
+        <div class="orders-table-container">
+
+<table class="orders-table">
+
+<thead>
+
+<tr>
+
+<th>
+
+<input
+type="checkbox"
+id="selectAll">
+
+</th>
+
+<th>Order</th>
+
+<th>Customer</th>
+
+<!-- <th>Phone</th> -->
+
+<th>Items</th>
+
+<th>Payment</th>
+
+<th>Status</th>
+
+<th>Total</th>
+
+<th>Date</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody id="ordersTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="pagination">
+
+<button id="prevPage">
+
+<i class="fas fa-angle-left"></i>
+
+Previous
+
+</button>
+
+<div id="pageNumbers"></div>
+
+<button id="nextPage">
+
+Next
+
+<i class="fas fa-angle-right"></i>
+
+</button>
+
+</div>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/orders.js"></script>
+
+</body>
+
+</html>

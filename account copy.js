@@ -11,16 +11,12 @@ import {
     getDoc,
     getDocs,
     setDoc,
-    addDoc,
     updateDoc,
     deleteDoc,
     query,
     where,
     orderBy,
     onSnapshot,
-    limit,
-    Timestamp,
-    writeBatch,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 function showToast(message){
@@ -110,13 +106,8 @@ document.querySelectorAll(".account-section");
 /* ======================================================
 SECTION SWITCHER
 ====================================================== */
-const params = new URLSearchParams(window.location.search);
 
-const requestedSection = params.get("section");
-
-const requestedOrder = params.get("order");
-
-async function openSection(sectionId){
+function openSection(sectionId){
 
     document
     .querySelectorAll(".account-section")
@@ -145,42 +136,7 @@ async function openSection(sectionId){
 
     if(sectionId==="orders-section"){
 
-       await loadOrders();
-
-if(requestedOrder){
-
-    setTimeout(()=>{
-
-        const orderCard =
-        document.querySelector(
-            `[data-order="${requestedOrder}"]`
-        );
-
-        if(orderCard){
-
-            orderCard.scrollIntoView({
-
-                behavior:"smooth",
-
-                block:"center"
-
-            });
-
-            orderCard.classList.add("highlight-order");
-
-            setTimeout(()=>{
-
-                orderCard.classList.remove(
-                    "highlight-order"
-                );
-
-            },4000);
-
-        }
-
-    },300);
-
-}
+        loadOrders();
 
     }
 
@@ -384,7 +340,6 @@ onAuthStateChanged(auth,async(user)=>{
     }
 
     currentUser=user;
-    listenForUnreadNotifications();
 
     const fullName=
     user.displayName || "Avoglow Customer";
@@ -452,6 +407,10 @@ href="account.html?view=orders">
 
     loadRecentlyViewed();
 
+    const params = new URLSearchParams(window.location.search);
+
+const requestedSection = params.get("section");
+
 switch(requestedSection){
 
     case "orders":
@@ -478,23 +437,30 @@ switch(requestedSection){
 
 function loadRecentlyViewed(){
 
-    const container =
-    document.getElementById(
-        "recently-viewed-container"
-    );
+    const section =
+        document.getElementById("recent-section");
 
-    if(!container) return;
+    const container =
+        document.getElementById("recently-viewed-container");
+
+    if(!container || !section) return;
 
     const viewed =
-    JSON.parse(
-        localStorage.getItem(
-            "recentlyViewed"
-        )
-    ) || [];
+        JSON.parse(localStorage.getItem("recentlyViewed")) || [];
 
     container.innerHTML = "";
 
-    viewed.forEach(product => {
+    if(viewed.length === 0){
+
+        section.style.display = "none";
+
+        return;
+
+    }
+
+    section.style.display = "block";
+
+    viewed.forEach(product=>{
 
         container.innerHTML += `
 
@@ -502,8 +468,7 @@ function loadRecentlyViewed(){
 
             <a href="${product.link}">
 
-                <img src="${product.image}"
-                     alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}">
 
             </a>
 
@@ -511,18 +476,22 @@ function loadRecentlyViewed(){
 
                 <h3>${product.name}</h3>
 
-                <p class="recent-category">
-                    ${product.category}
-                </p>
+                <p class="recent-category">${product.category}</p>
 
                 <div class="recent-price">
-                    UGX ${product.price.toLocaleString()}
+
+                    UGX ${Number(product.price).toLocaleString()}
+
                 </div>
 
                 <a href="${product.link}">
+
                     <button class="recent-btn">
+
                         View Product
+
                     </button>
+
                 </a>
 
             </div>
@@ -536,22 +505,30 @@ function loadRecentlyViewed(){
 }
 
 loadRecentlyViewed();
+
+/* ==========================
+   RECENTLY VIEWED ARROWS
+========================== */
+
 const recentContainer =
-document.getElementById("recently-viewed-container");
+    document.getElementById("recently-viewed-container");
 
 const leftArrow =
-document.querySelector(".recent-arrow.left");
+    document.querySelector(".recent-arrow.left");
 
 const rightArrow =
-document.querySelector(".recent-arrow.right");
+    document.querySelector(".recent-arrow.right");
 
-if(recentContainer){
+if (recentContainer && leftArrow && rightArrow) {
 
     rightArrow.addEventListener("click", () => {
 
         recentContainer.scrollBy({
+
             left: 350,
+
             behavior: "smooth"
+
         });
 
     });
@@ -559,8 +536,11 @@ if(recentContainer){
     leftArrow.addEventListener("click", () => {
 
         recentContainer.scrollBy({
+
             left: -350,
+
             behavior: "smooth"
+
         });
 
     });
@@ -2143,696 +2123,172 @@ function formatTimeAgo(timestamp){
     return Math.floor(seconds/86400) + " days ago";
 
 }
-function updateNotificationBadge(count){
-
-    const badge =
-
-        document.getElementById(
-
-            "notification-badge"
-
-        );
-
-    if(!badge) return;
-
-
-    if(count > 0){
-
-        badge.textContent =
-
-            count > 99
-
-            ? "99+"
-
-            : count;
-
-
-        badge.classList.add(
-
-            "has-notifications"
-
-        );
-
-    }
-
-    else{
-
-        badge.textContent = "";
-
-        badge.classList.remove(
-
-            "has-notifications"
-
-        );
-
-    }
-
-}
-let notificationBadgeListener = null;
-
-function listenForUnreadNotifications(){
+async function loadInbox(){
 
     if(!currentUser) return;
 
-    if(notificationBadgeListener){
+    const inboxContainer =
+    document.getElementById("inboxContainer");
 
-        notificationBadgeListener();
+    inboxContainer.innerHTML = "";
 
-    }
+    const inboxRef = collection(
 
-    const q = query(
+        db,
 
-        collection(db, "notifications"),
+        "users",
 
-        where("userId", "==", currentUser.uid),
+        currentUser.uid,
 
-        where("isRead", "==", false)
-
-    );
-
-    notificationBadgeListener = onSnapshot(
-
-        q,
-
-        (snapshot) => {
-
-            updateNotificationBadge(
-
-                snapshot.size
-
-            );
-
-        },
-
-        (error) => {
-
-            console.error(
-
-                "Notification badge error:",
-
-                error
-
-            );
-
-            updateNotificationBadge(0);
-
-        }
+        "inbox"
 
     );
 
-}
-let inboxListener = null;
-function getAdminNotificationIcon(category){
-
-    switch(category){
-
-        case "Promotion":
-
-            return `
-                <i class="fa-solid fa-tag"></i>
-            `;
-
-        case "Reminder":
-
-            return `
-                <i class="fa-solid fa-clock"></i>
-            `;
-
-        case "Order Update":
-
-            return `
-                <i class="fa-solid fa-box"></i>
-            `;
-
-        case "Custom":
-
-            return `
-                <i class="fa-solid fa-message"></i>
-            `;
-
-        default:
-
-            return `
-                <i class="fa-solid fa-bell"></i>
-            `;
-
-    }
-
-}
-
-function loadInbox(){
-
-    if(!currentUser) return;
-
-    const container =
-    document.getElementById("notifications-container");
-
-    const summary =
-    document.getElementById("notification-summary");
-
-    container.innerHTML = "<p>Loading notifications...</p>";
-
-    if(inboxListener){
-
-        inboxListener();
-
-    }
-
     const q = query(
 
-        collection(db,"notifications"),
-
-        where("userId","==",currentUser.uid),
+        inboxRef,
 
         orderBy("createdAt","desc")
 
     );
 
-    inboxListener = onSnapshot(q,(snapshot)=>{
+    const snapshot = await getDocs(q);
 
-        container.innerHTML = "";
+    if(snapshot.empty){
 
-        if(snapshot.empty){
+        inboxContainer.innerHTML = `
 
-            container.innerHTML = `
+        <div class="empty-inbox">
 
-                <div class="wishlist-empty">
+            <i class="fas fa-envelope-open-text"></i>
 
-                    <i class="fas fa-bell-slash"></i>
+            <h3>No messages yet</h3>
 
-                    <h3>No Notifications Yet</h3>
+            <p>
 
-                    <p>
+                You'll receive notifications about
 
-                        We'll notify you when something important happens.
+                your orders and promotions.
 
-                    </p>
+            </p>
 
-                </div>
+            <a href="products.html">
 
-            `;
+                Continue Shopping
 
-            summary.textContent =
-            "You have 0 unread notifications";
-
-            updateNotificationBadge(0);
-
-            return;
-
-        }
-
-        let unread = 0;
-
-        snapshot.forEach(docSnap=>{
-
-    const notification = docSnap.data();
-
-    if(!notification.isRead){
-
-        unread++;
-
-    }
-    const action = notification.action || {};
-
-let notificationHTML = "";
-
-
-// ==========================================
-// ORDER NOTIFICATION
-// ==========================================
-
-if(notification.type === "order"){
-
-    const image =
-
-        action.productImage ||
-
-        "images/product-placeholder.png";
-
-
-    const product =
-
-        action.productName ||
-
-        "Order";
-
-
-    const productText =
-
-        action.totalItems > 1
-
-        ?
-
-        `${product} +${action.totalItems - 1} more item${
-            action.totalItems > 2 ? "s" : ""
-        }`
-
-        :
-
-        product;
-
-
-    const deliveryText =
-
-        action.estimatedFrom &&
-
-        action.estimatedTo
-
-        ?
-
-        `${formatDeliveryDate(action.estimatedFrom)}
-        -
-        ${formatDeliveryDate(action.estimatedTo)}`
-
-        :
-
-        "";
-
-
-    notificationHTML = `
-
-        <div class="notification-body">
-
-            <div class="notification-product-image">
-
-                <img
-
-                    src="${image}"
-
-                    alt="${product}">
-
-            </div>
-
-
-            <div class="notification-content">
-
-                <h3 class="notification-title">
-
-                    ${notification.title}
-
-                </h3>
-
-
-                <p class="notification-message">
-
-                    ${notification.message}
-
-                </p>
-
-
-                <h4>
-
-                    ${productText}
-
-                </h4>
-
-
-                <div class="notification-delivery">
-
-                    <span>
-
-                        Estimated Delivery
-
-                    </span>
-
-
-                    <strong>
-
-                        ${deliveryText}
-
-                    </strong>
-
-                </div>
-
-            </div>
+            </a>
 
         </div>
 
-    `;
+        `;
 
-}
-
-
-// ==========================================
-// ADMIN NOTIFICATION
-// ==========================================
-
-else if(notification.type === "admin"){
-
-    notificationHTML = `
-
-        <div class="notification-body admin-notification-body">
-
-           <div class="admin-notification-icon">
-
-    ${getAdminNotificationIcon(
-
-        notification.category
-
-    )}
-
-</div>
-
-
-            <div class="notification-content">
-
-                <div class="admin-notification-type ${
-
-    (notification.category || "notification")
-
-        .toLowerCase()
-
-        .replace(/\s+/g, "-")
-
-}">
-
-                    ${notification.category || "Notification"}
-
-                </div>
-
-
-                <h3 class="notification-title">
-
-                    ${notification.title}
-
-                </h3>
-
-
-                <p class="notification-message">
-
-                    ${notification.message}
-
-                </p>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-else{
-
-    notificationHTML = `
-
-        <div class="notification-body">
-
-            <div class="admin-notification-icon">
-
-                <i class="fa-solid fa-bell"></i>
-
-            </div>
-
-
-            <div class="notification-content">
-
-                <h3 class="notification-title">
-
-                    ${notification.title}
-
-                </h3>
-
-
-                <p class="notification-message">
-
-                    ${notification.message}
-
-                </p>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-container.innerHTML += `
-
-    <div
-
-        class="notification-card
-
-        ${notification.isRead ? "read" : "unread"}"
-
-    >
-
-        <div class="notification-header">
-
-            <span class="notification-date">
-
-                ${formatNotificationDate(
-
-                    notification.createdAt
-
-                )}
-
-            </span>
-
-
-           <button
-
-    class="notification-link"
-
-    onclick="openNotification('${docSnap.id}')"
-
->
-
-    ${
-        notification.type === "order"
-
-        ? "View Order →"
-
-        : "Mark as Read"
+        return;
 
     }
 
-</button>
+    snapshot.forEach(doc=>{
 
-        </div>
+        const data = doc.data();
 
+        inboxContainer.innerHTML += `
 
-        ${notificationHTML}
+<div class="inbox-card ${!data.isRead ? "unread" : ""}">
+
+    <div class="inbox-top">
+
+        <span class="message-time">
+
+            ${formatTimeAgo(data.createdAt)}
+
+        </span>
+
+        <a href="${data.link}" class="details-link">
+
+            See Details
+
+        </a>
 
     </div>
 
+    <h3>
+
+        ${data.title}
+
+    </h3>
+
+    <p>
+
+        ${data.message}
+
+    </p>
+
+    <div class="inbox-product">
+
+        <img
+            src="${data.productImage}"
+            alt="${data.productName}">
+
+        <span>
+
+            ${data.productName}
+
+        </span>
+
+    </div>
+
+</div>
+
 `;
-});
-
-        summary.textContent =
-
-        `You have ${unread} unread notification${unread==1?"":"s"}`;
-
-        updateNotificationBadge(unread);
-
     });
 
 }
+document.getElementById("markAllRead")
+.addEventListener("click",markAllRead);
 
-window.openNotification = async function(notificationId){
-
-    try{
-
-        const notificationRef = doc(
-
-            db,
-
-            "notifications",
-
-            notificationId
-
-        );
-
-        const snap = await getDoc(notificationRef);
-
-        if(!snap.exists()) return;
-
-        const notification = snap.data();
-
-        await updateDoc(
-
-            notificationRef,
-
-            {
-
-                isRead: true
-
-            }
-
-        );
-
-        switch(notification.type){
-
-            case "order":{
-
-                const action =
-
-                    notification.action || {};
-
-                window.location.href =
-
-                    `account.html?section=orders&order=${
-                        action.orderNumber
-                    }`;
-
-                break;
-
-            }
-
-            case "wishlist":
-
-                window.location.href =
-
-                    "account.html?section=wishlist";
-
-                break;
-
-
-            case "product":
-
-                window.location.href =
-
-                    "products.html";
-
-                break;
-
-
-            case "admin":
-
-                // No redirect.
-
-                break;
-
-        }
-
-    }
-
-    catch(error){
-
-        console.error(
-
-            "Error opening notification:",
-
-            error
-
-        );
-
-    }
-
-};
-async function markAllNotificationsRead(){
+async function markAllRead(){
 
     if(!currentUser) return;
 
-    const q = query(
+    const snapshot = await getDocs(
 
-        collection(db,"notifications"),
+        collection(
 
-        where("userId","==",currentUser.uid),
+            db,
 
-        where("isRead","==",false)
+            "users",
+
+            currentUser.uid,
+
+            "inbox"
+
+        )
 
     );
 
-    const snapshot = await getDocs(q);
-
-    if(snapshot.empty) return;
-
-    const batch = writeBatch(db);
+    const promises=[];
 
     snapshot.forEach(docSnap=>{
 
-        batch.update(
+        promises.push(
 
-            docSnap.ref,
+            updateDoc(
 
-            {
+                docSnap.ref,
 
-                isRead:true
+                {
 
-            }
+                    isRead:true
+
+                }
+
+            )
 
         );
 
     });
 
-    await batch.commit();
+    await Promise.all(promises);
 
-}
-const markAllBtn =
-
-document.getElementById(
-
-    "mark-all-read"
-
-);
-
-if(markAllBtn){
-
-    markAllBtn.addEventListener(
-
-        "click",
-
-        markAllNotificationsRead
-
-    );
-
-}
-function formatNotificationDate(timestamp){
-
-    if(!timestamp) return "";
-
-    const date = timestamp.toDate();
-
-    const today = new Date();
-
-    const yesterday = new Date();
-
-    yesterday.setDate(today.getDate() - 1);
-
-    const sameDay =
-
-        date.getDate() === today.getDate() &&
-
-        date.getMonth() === today.getMonth() &&
-
-        date.getFullYear() === today.getFullYear();
-
-    if(sameDay){
-
-        return "Today";
-
-    }
-
-    const sameYesterday =
-
-        date.getDate() === yesterday.getDate() &&
-
-        date.getMonth() === yesterday.getMonth() &&
-
-        date.getFullYear() === yesterday.getFullYear();
-
-    if(sameYesterday){
-
-        return "Yesterday";
-
-    }
-
-    return date.toLocaleDateString(
-
-        "en-GB",
-
-        {
-
-            day:"numeric",
-
-            month:"long"
-
-        }
-
-    );
+    loadInbox();
 
 }

@@ -1325,6 +1325,57 @@ box-shadow: 0 8px 30px rgba(0,0,0,.05);;
     cursor:pointer;
 
 }
+.product-title-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.product-title-row h1{
+
+    margin:0;
+
+    flex:1;
+
+}
+
+.product-wishlist-btn{
+
+    background:none;
+
+    border:none;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    color:#bbb;
+
+    transition:.3s;
+
+    padding:0;
+
+}
+
+.product-wishlist-btn:hover{
+
+    color:#0A6B3B;
+
+    transform:scale(1.1);
+
+}
+
+.product-wishlist-btn.saved{
+
+    color:#0A6B3B;
+
+}
 /* ==========================
    PRODUCT SKELETON
 ========================== */

@@ -54,7 +54,7 @@ onAuthStateChanged(auth, (user) => {
 
             </a>
 
-            <a href="wishlist.html">
+            <a href="account.html?section=wishlist">
 
                 <i class="fas fa-heart"></i>
 

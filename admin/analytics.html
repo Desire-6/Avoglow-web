@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/analytics.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a href="products.html">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html" class="active">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+                <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+    <!-- =====================================
+         MAIN CONTENT
+    ====================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- =================================
+             TOP HEADER
+        ================================== -->
+
+        <header class="analytics-header">
+
+
+            <div class="header-left">
+
+                <h1>Analytics</h1>
+
+                <p>
+
+                    Understand your store performance
+
+                    and customer activity.
+
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+
+                <div class="date-filter">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <select id="analyticsPeriod">
+
+                        <option value="7">
+
+                            Last 7 Days
+
+                        </option>
+
+                        <option
+                            value="30"
+                            selected>
+
+                            Last 30 Days
+
+                        </option>
+
+                        <option value="90">
+
+                            Last 3 Months
+
+                        </option>
+
+                        <option value="365">
+
+                            This Year
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    id="refreshAnalytics"
+                    class="refresh-button">
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================
+             KEY PERFORMANCE INDICATORS
+        ================================== -->
+
+        <section class="analytics-stats-grid">
+
+
+            <!-- TOTAL REVENUE -->
+
+            <article class="analytics-stat-card">
+
+                <div class="analytics-stat-top">
+
+                    <div class="analytics-stat-icon revenue-icon">
+
+                        <i class="fa-solid fa-money-bill-trend-up"></i>
+
+                    </div>
+
+                    <span
+                        id="revenueGrowth"
+                        class="growth-indicator">
+
+                        --%
+
+                    </span>
+
+                </div>
+
+
+                <div class="analytics-stat-content">
+
+                    <span>
+
+                        Total Revenue
+
+                    </span>
+
+
+                    <h2 id="analyticsRevenue">
+
+                        UGX 0
+
+                    </h2>
+
+
+                    <small>
+
+                        Compared to previous period
+
+                    </small>
+
+                </div>
+
+            </article>
+
+
+            <!-- TOTAL ORDERS -->
+
+            <article class="analytics-stat-card">
+
+                <div class="analytics-stat-top">
+
+                    <div class="analytics-stat-icon orders-icon">
+
+                        <i class="fa-solid fa-cart-shopping"></i>
+
+                    </div>
+
+                    <span
+                        id="ordersGrowth"
+                        class="growth-indicator">
+
+                        --%
+
+                    </span>
+
+                </div>
+
+
+                <div class="analytics-stat-content">
+
+                    <span>
+
+                        Total Orders
+
+                    </span>
+
+
+                    <h2 id="analyticsOrders">
+
+                        0
+
+                    </h2>
+
+
+                    <small>
+
+                        Orders during selected period
+
+                    </small>
+
+                </div>
+
+            </article>
+
+
+            <!-- AVERAGE ORDER VALUE -->
+
+            <article class="analytics-stat-card">
+
+                <div class="analytics-stat-top">
+
+                    <div class="analytics-stat-icon average-icon">
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-stat-content">
+
+                    <span>
+
+                        Average Order Value
+
+                    </span>
+
+
+                    <h2 id="averageOrderValue">
+
+                        UGX 0
+
+                    </h2>
+
+
+                    <small>
+
+                        Average amount per order
+
+                    </small>
+
+                </div>
+
+            </article>
+
+
+            <!-- CUSTOMERS -->
+
+            <article class="analytics-stat-card">
+
+                <div class="analytics-stat-top">
+
+                    <div class="analytics-stat-icon customers-icon">
+
+                        <i class="fa-solid fa-user-group"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-stat-content">
+
+                    <span>
+
+                        Active Customers
+
+                    </span>
+
+
+                    <h2 id="analyticsCustomers">
+
+                        0
+
+                    </h2>
+
+
+                    <small>
+
+                        Customers with orders
+
+                    </small>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =================================
+             REVENUE OVERVIEW
+        ================================== -->
+
+        <section class="analytics-grid-main">
+
+
+            <div class="analytics-panel revenue-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Revenue Overview</h2>
+
+                        <p>
+
+                            Revenue performance over time
+
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        id="revenuePeriodLabel">
+
+                        Last 30 Days
+
+                    </span>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas
+                        id="revenueChart">
+
+                    </canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER STATUS -->
+
+            <div class="analytics-panel order-status-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Order Status</h2>
+
+                        <p>
+
+                            Current order distribution
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-status-chart-container">
+
+                    <canvas
+                        id="orderStatusChart">
+
+                    </canvas>
+
+                </div>
+
+
+                <div
+                    id="orderStatusLegend"
+                    class="chart-legend">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             SALES PERFORMANCE
+        ================================== -->
+
+        <section class="analytics-grid-secondary">
+
+
+            <!-- ORDERS OVER TIME -->
+
+            <div class="analytics-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Orders Over Time</h2>
+
+                        <p>
+
+                            Number of orders received
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas
+                        id="ordersChart">
+
+                    </canvas>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOP PRODUCTS -->
+
+            <div class="analytics-panel top-products-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Top Products</h2>
+
+                        <p>
+
+                            Best-performing products
+
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="products.html">
+
+                        View Products
+
+                    </a>
+
+                </div>
+
+
+                <div
+                    id="topProductsList"
+                    class="top-products-list">
+
+                    <div class="analytics-loading">
+
+                        Loading products...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             CUSTOMER ANALYTICS
+        ================================== -->
+
+        <section class="analytics-section">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>Customer Analytics</h2>
+
+                    <p>
+
+                        Understand your customer base.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="customer-analytics-grid">
+
+
+                <div class="analytics-mini-card">
+
+                    <div class="mini-card-icon">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+
+                            New Customers
+
+                        </span>
+
+
+                        <strong id="newAnalyticsCustomers">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-mini-card">
+
+                    <div class="mini-card-icon">
+
+                        <i class="fa-solid fa-repeat"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+
+                            Returning Customers
+
+                        </span>
+
+
+                        <strong id="returningCustomers">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-mini-card">
+
+                    <div class="mini-card-icon">
+
+                        <i class="fa-solid fa-user-check"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+
+                            Customers With Orders
+
+                        </span>
+
+
+                        <strong id="customersWithOrdersAnalytics">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-mini-card">
+
+                    <div class="mini-card-icon">
+
+                        <i class="fa-solid fa-user-clock"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+
+                            Customers Without Orders
+
+                        </span>
+
+
+                        <strong id="customersWithoutOrders">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             PAYMENT & DELIVERY ANALYTICS
+        ================================== -->
+
+        <section class="analytics-grid-secondary">
+
+
+            <!-- PAYMENT METHODS -->
+
+            <div class="analytics-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Payment Methods</h2>
+
+                        <p>
+
+                            How customers pay
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="paymentMethodsList"
+                    class="analytics-breakdown-list">
+
+                    <div class="analytics-loading">
+
+                        Loading payment data...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DELIVERY METHODS -->
+
+            <div class="analytics-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>Delivery Methods</h2>
+
+                        <p>
+
+                            Customer delivery preferences
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="deliveryMethodsList"
+                    class="analytics-breakdown-list">
+
+                    <div class="analytics-loading">
+
+                        Loading delivery data...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             PICKUP STATION PERFORMANCE
+        ================================== -->
+
+        <section class="analytics-panel pickup-stations-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>Pickup Station Performance</h2>
+
+                    <p>
+
+                        Most used pickup locations
+
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="settings.html">
+
+                    Manage Stations
+
+                </a>
+
+            </div>
+
+
+           <div
+    id="pickupStationsList"
+    class="pickup-stations-list">
+
+    <div class="analytics-loading">
+
+        Loading pickup station data...
+
+    </div>
+
+</div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================
+     CHART.JS
+========================================= -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js">
+
+</script>
+
+
+<!-- =========================================
+     ANALYTICS JAVASCRIPT
+========================================= -->
+
+<script
+    type="module"
+    src="js/analytics.js">
+
+</script>
+
+
+</body>
+
+</html>

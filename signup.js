@@ -10,7 +10,8 @@ import {
 
 import {
     doc,
-    setDoc
+    setDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 const form =
@@ -227,19 +228,57 @@ form.addEventListener("submit",async(e)=>{
 
         await setDoc(
 
-            doc(db,"users",user.uid),
+    doc(
 
-            {
+        db,
 
-                name,
+        "users",
 
-                email,
+        user.uid
 
-                createdAt:new Date()
+    ),
 
-            }
+    {
 
-        );
+        uid:
+
+            user.uid,
+
+        name,
+
+        email,
+
+        phone:
+
+            "",
+
+        photoURL:
+
+            "",
+
+        status:
+
+            "Active",
+
+        authProviders: {
+
+            password:
+
+                true,
+
+            google:
+
+                false
+
+        },
+
+        createdAt:
+
+            serverTimestamp()
+
+    }
+
+);
 
 window.location.href =
 "account.html";

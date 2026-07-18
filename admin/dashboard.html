@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AVOGLOW Admin Dashboard</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+    <button class="menu-toggle" id="menuToggle">
+
+    <i class="fas fa-bars"></i>
+
+</button>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+        <div class="sidebar-content">
+
+        <div class="logo">
+
+            <img src="images/logo.png">
+
+            <h2>AVOGLOW</h2>
+
+            <span>Admin Portal</span>
+
+        </div>
+
+        <nav>
+
+                             <a href="dashboard.html" class="active">
+        <i class="fas fa-chart-pie"></i>
+        Dashboard
+    </a>
+
+    <a href="orders.html">
+        <i class="fas fa-box"></i>
+        Orders
+    </a>
+
+    <a href="products.html">
+        <i class="fas fa-cube"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="analytics.html">
+        <i class="fas fa-chart-line"></i>
+        Analytics
+    </a>
+
+            <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+            <a href="settings.html">
+                <i class="fas fa-gear"></i>
+                Settings
+            </a>
+
+        </nav>
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Dashboard</h1>
+
+                <p>
+
+                    Welcome back Administrator
+
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+    <div class="notification">
+
+        <button id="notificationBtn">
+
+            <i class="fas fa-bell"></i>
+
+            <span class="notification-count" id="notificationCount">3</span>
+
+        </button>
+
+    </div>
+
+  <div class="admin-profile">
+
+<div class="admin-avatar">
+
+<span id="adminInitials"></span>
+
+</div>
+
+<div>
+
+<strong id="adminName"></strong>
+
+<p id="adminEmail"></p>
+
+</div>
+
+</div>
+
+</div>
+
+        </header>
+
+        <!-- Cards -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fas fa-box"></i>
+
+                <div>
+
+                    <h3 id="ordersCount">0</h3>
+
+                    <span>Total Orders</span>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-money-bill-wave"></i>
+
+                <div>
+
+                    <h3 id="revenue">UGX 0</h3>
+
+                    <span>Total Revenue</span>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-users"></i>
+
+                <div>
+
+                    <h3 id="customers">0</h3>
+
+                    <span>Customers</span>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-cube"></i>
+
+                <div>
+
+                    <h3 id="products">0</h3>
+
+                    <span>Products</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Orders -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+    <h2>Recent Orders</h2>
+
+    <div class="table-actions">
+
+    <!-- <i class="fas fa-search"></i> -->
+
+    <input
+        type="text"
+        id="orderSearch"
+        placeholder="Search order...">
+
+</div>
+
+</div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order</th>
+
+                        <th>Customer</th>
+
+                        <th>Status</th>
+
+                        <th>Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="recentOrders">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script type="module" src="js/dashboard.js"></script>
+
+</body>
+
+</html>

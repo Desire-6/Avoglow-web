@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/products.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a class="active">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+                <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+    <!-- ===========================
+    PAGE HEADER
+    ============================ -->
+
+    <section class="page-header">
+
+        <div class="page-title">
+
+            <h1>Products Management</h1>
+
+            <p>
+                Manage all AVOGLOW products from one place.
+            </p>
+
+        </div>
+
+        <button id="addProductBtn" class="btn-primary">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Add Product
+
+        </button>
+
+    </section>
+
+
+    <!-- ===========================
+    DASHBOARD CARDS
+    ============================ -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Total Products
+
+            </span>
+
+            <h2 id="totalProducts">0</h2>
+
+        </div>
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Active Products
+
+            </span>
+
+            <h2 id="activeProducts">0</h2>
+
+        </div>
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Low / Out of Stock
+
+            </span>
+
+            <h2 id="outStockProducts">0</h2>
+
+        </div>
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+
+                Categories
+
+            </span>
+
+            <h2 id="categoriesCount">0</h2>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================
+    TOOLBAR
+    ============================ -->
+
+    <section class="toolbar">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                type="text"
+                id="searchProduct"
+                placeholder="Search by product name, SKU or category">
+
+        </div>
+
+        <div class="toolbar-filters">
+
+            <select id="categoryFilter">
+
+                <option>All Categories</option>
+
+            </select>
+
+            <select id="statusFilter">
+
+                <option>All Status</option>
+
+                <option>Active</option>
+
+                <option>Hidden</option>
+
+            </select>
+
+            <select id="stockFilter">
+
+                <option>All Stock</option>
+
+                <option>In Stock</option>
+
+                <option>Low Stock</option>
+
+                <option>Out of Stock</option>
+
+            </select>
+
+            <select id="sortFilter">
+
+                <option value="Latest">Latest</option>
+
+                <option value="Oldest">Oldest</option>
+
+                <option value="PriceHigh">Highest Price</option>
+
+                <option value="PriceLow">Lowest Price</option>
+
+                <option value="AZ">A - Z</option>
+
+                <option value="ZA">Z - A</option>
+
+            </select>
+            <button id="resetFilters" class="btn-reset">
+    <i class="fa-solid fa-rotate-right"></i>
+    Reset
+</button>
+
+    <!-- ===========================
+    BULK BAR
+    ============================ -->
+
+    <section
+        id="bulkBar"
+        class="bulk-bar hidden">
+
+        <div>
+
+            <strong id="selectedCount">
+
+                0
+
+            </strong>
+
+            selected
+
+        </div>
+
+        <div class="bulk-actions">
+
+            <button id="bulkHide">
+
+                Hide
+
+            </button>
+
+            <button id="bulkDuplicate">
+
+                Duplicate
+
+            </button>
+
+            <button id="bulkDelete">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+PRODUCT GRID
+========================================== -->
+
+<section class="products-container">
+
+    <div id="productsGrid" class="products-grid">
+
+       
+
+    </div>
+
+</section>
+
+
+    <!-- ===========================
+    PAGINATION
+    ============================ -->
+
+    <section class="pagination">
+
+        <button id="prevPage">
+
+            <i class="fa-solid fa-chevron-left"></i>
+
+            Previous
+
+        </button>
+
+        <div id="pageNumbers">
+
+        </div>
+
+        <button id="nextPage">
+
+            Next
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+        </button>
+
+    </section>
+
+</main>
+
+</div>
+<!-- ==========================
+PRODUCT DRAWER
+========================== -->
+
+<div id="productDrawer" class="drawer">
+
+    <div class="drawer-overlay"></div>
+
+    <div class="drawer-panel">
+
+        <button id="closeDrawer" class="drawer-close">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+        <img id="drawerImage">
+
+        <div class="form-group">
+
+    <input
+        type="text"
+        id="editName"
+        class="drawer-input">
+
+</div>
+
+       <div class="form-group">
+
+<select
+id="editStatus"
+class="drawer-input">
+
+<option>Active</option>
+
+<option>Hidden</option>
+
+</select>
+
+</div>
+
+        <div class="drawer-grid">
+
+            <div>
+
+                <strong>Category</strong>
+
+               <div class="form-group">
+
+<select
+id="editCategory"
+class="drawer-input">
+
+<option>Hair Care</option>
+
+<option>Skin Care</option>
+
+<option>Wellness</option>
+
+</select>
+
+</div>
+
+            </div>
+
+            <div>
+
+                <strong>Price</strong>
+
+                <div class="form-group">
+
+<input
+type="number"
+id="editPrice"
+class="drawer-input">
+
+</div>
+
+            </div>
+
+            <div>
+
+                <strong>Stock</strong>
+
+               <div class="form-group">
+
+<input
+type="number"
+id="editStock"
+class="drawer-input">
+
+</div>
+
+            </div>
+
+            <div>
+
+                <strong>SKU</strong>
+
+               <div class="form-group">
+
+<input
+type="text"
+id="editSKU"
+class="drawer-input">
+
+</div>
+
+            </div>
+
+        </div>
+
+        <h3>Description</h3>
+
+       <div class="form-group">
+
+<textarea
+id="editDescription"
+class="drawer-textarea"></textarea>
+
+</div>
+        <h3>Quick Introduction</h3>
+<div class="form-group">
+
+<textarea
+id="editIntro"
+class="drawer-textarea"></textarea>
+
+</div>
+
+<h3>Short Paragraph</h3>
+<div class="form-group">
+
+<textarea
+id="editParagraph"
+class="drawer-textarea"></textarea>
+
+</div>
+
+<h3>Product Story</h3>
+<div class="form-group">
+
+<textarea
+id="editStory"
+class="drawer-textarea"></textarea>
+
+</div>
+
+<h3>How To Use</h3>
+
+<div id="howToUseContainer"></div>
+
+<button
+type="button"
+id="addHowToUse"
+class="small-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Step
+
+</button>
+
+<h3>Available Sizes</h3>
+
+<div id="sizesContainer"></div>
+
+<button
+type="button"
+id="addSize"
+class="small-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Size
+
+</button>
+<h3>Ingredients</h3>
+
+<div id="ingredientsContainer"></div>
+
+<button
+type="button"
+id="addIngredient"
+class="small-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Ingredient
+
+</button>
+
+       <h3>Benefits</h3>
+
+<div id="benefitsContainer"></div>
+
+<button
+type="button"
+id="addBenefit"
+class="small-btn">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Benefit
+
+</button>
+
+  <div class="drawer-footer">
+
+<button
+id="cancelEdit"
+class="secondary-btn">
+
+Cancel
+
+</button>
+
+<button
+id="saveProduct"
+class="primary-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Save Changes
+
+</button>
+
+</div>
+
+    </div>
+
+</div>
+<div id="toastContainer"></div>
+<!-- ==========================================
+CONFIRMATION MODAL
+========================================== -->
+
+<div id="confirmModal" class="confirm-modal">
+
+    <div class="confirm-box">
+
+        <div class="confirm-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <h2 id="confirmTitle">
+
+            Confirmation
+
+        </h2>
+
+        <p id="confirmMessage">
+
+            Are you sure?
+
+        </p>
+
+        <div class="confirm-buttons">
+
+            <button
+                id="confirmCancel"
+                class="btn-secondary">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="confirmOk"
+                class="btn-danger">
+
+                Confirm
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module" src="js/products.js"></script>
+
+</body>
+</html>

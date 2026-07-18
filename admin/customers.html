@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/customers.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a href="products.html">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html" class="active">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+              <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+  <main class="content">
+
+    <!-- ==========================================
+    PAGE HEADER
+    =========================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Customers</h1>
+
+            <p>
+                View and manage all registered AVOGLOW customers.
+            </p>
+
+        </div>
+
+        <!-- <button
+            id="exportCustomersBtn"
+            class="btn-primary">
+
+            <i class="fa-solid fa-download"></i>
+
+            Export Customers
+
+        </button> -->
+
+    </div>
+
+
+    <!-- ==========================================
+    CUSTOMER STATISTICS
+    =========================================== -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <h4>Total Customers</h4>
+
+                <h2 id="totalCustomers">0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-bag-shopping"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <h4>Customers With Orders</h4>
+
+                <h2 id="customersWithOrders">0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <h4>New This Month</h4>
+
+                <h2 id="newCustomers">0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+
+                <i class="fa-solid fa-wallet"></i>
+
+            </div>
+
+            <div class="stat-content">
+
+                <h4>Total Revenue</h4>
+
+                <h2 id="customerRevenue">
+
+                    UGX 0
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+    SEARCH & FILTERS
+    =========================================== -->
+
+    <section class="toolbar">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                type="text"
+                id="searchCustomer"
+                placeholder="Search customer name, email or phone">
+
+        </div>
+
+        <div class="toolbar-filters">
+
+            <select id="districtFilter">
+
+                <option value="">
+
+                    All Districts
+
+                </option>
+
+            </select>
+
+            <select id="statusFilter">
+
+                <option value="">
+
+                    All Status
+
+                </option>
+
+                <option value="Active">
+
+                    Active
+
+                </option>
+
+                <option value="Blocked">
+
+                    Blocked
+
+                </option>
+
+            </select>
+
+            <select id="orderFilter">
+
+                <option value="">
+
+                    All Customers
+
+                </option>
+
+                <option value="WithOrders">
+
+                    With Orders
+
+                </option>
+
+                <option value="WithoutOrders">
+
+                    No Orders
+
+                </option>
+
+            </select>
+
+            <select id="sortCustomers">
+
+                <option value="Newest">
+
+                    Newest
+
+                </option>
+
+                <option value="Oldest">
+
+                    Oldest
+
+                </option>
+
+                <option value="AZ">
+
+                    A - Z
+
+                </option>
+
+                <option value="ZA">
+
+                    Z - A
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================
+    CUSTOMERS TABLE
+    =========================================== -->
+
+    <section class="table-card">
+
+        <table class="customers-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        Customer
+
+                    </th>
+
+                    <th>
+
+                        Phone
+
+                    </th>
+
+                    <th>
+
+                        District
+
+                    </th>
+
+                    <th>
+
+                        Orders
+
+                    </th>
+
+                    <th>
+
+                        Total Spent
+
+                    </th>
+
+                    <th>
+
+                        Joined
+
+                    </th>
+
+                    <th>
+
+                        Status
+
+                    </th>
+
+                    <th>
+
+                        Actions
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="customersTableBody">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- ==========================================
+    EMPTY STATE
+    =========================================== -->
+
+    <section
+        id="emptyCustomers"
+        class="empty-state hidden">
+
+        <i class="fa-solid fa-users"></i>
+
+        <h2>
+
+            No Customers Found
+
+        </h2>
+
+        <p>
+
+            Try changing your search or filters.
+
+        </p>
+
+    </section>
+
+
+    <!-- ==========================================
+    PAGINATION
+    =========================================== -->
+
+    <section class="pagination">
+
+        <button
+            id="previousCustomers"
+            class="btn-secondary">
+
+            <i class="fa-solid fa-chevron-left"></i>
+
+            Previous
+
+        </button>
+
+        <span id="customerPageNumber">
+
+            Page 1 of 1
+
+        </span>
+
+        <button
+            id="nextCustomers"
+            class="btn-secondary">
+
+            Next
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+        </button>
+
+    </section>
+
+</main>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<aside class="customer-drawer" id="customerDrawer">
+
+    <div class="drawer-header">
+
+    <button class="drawer-close" id="closeDrawer">
+
+        <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <div class="drawer-avatar" id="drawerAvatar">
+
+        A
+
+    </div>
+
+    <h2 id="drawerName">
+
+        Customer Name
+
+    </h2>
+
+    <p id="drawerEmail">
+
+        customer@email.com
+
+    </p>
+
+    <span class="drawer-status active">
+
+        Active Customer
+
+    </span>
+
+</div>
+
+<div class="drawer-body">
+
+    <!-- SUMMARY -->
+
+    <section class="drawer-section">
+
+        <h3>
+
+            Customer Summary
+
+        </h3>
+
+        <div class="summary-grid">
+
+            <div class="summary-item">
+
+                <span>Orders</span>
+
+                <strong id="drawerOrders">
+
+                    0
+
+                </strong>
+
+            </div>
+
+            <div class="summary-item">
+
+                <span>Total Spent</span>
+
+                <strong id="drawerSpent">
+
+                    UGX 0
+
+                </strong>
+
+            </div>
+
+            <div class="summary-item">
+
+                <span>Joined</span>
+
+                <strong id="drawerJoined">
+
+                    --
+
+                </strong>
+
+            </div>
+
+            <div class="summary-item">
+
+                <span>Last Order</span>
+
+                <strong id="drawerLastOrder">
+
+                    --
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CONTACT -->
+
+    <section class="drawer-section">
+
+        <h3>
+
+            Contact Information
+
+        </h3>
+
+        <div class="info-list">
+
+            <div>
+
+                <label>Phone</label>
+
+                <p id="drawerPhone">--</p>
+
+            </div>
+
+            <div>
+
+                <label>District</label>
+
+                <p id="drawerDistrict">--</p>
+
+            </div>
+
+            <div>
+
+                <label>City</label>
+
+                <p id="drawerCity">--</p>
+
+            </div>
+
+            <div>
+
+                <label>Address</label>
+
+                <p id="drawerAddress">--</p>
+
+            </div>
+
+            <div>
+
+                <label>Notes</label>
+
+                <p id="drawerNotes">--</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+   
+    <!-- RECENT ORDERS -->
+
+    <section class="drawer-section">
+
+        <h3>
+
+            Recent Orders
+
+        </h3>
+
+        <div id="drawerOrdersList">
+
+        </div>
+
+    </section>
+
+    <!-- ACTIONS -->
+
+    <section class="drawer-section">
+
+    <div class="drawer-actions">
+
+<button
+
+class="btn-primary"
+
+id="notifyCustomer">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+Send Notification
+
+</button>
+
+<button
+
+class="btn-danger"
+
+id="toggleCustomerStatus">
+
+<i class="fa-solid fa-user-lock"></i>
+
+Block Customer
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+</aside>
+<div class="notification-modal" id="notificationModal">
+
+    <div class="notification-box">
+
+        <div class="notification-header">
+
+            <h2>Send Notification</h2>
+
+            <button id="closeNotification">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div class="notification-body">
+
+            <label>Notification Type</label>
+
+            <select id="notificationType">
+
+                <option value="Order Update">
+
+                    Order Update
+
+                </option>
+
+                <option value="Promotion">
+
+                    Promotion
+
+                </option>
+
+                <option value="Reminder">
+
+                    Reminder
+
+                </option>
+
+                <option value="Custom">
+
+                    Custom
+
+                </option>
+
+            </select>
+
+            <label>Title</label>
+
+            <input
+            type="text"
+            id="notificationTitle">
+
+            <label>Message</label>
+
+            <textarea
+            id="notificationMessage"
+            rows="6"></textarea>
+
+        </div>
+
+        <div class="notification-footer">
+
+            <button
+            class="cancel-notification"
+            id="cancelNotification">
+
+                Cancel
+
+            </button>
+
+            <button
+            class="send-notification"
+            id="sendNotification">
+
+                Send Notification
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toastContainer"></div>
+<script type="module" src="js/customers.js"></script>
+
+</body>
+</html>

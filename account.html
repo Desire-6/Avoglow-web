@@ -44,15 +44,15 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 
                 <ul class="dropdown-menu">
 
-                    <li><a href="shop.html">All Products</a></li>
+                    <li><a href="shop.html#all-products">All Products</a></li>
 
-                    <li><a href="shop.html#hair-care">Hair Care</a></li>
+<li><a href="shop.html#hair-care">Hair Care</a></li>
 
-                    <li><a href="shop.html#skin-care">Skin Care</a></li>
+<li><a href="shop.html#skin-care">Skin Care</a></li>
 
-                    <li><a href="shop.html#wellness">Wellness</a></li>
+<li><a href="shop.html#wellness">Wellness</a></li>
 
-                    <li><a href="shop.html#gift-sets">Gift Sets</a></li>
+<li><a href="shop.html#gift-sets">Gift Sets</a></li>
 
                 </ul>
 
@@ -185,15 +185,40 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                 Recently Viewed
             </a> -->
 
-            <a href="#" id="nav-inbox" data-section="inbox-section">
-                <i class="fa-regular fa-envelope"></i>
-                Inbox
-            </a>
+           <a href="#" id="nav-inbox" data-section="inbox-section">
 
-            <a href="#" id="nav-address" data-section="address-section">
+    <span class="nav-icon">
+
+        <i class="fa-regular fa-envelope"></i>
+
+    </span>
+
+    <span class="nav-label">
+
+        Inbox
+
+    </span>
+
+    <span
+
+        id="notification-badge"
+
+        class="notification-badge"
+
+        aria-label="Unread notifications"
+
+    >
+
+        0
+
+    </span>
+
+</a>
+
+            <!-- <a href="#" id="nav-address" data-section="address-section">
                 <i class="fa-solid fa-location-dot"></i>
                 Address Book
-            </a>
+            </a> -->
 
             <a href="#" id="nav-settings" data-section="settings-section">
                 <i class="fa-solid fa-gear"></i>
@@ -490,17 +515,59 @@ TRACKING
              WISHLIST
         ======================= -->
 
-        <section id="wishlist-section" class="account-section" style="display:none;">
+      <section id="wishlist-section"
+class="account-section"
+style="display:none;">
 
-        </section>
+    <div class="wishlist-header">
+
+        <h2>My Wishlist</h2>
+
+        <p>Your favourite Avoglow products.</p>
+
+    </div>
+
+    <div id="wishlist-container">
+
+    </div>
+
+</section>
 
         <!-- ======================
              INBOX
         ======================= -->
 
-        <section id="inbox-section" class="account-section" style="display:none;">
+ <section id="inbox-section" class="account-section" style="display:none;">
 
-        </section>
+    <div class="inbox-header">
+
+        <div>
+
+            <h2>Inbox Notifications</h2>
+
+            <p id="notification-summary">
+
+                You have 0 unread notifications
+
+            </p>
+
+        </div>
+
+        <button id="mark-all-read">
+
+            <i class="fas fa-check-double"></i>
+
+            Mark all as read
+
+        </button>
+
+    </div>
+
+    <div id="notifications-container">
+
+    </div>
+
+</section>
 
         <!-- ======================
              SETTINGS
@@ -517,39 +584,42 @@ TRACKING
              RECENTLY VIEWED
         ======================= -->
 
-        <section id="recent-section">
+       <section class="recently-viewed">
 
-            <div class="section-heading">
+    <div class="section-heading">
 
-                <h2>Recently Viewed</h2>
+        <h2>Recently Viewed</h2>
 
-                <p>Continue shopping where you left off.</p>
+        <p>
+            Products you've looked at recently.
+        </p>
 
-            </div>
+    </div>
+    <div class="recently-viewed-wrapper">
 
-            <div class="recently-viewed-wrapper">
+    <button class="recent-arrow left">
+        &#10094;
+    </button>
 
-                <button class="recent-arrow left">
+    <div id="recently-viewed-container"
+         class="recent-scroll">
 
-                    &#10094;
+    </div>
 
-                </button>
+    <button class="recent-arrow right">
+        &#10095;
+    </button>
 
-                <div
-                    id="recently-viewed-container"
-                    class="recent-scroll">
+</div>
 
-                </div>
+</section>
+        <div id="toast" class="toast">
 
-                <button class="recent-arrow right">
+    <span id="toast-message"></span>
 
-                    &#10095;
+    <button id="close-toast">&times;</button>
 
-                </button>
-
-            </div>
-
-        </section>
+</div>
 <footer class="footer">
 
     <div class="footer-container">
@@ -596,7 +666,7 @@ TRACKING
 
             <p>Mbale, Uganda</p>
 
-            <p>+256 787 244 223</p>
+            <p>++256 759 697 167</p>
 
             <p>info@avoglow.com</p>
 
@@ -607,16 +677,18 @@ TRACKING
             <h4>Follow Us</h4>
 
              <div class="social-icons"> 
-                </a> 
-                <a href="https://www.instagram.com/avoglowuganda/"> 
+              <a href="https://www.instagram.com/avoglowuganda/"> 
                     <i class="fab fa-instagram"></i> 
-                </a> <a href="https://www.facebook.com/profile.php?id=61582545884756"> 
+                </a> 
+                <a href="https://www.facebook.com/profile.php?id=61582545884756"> 
                     <i class="fab fa-facebook-f"></i> 
-                </a> <a href="https://wa.me/message/QFMWC52VG3R7B1"> 
+                </a> 
+                <a href="https://wa.me/message/QFMWC52VG3R7B1"> 
                     <i class="fab fa-whatsapp"></i> 
                 </a>
                  <a href="#"> 
                     <i class="fab fa-tiktok"></i> 
+                    </a>  
              </div> 
 
         </div>

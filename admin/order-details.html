@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Order Details</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/order-details.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+ <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+        <i class="fas fa-chart-pie"></i>
+        Dashboard
+    </a>
+
+    <a href="orders.html" class="active">
+        <i class="fas fa-box"></i>
+        Orders
+    </a>
+
+    <a href="products.html">
+        <i class="fas fa-cube"></i>
+        Products
+    </a>
+
+    <a href="customers.html">
+        <i class="fas fa-users"></i>
+        Customers
+    </a>
+
+    <a href="analytics.html">
+        <i class="fas fa-chart-line"></i>
+        Analytics
+    </a>
+
+              <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+            <a href="settings.html">
+                <i class="fas fa-gear"></i>
+                Settings
+            </a>
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+<!-- Main -->
+
+<main class="main-content">
+
+<header class="order-header">
+
+<a href="orders.html" class="back-link">
+
+<i class="fas fa-arrow-left"></i>
+
+Back to Orders
+
+</a>
+
+<div class="order-title">
+
+<h1 id="orderNumber"></h1>
+
+<span id="statusBadge" class="status pending">
+
+Pending
+
+</span>
+
+</div>
+<div class="order-meta">
+
+    <span id="orderDate"></span>
+
+</div>
+
+<div class="order-actions">
+
+<button class="outline-btn">
+
+<i class="fas fa-print"></i>
+
+Print Invoice
+
+</button>
+
+</div>
+
+</header>
+
+
+<div class="order-grid">
+
+<!-- LEFT -->
+
+<div class="left-column">
+
+<div class="panel">
+
+<h2>
+
+Customer
+
+</h2>
+
+<div class="info-grid">
+
+<div>
+
+<strong>Name</strong>
+
+<p id="customerName"></p>
+
+</div>
+
+<div>
+
+<strong>Email</strong>
+
+<p id="customerEmail"></p>
+
+</div>
+
+<div>
+
+<strong>Phone</strong>
+
+<p id="customerPhone"></p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+
+Delivery Address
+
+</h2>
+
+<p id="deliveryAddress"></p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+
+Products Ordered
+
+</h2>
+
+<div id="orderedItems"></div>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT -->
+
+<div class="right-column">
+
+<div class="panel">
+
+<h2>
+
+Order Summary
+
+</h2>
+
+<div class="summary">
+
+<div>
+
+Subtotal
+
+<span id="subtotal"></span>
+
+</div>
+
+<div>
+
+Delivery
+
+<span id="deliveryFee"></span>
+
+</div>
+
+<div class="grand">
+
+Total
+
+<span id="total"></span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+
+Payment
+
+</h2>
+
+<p>
+
+Method
+
+</p>
+
+<strong id="paymentMethod">
+
+</strong>
+
+<br><br>
+
+<p>
+
+Status
+
+</p>
+
+<strong id="paymentStatus">
+
+</strong>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+
+Tracking
+
+</h2>
+
+<div id="trackingTimeline">
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+
+Update Status
+
+</h2>
+
+<select id="statusSelect">
+
+<option>Pending</option>
+
+<option>Preparing Order</option>
+
+<option>Ready for Pickup</option>
+
+<option>Out for Delivery</option>
+
+<option>Delivered</option>
+
+</select>
+
+<button id="updateStatus">
+
+Update Status
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+<div id="toastContainer"></div>
+
+<script type="module" src="js/order-details.js"></script>
+
+</body>
+
+</html>

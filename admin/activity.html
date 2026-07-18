@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/activity.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a href="products.html">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+                <a href="activity.html"  class="active">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+   <main class="admin-main activity-main">
+
+    <!-- =================================
+         ACTIVITY HEADER
+    ================================== -->
+
+    <header class="activity-header">
+
+        <div class="activity-header-left">
+
+            <h1>Activity</h1>
+
+            <p>
+                Track important actions and changes across your store.
+            </p>
+
+        </div>
+
+        <div class="activity-header-right">
+
+            <button
+                class="activity-refresh-btn"
+                id="refreshActivity">
+
+                <i class="fa-solid fa-rotate"></i>
+
+                Refresh
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         ACTIVITY TOOLBAR
+    ================================== -->
+
+    <section class="activity-toolbar">
+
+        <!-- SEARCH -->
+
+        <div class="activity-search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="activitySearch"
+                placeholder="Search activity...">
+
+        </div>
+
+
+        <!-- ACTIVITY TYPE -->
+
+        <div class="activity-filter">
+
+            <i class="fa-solid fa-filter"></i>
+
+            <select id="activityTypeFilter">
+
+                <option value="">
+
+                    All Activity
+
+                </option>
+
+                <option value="order">
+
+                    Orders
+
+                </option>
+
+                <option value="customer">
+
+                    Customers
+
+                </option>
+
+                <option value="product">
+
+                    Products
+
+                </option>
+
+                <option value="payment">
+
+                    Payments
+
+                </option>
+
+                <option value="notification">
+
+                    Notifications
+
+                </option>
+
+                <option value="system">
+
+                    System
+
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DATE FILTER -->
+
+        <div class="activity-filter">
+
+            <i class="fa-regular fa-calendar"></i>
+
+            <select id="activityDateFilter">
+
+                <option value="">
+
+                    All Time
+
+                </option>
+
+                <option value="today">
+
+                    Today
+
+                </option>
+
+                <option value="yesterday">
+
+                    Yesterday
+
+                </option>
+
+                <option value="7">
+
+                    Last 7 Days
+
+                </option>
+
+                <option value="30">
+
+                    Last 30 Days
+
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- CLEAR FILTERS -->
+
+        <button
+            id="clearActivityFilters"
+            class="activity-clear-btn">
+
+            Clear Filters
+
+        </button>
+
+    </section>
+
+
+    <!-- =================================
+         ACTIVITY CONTENT
+    ================================== -->
+
+    <section class="activity-layout">
+
+
+        <!-- ACTIVITY PANEL -->
+
+        <div class="activity-panel">
+
+
+            <!-- PANEL HEADER -->
+
+            <div class="activity-panel-header">
+
+                <div>
+
+                    <h2>Recent Activity</h2>
+
+                    <p>
+                        A record of important events in your store.
+                    </p>
+
+                </div>
+
+
+                <span
+                    id="activityCount"
+                    class="activity-count">
+
+                    0 activities
+
+                </span>
+
+            </div>
+
+
+            <!-- ACTIVITY LIST -->
+
+            <div
+                id="activityList"
+                class="activity-list">
+
+
+                <!-- LOADING STATE -->
+
+                <div
+                    id="activityLoading"
+                    class="activity-loading">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    <p>
+
+                        Loading activity...
+
+                    </p>
+
+                </div>
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    id="activityEmpty"
+                    class="activity-empty hidden">
+
+                    <div class="activity-empty-icon">
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    </div>
+
+                    <h3>
+
+                        No Activity Found
+
+                    </h3>
+
+                    <p>
+
+                        Important actions and events will appear here.
+
+                    </p>
+
+                </div>
+
+
+                <!--
+                ACTIVITY ITEMS WILL BE INSERTED HERE
+                USING JAVASCRIPT
+                -->
+
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div
+                id="activityPagination"
+                class="activity-pagination">
+
+                <!-- JavaScript will insert pagination -->
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             ACTIVITY DETAILS PANEL
+        ================================== -->
+
+        <aside
+            id="activityDetailsPanel"
+            class="activity-details-panel hidden">
+
+
+            <!-- CLOSE BUTTON -->
+
+            <button
+                id="closeActivityDetails"
+                class="activity-details-close">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+
+            <!-- DETAILS HEADER -->
+
+            <div class="activity-details-header">
+
+                <div
+                    id="activityDetailsIcon"
+                    class="activity-details-icon">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span
+                        id="activityDetailsType"
+                        class="activity-details-type">
+
+                        Activity
+
+                    </span>
+
+
+                    <h2
+                        id="activityDetailsTitle">
+
+                        Activity Details
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS BODY -->
+
+            <div class="activity-details-body">
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="activity-detail-group">
+
+                    <label>
+
+                        Description
+
+                    </label>
+
+                    <p
+                        id="activityDetailsDescription">
+
+                        --
+
+                    </p>
+
+                </div>
+
+
+                <!-- PERFORMED BY -->
+
+                <div class="activity-detail-group">
+
+                    <label>
+
+                        Performed By
+
+                    </label>
+
+                    <p
+                        id="activityDetailsUser">
+
+                        --
+
+                    </p>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="activity-detail-group">
+
+                    <label>
+
+                        Date & Time
+
+                    </label>
+
+                    <p
+                        id="activityDetailsDate">
+
+                        --
+
+                    </p>
+
+                </div>
+
+
+                <!-- RELATED ITEM -->
+
+                <div class="activity-detail-group">
+
+                    <label>
+
+                        Related Item
+
+                    </label>
+
+                    <p
+                        id="activityDetailsRelated">
+
+                        --
+
+                    </p>
+
+                </div>
+
+
+                <!-- ACTIVITY DATA -->
+
+                <div class="activity-detail-group">
+
+                    <label>
+
+                        Additional Information
+
+                    </label>
+
+
+                    <div
+                        id="activityDetailsMetadata"
+                        class="activity-metadata">
+
+                        --
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+</main>
+</div>
+<script type="module" src="js/activity.js"></script>
+</body>
+</html>

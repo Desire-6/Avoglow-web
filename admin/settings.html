@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/settings.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a href="products.html">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a>
+
+                <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html" class="active">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+    <main class="admin-main settings-main">
+
+    <!-- SETTINGS HEADER -->
+
+    <header class="settings-header">
+
+        <div>
+
+            <h1>Settings</h1>
+
+            <p>
+                Manage your admin account and store configuration.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- SETTINGS LAYOUT -->
+
+    <section class="settings-layout">
+
+
+        <!-- SETTINGS NAVIGATION -->
+
+        <aside class="settings-navigation">
+
+            <button
+                class="settings-nav-item active"
+                data-settings-section="admin-profile">
+
+                <i class="fa-solid fa-user"></i>
+
+                <span>
+
+                    <strong>Admin Profile</strong>
+
+                    <small>
+                        Manage your account
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="settings-nav-item"
+                data-settings-section="store-information">
+
+                <i class="fa-solid fa-store"></i>
+
+                <span>
+
+                    <strong>Store Information</strong>
+
+                    <small>
+                        Business details
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="settings-nav-item"
+                data-settings-section="pickup-stations">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+                <span>
+
+                    <strong>Pickup Stations</strong>
+
+                    <small>
+                        Manage collection points
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="settings-nav-item"
+                data-settings-section="notifications">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span>
+
+                    <strong>Notifications</strong>
+
+                    <small>
+                        Notification preferences
+                    </small>
+
+                </span>
+
+            </button>
+
+
+            <button
+                class="settings-nav-item"
+                data-settings-section="security">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+
+                    <strong>Security</strong>
+
+                    <small>
+                        Account security
+                    </small>
+
+                </span>
+
+            </button>
+
+        </aside>
+
+
+        <!-- SETTINGS CONTENT -->
+
+        <div class="settings-content">
+
+
+            <!-- =================================
+                 ADMIN PROFILE
+            ================================== -->
+
+            <section
+                class="settings-section active"
+                id="admin-profile">
+
+
+                <div class="settings-section-header">
+
+                    <div>
+
+                        <h2>Admin Profile</h2>
+
+                        <p>
+                            Manage your administrator account information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+
+                    <div class="profile-preview">
+
+                        <div
+                            id="adminAvatar"
+                            class="admin-avatar">
+
+                            A
+
+                        </div>
+
+
+                        <div>
+
+                            <h3 id="adminDisplayName">
+
+                                Admin
+
+                            </h3>
+
+
+                            <p id="adminEmail">
+
+                                Loading email...
+
+                            </p>
+                            <span class="admin-account-status">
+
+            <i class="fa-solid fa-circle"></i>
+
+            Administrator Account
+
+        </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-form-grid">
+
+
+                        <div class="settings-form-group">
+
+                            <label for="adminName">
+
+                                Full Name
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="adminName"
+                                placeholder="Enter your name">
+
+                        </div>
+
+
+                        <div class="settings-form-group">
+
+                            <label for="adminPhone">
+
+                                Phone Number
+
+                            </label>
+
+
+                            <input
+                                type="tel"
+                                id="adminPhone"
+                                placeholder="+256...">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-actions">
+
+                        <button
+                            id="saveAdminProfile"
+                            class="settings-save-btn">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 STORE INFORMATION
+            ================================== -->
+
+            <section
+                class="settings-section"
+                id="store-information">
+
+
+                <div class="settings-section-header">
+
+                    <div>
+
+                        <h2>Store Information</h2>
+
+                        <p>
+                            Information displayed across your store.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+
+                    <div class="settings-form-grid">
+
+
+                        <div class="settings-form-group">
+
+                            <label for="storeName">
+
+                                Store Name
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="storeName"
+                                placeholder="AVOGLOW">
+
+                        </div>
+
+
+                        <div class="settings-form-group">
+
+                            <label for="storePhone">
+
+                                Phone Number
+
+                            </label>
+
+
+                            <input
+                                type="tel"
+                                id="storePhone"
+                                placeholder="+256...">
+
+                        </div>
+
+
+                        <div class="settings-form-group">
+
+                            <label for="storeEmail">
+
+                                Email Address
+
+                            </label>
+
+
+                            <input
+                                type="email"
+                                id="storeEmail"
+                                placeholder="info@example.com">
+
+                        </div>
+
+
+                        <div class="settings-form-group">
+
+                            <label for="storeLocation">
+
+                                Location
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="storeLocation"
+                                placeholder="Kampala, Uganda">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="settings-form-group full-width">
+
+                        <label for="storeDescription">
+
+                            Store Description
+
+                        </label>
+
+
+                        <textarea
+                            id="storeDescription"
+                            rows="5"
+                            placeholder="Describe your store...">
+
+                        </textarea>
+
+                    </div>
+
+
+                    <div class="settings-actions">
+
+                        <button
+                            id="saveStoreInformation"
+                            class="settings-save-btn">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            Save Store Information
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 PICKUP STATIONS
+            ================================== -->
+
+            <section
+                class="settings-section"
+                id="pickup-stations">
+
+
+                <div class="settings-section-header">
+
+                    <div>
+
+                        <h2>Pickup Stations</h2>
+
+                        <p>
+                            Manage locations where customers collect orders.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="addPickupStation"
+                        class="settings-primary-btn">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Add Station
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="pickupStationsSettingsList"
+                    class="pickup-stations-settings-list">
+
+                    <div class="settings-loading">
+
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+
+                        Loading pickup stations...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 NOTIFICATIONS
+            ================================== -->
+
+            <section
+                class="settings-section"
+                id="notifications">
+
+
+                <div class="settings-section-header">
+
+                    <div>
+
+                        <h2>Notifications</h2>
+
+                        <p>
+                            Control how store notifications are handled.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+
+                    <div class="settings-option">
+
+                        <div>
+
+                            <strong>
+                                Customer Order Notifications
+                            </strong>
+
+                            <p>
+                                Notify customers when their order status changes.
+                            </p>
+
+                        </div>
+
+
+                        <label class="settings-switch">
+
+                            <input
+                                type="checkbox"
+                                id="orderNotificationsEnabled"
+                                checked>
+
+                            <span></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="settings-option">
+
+                        <div>
+
+                            <strong>
+                                Admin Activity Tracking
+                            </strong>
+
+                            <p>
+                                Record important actions performed by administrators.
+                            </p>
+
+                        </div>
+
+
+                        <label class="settings-switch">
+
+                            <input
+                                type="checkbox"
+                                id="activityTrackingEnabled"
+                                checked>
+
+                            <span></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="settings-actions">
+
+                        <button
+                            id="saveNotificationSettings"
+                            class="settings-save-btn">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            Save Notification Settings
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 SECURITY
+            ================================== -->
+
+            <section
+                class="settings-section"
+                id="security">
+
+
+                <div class="settings-section-header">
+
+                    <div>
+
+                        <h2>Security</h2>
+
+                        <p>
+                            Protect your administrator account.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+
+                    <div class="security-option">
+
+                        <div class="security-option-icon">
+
+                            <i class="fa-solid fa-key"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>Change Password</h3>
+
+                            <p>
+                                Update your administrator password.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            id="changePasswordBtn"
+                            class="settings-secondary-btn">
+
+                            Change Password
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="security-option">
+
+                        <div class="security-option-icon">
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>Sign Out</h3>
+
+                            <p>
+                                Sign out of this administrator account.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            id="settingsLogoutBtn"
+                            class="settings-danger-btn">
+
+                            Sign Out
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+</main>
+</div>
+<div
+    id="pickupStationModal"
+    class="settings-modal">
+
+
+    <div
+
+        class="settings-modal-overlay"
+
+        id="pickupStationModalOverlay">
+
+    </div>
+
+
+    <div
+
+        class="settings-modal-content">
+
+
+        <div
+
+            class="settings-modal-header">
+
+
+            <div>
+
+               <h2 id="pickupStationModalTitle">
+    Edit Pickup Station
+</h2>
+
+
+                <p>
+
+                    Update pickup station information.
+
+                </p>
+
+            </div>
+
+
+            <button
+
+                id="closePickupStationModal"
+
+                class="settings-modal-close">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div
+
+            class="settings-form-grid">
+
+
+            <div class="settings-form-group">
+
+                <label>Station Name</label>
+
+                <input
+
+                    id="stationName"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Building</label>
+
+                <input
+
+                    id="stationBuilding"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Phone Number</label>
+
+                <input
+
+                    id="stationPhone"
+
+                    type="tel">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>District</label>
+
+                <input
+
+                    id="stationDistrict"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>City</label>
+
+                <input
+
+                    id="stationCity"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Landmark</label>
+
+                <input
+
+                    id="stationLandmark"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Weekday Opening Hours</label>
+
+                <input
+
+                    id="stationWeekdays"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Weekend Opening Hours</label>
+
+                <input
+
+                    id="stationWeekend"
+
+                    type="text">
+
+            </div>
+
+
+            <div class="settings-form-group">
+
+                <label>Status</label>
+
+                <select id="stationStatus">
+
+                    <option value="active">
+
+                        Active
+
+                    </option>
+
+                    <option value="inactive">
+
+                        Inactive
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div
+
+            class="settings-modal-actions">
+
+
+            <button
+
+                id="cancelPickupStationModal"
+
+                class="settings-secondary-btn">
+
+                Cancel
+
+            </button>
+
+
+            <button
+
+                id="savePickupStation"
+
+                class="settings-save-btn">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Station
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ==========================================
+     CHANGE PASSWORD MODAL
+========================================== -->
+
+<div
+    id="changePasswordModal"
+    class="settings-modal">
+<div
+    class="settings-modal-overlay"
+    id="changePasswordModalOverlay">
+</div>
+
+<div class="settings-modal-content password-modal">
+
+    <div class="settings-modal-header">
+
+        <div>
+
+            <h2>Change Password</h2>
+
+            <p>
+                Update your administrator account password.
+            </p>
+
+        </div>
+
+        <button
+            id="closeChangePasswordModal"
+            class="settings-modal-close">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <div class="password-form">
+
+        <div class="settings-form-group">
+
+            <label for="currentPassword">
+
+                Current Password
+
+            </label>
+
+            <div class="password-input-wrapper">
+
+                <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Enter current password">
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    data-target="currentPassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-form-group">
+
+            <label for="newPassword">
+
+                New Password
+
+            </label>
+
+            <div class="password-input-wrapper">
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password">
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    data-target="newPassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-form-group">
+
+            <label for="confirmPassword">
+
+                Confirm New Password
+
+            </label>
+
+            <div class="password-input-wrapper">
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password">
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    data-target="confirmPassword">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="password-requirements">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <span>
+                Password must be at least 6 characters long.
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="settings-modal-actions">
+
+        <button
+            id="cancelChangePassword"
+            class="settings-secondary-btn">
+
+            Cancel
+
+        </button>
+
+
+        <button
+            id="saveNewPassword"
+            class="settings-save-btn">
+
+            <i class="fa-solid fa-key"></i>
+
+            Change Password
+
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+<script type="module" src="js/settings.js"></script>
+</body>
+</html>

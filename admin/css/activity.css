@@ -1,0 +1,938 @@
+/* =====================================================
+   ACTIVITY PAGE
+===================================================== */
+
+.activity-main {
+    padding: 32px;
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 280px;
+}
+
+
+/* =====================================================
+   ACTIVITY HEADER
+===================================================== */
+
+.activity-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.activity-header-left h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.activity-header-left p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.activity-header-right {
+    display: flex;
+    align-items: center;
+}
+
+.activity-refresh-btn {
+    border: none;
+    background: #0c593a;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.activity-refresh-btn:hover {
+    background: #08462e;
+    transform: translateY(-1px);
+}
+
+.activity-refresh-btn i {
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   ACTIVITY TOOLBAR
+===================================================== */
+
+.activity-toolbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.activity-search-box {
+    flex: 1;
+    min-width: 250px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.activity-search-box i {
+    color: #9ca3af;
+}
+
+.activity-search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #1f2937;
+}
+
+.activity-search-box input::placeholder {
+    color: #9ca3af;
+}
+
+
+.activity-filter {
+    min-width: 180px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 13px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.activity-filter i {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.activity-filter select {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #374151;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.activity-clear-btn {
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #4b5563;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.25s ease;
+}
+
+.activity-clear-btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+
+/* =====================================================
+   ACTIVITY LAYOUT
+===================================================== */
+
+.activity-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 20px;
+    align-items: start;
+}
+
+
+/* =====================================================
+   MAIN ACTIVITY PANEL
+===================================================== */
+
+.activity-panel {
+    width: 100%;
+    min-width: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   ACTIVITY PANEL HEADER
+===================================================== */
+
+.activity-panel-header {
+    min-height: 96px;
+    padding: 22px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.activity-panel-header h2 {
+    margin: 0 0 6px;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #0b2c4d;
+}
+
+.activity-panel-header p {
+    margin: 0;
+
+    font-size: 14px;
+    color: #718096;
+}
+
+.activity-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 16px;
+
+    border-radius: 30px;
+
+    background: #edf8f2;
+    color: #087443;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   ACTIVITY LIST
+===================================================== */
+
+.activity-list {
+    width: 100%;
+    min-height: 300px;
+
+    padding: 12px 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+/* =====================================================
+   ACTIVITY ITEM
+===================================================== */
+
+.activity-item {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 54px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 18px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #edf0f2;
+
+    border-radius: 14px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.activity-item:hover {
+    background: #fbfdfc;
+
+    border-color: #dce6e1;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =====================================================
+   ACTIVITY ICON
+===================================================== */
+
+.activity-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    font-size: 20px;
+}
+
+.activity-icon.notification {
+    background: #eef4ff;
+    color: #2563eb;
+}
+
+.activity-icon.order {
+    background: #edf8f2;
+    color: #087443;
+}
+
+.activity-icon.customer {
+    background: #fff7e8;
+    color: #c27a00;
+}
+
+.activity-icon.product {
+    background: #f4efff;
+    color: #7c3aed;
+}
+
+.activity-icon.payment {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.activity-icon.system {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.activity-icon.default {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+
+/* =====================================================
+   ACTIVITY CONTENT
+===================================================== */
+
+.activity-content {
+    min-width: 0;
+}
+
+.activity-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.activity-top h3 {
+    margin: 0 0 4px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    color: #0f2d4a;
+}
+
+.activity-time {
+    display: block;
+
+    font-size: 12px;
+
+    color: #94a3b8;
+}
+
+.activity-content > p {
+    margin: 9px 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #526477;
+}
+
+
+/* =====================================================
+   ACTIVITY TYPE BADGE
+===================================================== */
+
+.activity-type {
+    flex-shrink: 0;
+
+    padding: 6px 11px;
+
+    border-radius: 7px;
+
+    background: #f3f4f6;
+
+    color: #64748b;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: capitalize;
+}
+
+
+/* =====================================================
+   ACTIVITY META
+===================================================== */
+
+.activity-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    margin-top: 8px;
+}
+
+.activity-meta span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+.activity-meta i {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+
+/* =====================================================
+   VIEW BUTTON
+===================================================== */
+
+.activity-view-btn {
+    flex-shrink: 0;
+
+    min-width: 70px;
+
+    padding: 9px 15px;
+
+    border: 1px solid #d7dee5;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #53677b;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.activity-view-btn:hover {
+    background: #0c593a;
+
+    border-color: #0c593a;
+
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.activity-pagination {
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid #eef0f2;
+}
+
+.activity-pagination button {
+    padding: 9px 16px;
+
+    border: 1px solid #dfe5ea;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #526477;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.activity-pagination button:hover:not(:disabled) {
+    background: #f1f8f4;
+
+    border-color: #0c593a;
+
+    color: #0c593a;
+}
+
+.activity-pagination button:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+.activity-pagination span {
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   DETAILS DRAWER
+===================================================== */
+
+.activity-details-panel {
+    position: sticky;
+    top: 20px;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
+}
+
+.activity-details-panel.hidden {
+    display: none;
+}
+
+
+/* =====================================================
+   DETAILS CLOSE BUTTON
+===================================================== */
+
+.activity-details-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    cursor: pointer;
+}
+
+.activity-details-close:hover {
+    background: #e2e8f0;
+
+    color: #0f172a;
+}
+
+
+/* =====================================================
+   DETAILS HEADER
+===================================================== */
+
+.activity-details-header {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 24px 24px 22px;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.activity-details-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #edf8f2;
+
+    color: #087443;
+
+    font-size: 19px;
+}
+
+.activity-details-type {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #087443;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.activity-details-header h2 {
+    max-width: 210px;
+
+    margin: 0;
+
+    color: #0f2d4a;
+
+    font-size: 18px;
+
+    line-height: 1.25;
+}
+
+
+/* =====================================================
+   DETAILS BODY
+===================================================== */
+
+.activity-details-body {
+    padding: 22px 24px;
+}
+
+.activity-detail-group {
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eef0f2;
+}
+
+.activity-detail-group:first-child {
+    padding-top: 0;
+}
+
+.activity-detail-group:last-child {
+    border-bottom: none;
+}
+
+.activity-detail-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.activity-detail-group p {
+    margin: 0;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    line-height: 1.55;
+}
+
+
+/* =====================================================
+   METADATA
+===================================================== */
+
+.activity-metadata {
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   DETAILS FOOTER
+===================================================== */
+
+.activity-details-footer {
+    padding: 18px 24px;
+
+    border-top: 1px solid #eef0f2;
+}
+
+.activity-details-action {
+    width: 100%;
+
+    padding: 11px 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #0c593a;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.activity-details-action:hover {
+    background: #08462d;
+}
+
+.activity-details-action.hidden {
+    display: none;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.activity-loading {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #94a3b8;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.activity-empty {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.activity-empty.hidden {
+    display: none;
+}
+
+.activity-empty-icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #94a3b8;
+
+    font-size: 24px;
+}
+
+.activity-empty h3 {
+    margin: 0 0 6px;
+
+    color: #334155;
+
+    font-size: 17px;
+}
+
+.activity-empty p {
+    margin: 0;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   ERROR STATE
+===================================================== */
+
+.activity-error {
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #64748b;
+}
+
+.activity-error i {
+    margin-bottom: 12px;
+
+    color: #dc2626;
+
+    font-size: 28px;
+}
+
+.activity-error h3 {
+    margin: 0 0 8px;
+
+    color: #334155;
+}
+
+.activity-error p {
+    margin: 0;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .activity-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-details-panel {
+        position: fixed;
+
+        top: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 1000;
+
+        width: min(390px, 92vw);
+
+        border-radius: 18px 0 0 18px;
+
+        overflow-y: auto;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .activity-panel-header {
+        padding: 18px;
+    }
+
+    .activity-list {
+        padding: 10px;
+    }
+
+    .activity-item {
+        grid-template-columns: 44px minmax(0, 1fr);
+
+        padding: 15px;
+    }
+
+    .activity-icon {
+        width: 44px;
+        height: 44px;
+
+        font-size: 17px;
+    }
+
+    .activity-view-btn {
+        grid-column: 2;
+
+        justify-self: start;
+
+        margin-top: 5px;
+    }
+
+    .activity-top {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+}
