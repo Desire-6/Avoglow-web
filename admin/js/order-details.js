@@ -1,16 +1,20 @@
 import { auth, db } from "../../firebase-config.js";
 
 import {
-    onAuthStateChanged,
     signOut
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
+    requireAdmin
+}
+from "../../auth-service.js";
+
+import {
     doc,
-    getDoc,
     updateDoc,
     collection,
+    getDoc,
     getDocs,
     serverTimestamp
 }
@@ -29,29 +33,28 @@ console.log("Order Number:", orderNumber);
 
 let currentOrder = null;
 
-onAuthStateChanged(auth, async(user)=>{
+async function checkAdminAccess(){
 
-    if(!user){
+    try{
 
-        location.href="login.html";
+        await requireAdmin();
 
-        return;
-
-    }
-
-    const admin = await getDoc(doc(db,"admins",user.uid));
-
-    if(!admin.exists()){
-
-        location.href="login.html";
-
-        return;
+        loadOrder();
 
     }
 
-    loadOrder();
+    catch(error){
 
-});
+        console.error(error);
+
+        location.href="../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 async function loadOrder(){
 
     const orderRef = doc(db,"orders",orderNumber);
@@ -663,6 +666,6 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+window.location.href="../../login.html";
 
 };

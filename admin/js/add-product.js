@@ -1,16 +1,18 @@
-import { auth, db } from "../../firebase-config.js";
+import {auth, db } from "../../firebase-config.js";
+import {
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-
-import {
-    doc,
-    getDoc,
     collection,
     addDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+import {
+    requireAdmin
+} from "../../auth-service.js";
 import {
     createAdminActivity
 }
@@ -23,33 +25,33 @@ GLOBAL VARIABLES
 let selectedImage = null;
 let isSaving = false;
 
+
 /* ===========================================
 CHECK ADMIN LOGIN
 =========================================== */
 
-onAuthStateChanged(auth, async (user) => {
+async function checkAdminAccess(){
 
-    if (!user) {
+    try{
 
-        window.location.href = "login.html";
-        return;
+        await requireAdmin();
 
-    }
-
-    const adminRef = doc(db, "admins", user.uid);
-
-    const adminSnap = await getDoc(adminRef);
-
-    if (!adminSnap.exists()) {
-
-        window.location.href = "../index.html";
-        return;
+        initialisePage();
 
     }
 
-    initialisePage();
+    catch(error){
 
-});
+        console.error(error);
+
+        window.location.href = "../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 
 /* ===========================================
 INITIALISE PAGE
@@ -957,3 +959,16 @@ function showConfirm(options){
     };
 
 }
+/* ===========================
+LOGOUT
+=========================== */
+
+document.getElementById("logoutBtn")
+
+.onclick=async()=>{
+
+await signOut(auth);
+
+ window.location.href = "../login.html";
+
+};

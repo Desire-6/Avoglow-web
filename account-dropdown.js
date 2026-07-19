@@ -14,6 +14,17 @@ document.getElementById("account-greeting");
 
 const accountMenu =
 document.getElementById("account-menu");
+/* ==========================
+   SHOW CACHED USER NAME
+========================== */
+
+const cachedName = localStorage.getItem("firstName");
+
+if (cachedName && greeting) {
+
+    greeting.textContent = `Hi, ${cachedName}`;
+
+}
 
 /* ==========================
    ACCOUNT DROPDOWN
@@ -29,12 +40,18 @@ onAuthStateChanged(auth, (user) => {
 
     if (user) {
 
-        const firstName =
-        (user.displayName || "Customer")
-        .split(" ")[0];
+      const firstName =
+(user.displayName || "Customer")
+.split(" ")[0];
 
-        greeting.textContent =
-        `Hi, ${firstName}`;
+greeting.textContent =
+`Hi, ${firstName}`;
+
+// Cache it
+localStorage.setItem(
+    "firstName",
+    firstName
+);
 
         accountMenu.innerHTML = `
 
@@ -82,12 +99,14 @@ onAuthStateChanged(auth, (user) => {
 
             e.preventDefault();
 
-            signOut(auth).then(() => {
+          signOut(auth).then(() => {
 
-                window.location.href =
-                "index.html";
+    localStorage.removeItem("firstName");
 
-            });
+    window.location.href =
+    "index.html";
+
+});
 
         });
 

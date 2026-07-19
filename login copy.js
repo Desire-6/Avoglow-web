@@ -19,12 +19,6 @@ import {
     arrayUnion,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
-import {
-    loginWithEmail,
-    loginWithGoogle,
-    getUser,
-    getUserRole
-} from "./auth-service.js";
 
 /* ==========================
    ELEMENTS
@@ -80,33 +74,6 @@ function showToast(message,type="success"){
 
 }
 
-async function redirectUser(user) {
-
-    const role = await getUserRole(user.uid);
-
-    if (role === "admin") {
-
-        window.location.href = "admin/dashboard.html";
-        return;
-
-    }
-
-    const redirect =
-        localStorage.getItem("redirectAfterLogin");
-
-    if (redirect) {
-
-        localStorage.removeItem("redirectAfterLogin");
-
-        window.location.href = redirect;
-
-    } else {
-
-        window.location.href = "account.html";
-
-    }
-
-}
 /* ==========================
    ERRORS
 ========================== */
@@ -242,11 +209,19 @@ form.addEventListener("submit",async(e)=>{
 
         );
 
-       const user =
-    await loginWithEmail(
-        email,
-        password
-    );
+        const userCredential=
+        await signInWithEmailAndPassword(
+
+            auth,
+
+            email,
+
+            password
+
+        );
+
+        const user=
+        userCredential.user;
         const userDoc = await getDoc(
     doc(
         db,
@@ -295,7 +270,29 @@ if(userDoc.exists()){
 
         );
 
- await redirectUser(user);
+    const redirect =
+localStorage.getItem(
+    "redirectAfterLogin"
+);
+
+if(redirect){
+
+    localStorage.removeItem(
+        "redirectAfterLogin"
+    );
+
+    window.location.href =
+    redirect;
+
+}
+
+else{
+
+    window.location.href =
+    "account.html";
+
+}
+
     }
 
     catch(error){
@@ -582,8 +579,22 @@ async function signInWithGoogle(){
 
     try{
 
-       const user =
-    await loginWithGoogle();
+        const provider =
+            new GoogleAuthProvider();
+
+
+        const result =
+            await signInWithPopup(
+
+                auth,
+
+                provider
+
+            );
+
+
+        const user =
+            result.user;
 
 
         /*
@@ -765,7 +776,34 @@ async function signInWithGoogle(){
         ==========================================
         */
 
-await redirectUser(user);
+        const redirect =
+            localStorage.getItem(
+
+                "redirectAfterLogin"
+
+            );
+
+
+        if(redirect){
+
+            localStorage.removeItem(
+
+                "redirectAfterLogin"
+
+            );
+
+
+            window.location.href =
+                redirect;
+
+        }
+
+        else{
+
+            window.location.href =
+                "account.html";
+
+        }
 
     }
 

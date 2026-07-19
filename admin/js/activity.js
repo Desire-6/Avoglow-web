@@ -1,4 +1,8 @@
-import { db } from "../../firebase-config.js";
+import {auth, db } from "../../firebase-config.js";
+import {
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
     collection,
@@ -6,6 +10,7 @@ import {
     query,
     orderBy
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import { requireAdmin } from "../../auth-service.js";
 
 
 let allActivities = [];
@@ -30,11 +35,25 @@ document.addEventListener(
 );
 
 
-async function initialiseActivity(){
+async function initialiseActivity() {
 
-    await loadActivities();
+    try {
 
-    initialiseActivityFilters();
+        await requireAdmin();
+
+        await loadActivities();
+
+        initialiseActivityFilters();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        window.location.href = "../login.html";
+
+    }
 
 }
 
@@ -1806,6 +1825,6 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+ window.location.href = "../login.html";
 
 };

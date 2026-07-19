@@ -1,7 +1,6 @@
 import { auth, db } from "../../firebase-config.js";
 
 import {
-    onAuthStateChanged,
     updateProfile,
     updatePassword,
     signOut,
@@ -20,6 +19,10 @@ import {
     deleteDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import {
+    requireAdmin
+}
+from "../../auth-service.js";
 
 
 // ==========================================
@@ -30,6 +33,41 @@ let currentUser = null;
 
 let currentAdminData = null;
 let currentEditingStation = null;
+
+// ==========================================
+// AUTHENTICATION
+// ==========================================
+
+async function checkAdminAccess(){
+
+    try{
+
+        const { user } = await requireAdmin();
+
+        currentUser = user;
+
+        await loadAdminProfile();
+
+        await loadStoreInformation();
+
+        await loadPickupStations();
+
+        await loadNotificationSettings();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        window.location.href = "../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 
 
 // ==========================================
@@ -57,40 +95,6 @@ function initialiseSettings(){
     initialiseSecurity();
 
 }
-
-
-// ==========================================
-// AUTHENTICATION
-// ==========================================
-
-onAuthStateChanged(
-
-    auth,
-
-    async(user)=>{
-
-        if(!user){
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-        currentUser = user;
-
-        await loadAdminProfile();
-
-        await loadStoreInformation();
-
-        await loadPickupStations();
-
-        await loadNotificationSettings();
-
-    }
-
-);
 
 
 // ==========================================
@@ -2386,6 +2390,6 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+window.location.href="../../login.html";
 
 };

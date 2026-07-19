@@ -1,59 +1,58 @@
 import { auth, db } from "../../firebase-config.js";
 
 import {
-    onAuthStateChanged,
+
     signOut
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
-    doc,
-    getDoc,
     collection,
     getDocs
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-onAuthStateChanged(auth, async (user) => {
+import {
+    requireAdmin
+} from "../../auth-service.js";
 
-    if (!user) {
 
-        window.location.href = "login.html";
-        return;
+initializeDashboard();
+
+async function initializeDashboard() {
+
+    try {
+
+        const { user, admin } = await requireAdmin();
+
+        document.getElementById("adminName").textContent =
+            admin.name;
+
+        document.getElementById("adminEmail").textContent =
+            admin.email;
+
+        document.getElementById("adminInitials").textContent =
+            admin.name
+                .split(" ")
+                .map(n => n[0])
+                .join("")
+                .toUpperCase();
+
+        await loadDashboard();
 
     }
 
-    const adminSnap = await getDoc(
-        doc(db, "admins", user.uid)
-    );
+    catch (error) {
 
-    if (!adminSnap.exists()) {
+        console.error(error);
 
         await signOut(auth);
 
-        window.location.href = "login.html";
-
-        return;
+       window.location.href = "../../login.html";
 
     }
-    const admin = adminSnap.data();
 
-document.getElementById("adminName").textContent =
-admin.name;
-
-document.getElementById("adminEmail").textContent =
-admin.email;
-
-document.getElementById("adminInitials").textContent =
-admin.name
-.split(" ")
-.map(n=>n[0])
-.join("")
-.toUpperCase();
-
-    loadDashboard();
-
-});
+}
 
 async function loadDashboard() {
 
@@ -173,7 +172,7 @@ document
 
     await signOut(auth);
 
-    window.location.href = "login.html";
+window.location.href = "../../login.html";
 
 });
 const menuToggle = document.getElementById("menuToggle");

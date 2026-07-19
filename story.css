@@ -550,86 +550,95 @@ nav{
     margin-bottom:20px;
 
 } */
+/*=====================================
+    ATARI FARMS
+=====================================*/
+
 .atari-connection{
 
-    padding:80px 8%;
-
     background:#f7f3ec;
+    padding:120px 8%;
 
 }
 
 .connection-container{
 
-    max-width:900px;
-
+    max-width:850px;
     margin:auto;
-
     text-align:center;
 
 }
 
 .section-tag{
 
-    display:block;
-
-    color:#d87a4a;
-
-    letter-spacing:4px;
-
+    display:inline-block;
+    letter-spacing:3px;
     text-transform:uppercase;
-
-    font-size:14px;
-
-    margin-bottom:20px;
-
-    font-weight:600;
+    color:var(--gold);
+    font-weight:700;
+    font-size:.9rem;
+    margin-bottom:18px;
 
 }
 
-.atari-connection h2{
+.connection-container h2{
 
     font-size:3rem;
-
-    color:#0b6b3f;
-
-    margin-bottom:35px;
-
+    color:var(--emerald);
+    margin-bottom:30px;
     line-height:1.2;
 
 }
 
 .lead-text{
 
-    font-size:1.4rem;
-
-    color:#0b6b3f;
-
-    font-weight:500;
-
-    margin-bottom:30px;
-
+    font-size:1.35rem;
     line-height:1.8;
+    color:var(--emerald);
+    max-width:700px;
+    margin:0 auto 30px;
+    font-weight:500;
 
 }
 
-.atari-connection p{
+.story-divider{
+
+    width:80px;
+    height:3px;
+    background:var(--gold);
+    margin:0 auto 50px;
+    border-radius:20px;
+
+}
+
+.connection-story{
+
+    text-align:left;
+    max-width:760px;
+    margin:auto;
+
+}
+
+.connection-story p{
 
     color:#666;
-
-    font-size:1.15rem;
-
     line-height:2;
-
-    margin-bottom:15px;
+    font-size:1.08rem;
+    margin-bottom:18px;
 
 }
 
 .connection-footer{
-    margin-top:40px;
-    font-size:1rem;
-    color:#0b6b3f;
+
+    margin-top:60px;
+    padding-top:35px;
+    border-top:1px solid rgba(0,0,0,.08);
+
+    color:var(--emerald);
     font-style:italic;
-    font-weight:500;
+    font-weight:600;
+    font-size:1.05rem;
+
 }
 .people-section{
 

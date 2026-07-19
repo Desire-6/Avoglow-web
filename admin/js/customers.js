@@ -1,22 +1,21 @@
-import { auth, db } from "../../firebase-config.js";
-
+import {auth, db } from "../../firebase-config.js";
 import {
-    onAuthStateChanged
+    signOut
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+import {
+    requireAdmin
+} from "../../auth-service.js";
 
 import{
 
 collection,
 
 getDocs,
-
-doc,
-
-getDoc,
 query,
 updateDoc,
-
+doc,
 where,
 
 orderBy,
@@ -56,35 +55,28 @@ const overlay =
 CHECK ADMIN LOGIN
 ============================================ */
 
-onAuthStateChanged(auth, async(user)=>{
+async function checkAdminAccess(){
 
-    if(!user){
+    try{
 
-        window.location.href="login.html";
+        await requireAdmin();
 
-        return;
-
-    }
-
-    const adminRef=
-
-        doc(db,"admins",user.uid);
-
-    const adminSnap=
-
-        await getDoc(adminRef);
-
-    if(!adminSnap.exists()){
-
-        window.location.href="../index.html";
-
-        return;
+        initialiseCustomers();
 
     }
 
-    initialiseCustomers();
+    catch(error){
 
-});
+        console.error(error);
+
+        window.location.href="../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 /* ============================================
 INITIALISE
 ============================================ */
@@ -1960,6 +1952,6 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+ window.location.href = "../login.html";
 
 };

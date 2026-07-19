@@ -15,6 +15,10 @@ import {
     onSnapshot
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import {
+    requireAdmin
+}
+from "../../auth-service.js";
 
 let allOrders = [];
 let filteredOrders = [];
@@ -56,32 +60,32 @@ function getStatusBadge(status){
     }
 
 }
-
 /* ===========================
 AUTH
 =========================== */
 
-onAuthStateChanged(auth, async(user)=>{
+async function checkAdminAccess(){
 
-    if(!user){
+    try{
 
-        location.href="login.html";
-        return;
+        await requireAdmin();
 
-    }
-
-    const admin = await getDoc(doc(db,"admins",user.uid));
-
-    if(!admin.exists()){
-
-        location.href="login.html";
-        return;
+        loadOrders();
 
     }
 
-    loadOrders();
+    catch(error){
 
-});
+        console.error(error);
+
+        location.href="../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 
 /* ===========================
 LOAD ORDERS
@@ -518,7 +522,7 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+window.location.href="../../login.html";
 
 };
 document.addEventListener("click",(e)=>{

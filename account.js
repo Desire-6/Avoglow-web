@@ -2,7 +2,13 @@ import { auth, db } from "./firebase-config.js";
 
 import {
     onAuthStateChanged,
-    signOut
+    signOut,
+    updatePassword,
+    deleteUser,
+    reauthenticateWithCredential,
+    GoogleAuthProvider,
+    reauthenticateWithPopup,
+    EmailAuthProvider
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
@@ -194,7 +200,11 @@ if(requestedOrder){
     loadInbox();
 
 }
+if(sectionId==="settings-section"){
 
+    loadAccountSettings();
+
+}
     const activeLink =
     document.querySelector(
         `a[data-section="${sectionId}"]`
@@ -2834,5 +2844,520 @@ function formatNotificationDate(timestamp){
         }
 
     );
+
+}
+async function loadAccountSettings(){
+
+    const user = auth.currentUser;
+
+    if(!user) return;
+
+    const snap = await getDoc(
+
+        doc(
+
+            db,
+
+            "users",
+
+            user.uid
+
+        )
+
+    );
+
+    if(!snap.exists()) return;
+
+    const data = snap.data();
+
+    document.getElementById("settings-name").value =
+        data.name || "";
+
+    document.getElementById("settings-email").value =
+        data.email || "";
+
+    document.getElementById("settings-phone").value =
+        data.phone || "";
+
+    // document.getElementById("shipping-district").value =
+    //     data.district || "";
+
+    // document.getElementById("shipping-city").value =
+    //     data.city || "";
+
+    // document.getElementById("shipping-address").value =
+    //     data.address || "";
+
+    document.getElementById("account-status").textContent =
+        data.status || "Active";
+
+    if(data.createdAt){
+
+        document.getElementById("member-since").textContent =
+            data.createdAt.toDate().toLocaleDateString();
+
+    }
+
+}
+document.getElementById("save-profile-btn")
+
+.addEventListener(
+
+    "click",
+
+    async()=>{
+
+        await updateDoc(
+
+            doc(db,"users",auth.currentUser.uid),
+
+            {
+
+                name:
+
+                    document.getElementById("settings-name").value,
+
+                phone:
+
+                    document.getElementById("settings-phone").value
+
+            }
+
+        );
+
+        showToast("Profile updated successfully.");
+
+    }
+
+);
+// document.getElementById("save-address-btn")
+
+// .addEventListener(
+
+//     "click",
+
+//     async()=>{
+
+//         await updateDoc(
+
+//             doc(db,"users",auth.currentUser.uid),
+
+//             {
+
+//                 district:
+
+//                     document.getElementById("shipping-district").value,
+
+//                 city:
+
+//                     document.getElementById("shipping-city").value,
+
+//                 address:
+
+//                     document.getElementById("shipping-address").value
+
+//             }
+
+//         );
+
+//         showToast("Shipping address saved.");
+
+//     }
+
+// );
+document
+
+.getElementById("change-password-btn")
+
+.addEventListener(
+
+"click",
+
+async()=>{
+
+const currentPassword=
+
+document.getElementById(
+
+"current-password"
+
+).value;
+
+const newPassword=
+
+document.getElementById(
+
+"new-password"
+
+).value;
+
+const confirmPassword=
+
+document.getElementById(
+
+"confirm-password"
+
+).value;
+
+if(newPassword.length<6){
+
+showToast(
+
+"Password must be at least 6 characters.",
+
+"error"
+
+);
+
+return;
+
+}
+
+if(newPassword!==confirmPassword){
+
+showToast(
+
+"Passwords do not match.",
+
+"error"
+
+);
+
+return;
+
+}
+
+try{
+
+const credential=
+
+EmailAuthProvider.credential(
+
+auth.currentUser.email,
+
+currentPassword
+
+);
+
+await reauthenticateWithCredential(
+
+auth.currentUser,
+
+credential
+
+);
+
+await updatePassword(
+
+auth.currentUser,
+
+newPassword
+
+);
+
+document.getElementById(
+
+"current-password"
+
+).value="";
+
+document.getElementById(
+
+"new-password"
+
+).value="";
+
+document.getElementById(
+
+"confirm-password"
+
+).value="";
+
+showToast(
+
+"Password updated successfully."
+
+);
+
+}
+
+catch(error){
+
+console.error(error);
+
+showToast(
+
+"Current password is incorrect.",
+
+"error"
+
+);
+
+}
+
+}
+
+);
+// document
+
+// .getElementById("delete-account-btn")
+
+// .addEventListener(
+
+// "click",
+
+// async()=>{
+
+// try{
+
+// await deleteDoc(
+
+// doc(
+
+// db,
+
+// "users",
+
+// auth.currentUser.uid
+
+// )
+
+// );
+
+// await deleteUser(
+
+// auth.currentUser
+
+// );
+
+// showToast(
+
+// "Account deleted."
+
+// );
+
+// window.location.href="index.html";
+
+// }
+
+// catch(error){
+
+// console.error(error);
+
+// }
+
+// }
+
+// );
+const deleteModal =
+document.getElementById("deleteAccountModal");
+
+document
+
+.getElementById("delete-account-btn")
+
+.addEventListener(
+
+"click",
+
+()=>{
+
+    deleteModal.classList.remove("hidden");
+
+}
+
+);
+document
+
+.getElementById("cancelDeleteBtn")
+
+.addEventListener(
+
+"click",
+
+()=>{
+
+    deleteModal.classList.add("hidden");
+
+}
+
+);
+document
+.getElementById("confirmDeleteBtn")
+.addEventListener(
+
+"click",
+
+async()=>{
+    const providerId =
+auth.currentUser.providerData[0].providerId;
+
+if(providerId === "password"){
+
+    document
+    .getElementById("passwordContainer")
+    .style.display="block";
+
+}
+
+else{
+
+    document
+    .getElementById("passwordContainer")
+    .style.display="none";
+
+}
+
+try{
+
+const user = auth.currentUser;
+
+const provider =
+user.providerData[0].providerId;
+
+/*==============================
+EMAIL USERS
+==============================*/
+
+if(provider==="password"){
+
+const password =
+document
+.getElementById("deletePassword")
+.value;
+
+const credential =
+EmailAuthProvider.credential(
+
+user.email,
+
+password
+
+);
+
+await reauthenticateWithCredential(
+
+user,
+
+credential
+
+);
+
+}
+
+/*==============================
+GOOGLE USERS
+==============================*/
+
+else if(provider==="google.com"){
+
+const googleProvider =
+new GoogleAuthProvider();
+
+await reauthenticateWithPopup(
+
+user,
+
+googleProvider
+
+);
+
+}
+
+/*==============================
+DELETE FIRESTORE DATA
+==============================*/
+
+await deleteUserData(user.uid);
+
+/*==============================
+DELETE AUTH ACCOUNT
+==============================*/
+
+await deleteUser(user);
+
+showToast(
+
+"Account deleted successfully."
+
+);
+
+window.location.href="index.html";
+
+}
+
+catch(error){
+
+console.error(error);
+
+showToast(
+
+error.message,
+
+"error"
+
+);
+
+}
+
+});
+
+async function deleteUserData(uid){
+
+await deleteCollection("wishlist");
+
+await deleteCollection("cart");
+
+await deleteCollection("messages");
+
+await deleteCollection("inbox");
+
+await deleteCollection("orders");
+
+await deleteCollection("settings");
+
+await deleteDoc(
+
+doc(
+
+db,
+
+"users",
+
+uid
+
+)
+
+);
+
+async function deleteCollection(name){
+
+const snap = await getDocs(
+
+collection(
+
+db,
+
+"users",
+
+uid,
+
+name
+
+)
+
+);
+
+const batch = writeBatch(db);
+
+snap.forEach(docItem=>{
+
+batch.delete(docItem.ref);
+
+});
+
+await batch.commit();
+
+}
 
 }

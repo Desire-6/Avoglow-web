@@ -19,6 +19,10 @@ import {
     createAdminActivity
 }
 from "../../adminActivity.js";
+import {
+    requireAdmin
+}
+from "../../auth-service.js";
 
 /* ======================================================
 GLOBAL VARIABLES
@@ -35,43 +39,33 @@ let currentDrawerProduct = null;
 CHECK ADMIN
 ====================================================== */
 
-onAuthStateChanged(auth, async (user) => {
+async function checkAdminAccess(){
 
-    if (!user) {
-        window.location.href = "login.html";
-        return;
+    try{
+
+        await requireAdmin();
+
+        initialiseProducts();
+
     }
 
-    try {
-
-        const adminSnap = await getDoc(
-            doc(db, "admins", user.uid)
-        );
-
-        if (!adminSnap.exists()) {
-
-            alert("Access Denied");
-
-            window.location.href = "../index.html";
-
-            return;
-        }
-
-        initialiseDashboard();
-
-    } catch (error) {
+    catch(error){
 
         console.error(error);
 
+        window.location.href="../../login.html";
+
     }
 
-});
+}
 
+
+checkAdminAccess();
 /* ======================================================
 INITIALISE PAGE
 ====================================================== */
 
-function initialiseDashboard() {
+function initialiseProducts() {
 
     initialiseLogout();
 
@@ -166,27 +160,40 @@ function updateStatistics() {
         categories.size;
 
 }
-
-/* ======================================================
-LOGOUT
-====================================================== */
-
-function initialiseLogout() {
+function initialiseLogout(){
 
     const logoutBtn =
         document.getElementById("logoutBtn");
 
+
     if(!logoutBtn) return;
 
-    logoutBtn.onclick = async () => {
 
-        await signOut(auth);
+    logoutBtn.addEventListener(
+        "click",
+        async()=>{
 
-        window.location.href = "login.html";
+            await signOut(auth);
 
-    };
+            window.location.href="../../login.html";
+
+        }
+    );
 
 }
+/* ===========================
+LOGOUT
+=========================== */
+
+document.getElementById("logoutBtn")
+
+.onclick=async()=>{
+
+await signOut(auth);
+
+window.location.href="../../login.html";
+
+};
 
 /* ======================================================
 RENDER PRODUCTS

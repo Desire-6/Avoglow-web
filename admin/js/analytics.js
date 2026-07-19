@@ -1,19 +1,22 @@
-import { auth, db } from "../../firebase-config.js";
-
+import {auth, db } from "../../firebase-config.js";
 import {
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 import {
 
     collection,
     getDocs,
-    getDoc,
-    doc,
     query,
     where
 
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+
+import {
+    requireAdmin
+} from "../../auth-service.js";
 
 
 /* ==========================================
@@ -38,53 +41,28 @@ let pickupStations = {};
    CHECK ADMIN LOGIN
 ========================================== */
 
-onAuthStateChanged(
+async function checkAdminAccess(){
 
-    auth,
+    try{
 
-    async (user) => {
-
-        if (!user) {
-
-            window.location.href = "login.html";
-
-            return;
-
-        }
-
-
-        const adminRef = doc(
-
-            db,
-
-            "admins",
-
-            user.uid
-
-        );
-
-
-        const adminSnap = await getDoc(
-
-            adminRef
-
-        );
-
-
-        if (!adminSnap.exists()) {
-
-            window.location.href = "../index.html";
-
-            return;
-
-        }
-
+        await requireAdmin();
 
         initialiseAnalytics();
 
     }
 
-);
+    catch(error){
+
+        console.error(error);
+
+        window.location.href = "../../login.html";
+
+    }
+
+}
+
+
+checkAdminAccess();
 
 
 /* ==========================================
@@ -2171,6 +2149,6 @@ document.getElementById("logoutBtn")
 
 await signOut(auth);
 
-location.href="login.html";
+ window.location.href = "../login.html";
 
 };
