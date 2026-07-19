@@ -1,6 +1,23 @@
+import { db } from "./firebase-config.js";
+import {
+
+    collection,
+
+    getDocs,
+
+    query,
+
+    where,
+
+    orderBy
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 const counters = document.querySelectorAll(".counter");
 
 let started = false;
+let storyInterval = null;
 
 function animateCounters() {
 
@@ -54,36 +71,147 @@ window.addEventListener("load", animateCounters);
 
 let currentSlide = 0;
 
-const slides = document.querySelectorAll('.slide');
+let slides = [];
 
 function showSlide(index){
 
-    slides.forEach(slide =>
-        slide.classList.remove('active')
-    );
+    if(slides.length===0) return;
 
-    slides[index].classList.add('active');
+    slides.forEach(slide=>{
+
+        slide.classList.remove("active");
+
+    });
+
+    slides[index].classList.add("active");
+
 }
 
 function changeSlide(direction){
 
+    if(slides.length === 0) return;
+
     currentSlide += direction;
 
     if(currentSlide >= slides.length){
+
         currentSlide = 0;
+
     }
 
     if(currentSlide < 0){
+
         currentSlide = slides.length - 1;
+
     }
 
     showSlide(currentSlide);
+
 }
 
-/* Auto Slide Every 5 Seconds */
+async function loadFarmerStories(){
 
-setInterval(() => {
+    const container =
+    document.getElementById("farmerStoriesContainer");
 
-    changeSlide(1);
+    container.innerHTML = "";
 
-}, 5000);
+    const q = query(
+
+        collection(db,"farmerStories"),
+
+        where("published","==",true),
+
+        orderBy("createdAt","desc")
+
+    );
+
+    const snapshot = await getDocs(q);
+
+    let stories = [];
+
+    snapshot.forEach(doc=>{
+
+        stories.push({
+
+            id: doc.id,
+
+            ...doc.data()
+
+        });
+
+    });
+
+   // Create groups of 3
+let slideGroups = [];
+
+    for(let i=0;i<stories.length;i+=3){
+
+       slideGroups.push(
+    stories.slice(i,i+3)
+);
+
+    }
+
+    slideGroups.forEach((group,index)=>{
+
+        const slide = document.createElement("div");
+
+        slide.className =
+
+            index===0
+
+            ? "slide active"
+
+            : "slide";
+
+        group.forEach(story=>{
+
+            slide.innerHTML += `
+
+                <div class="story-card">
+
+                    <div class="quote">❝</div>
+
+                    <p>${story.story}</p>
+
+                    <h4>${story.farmerName}</h4>
+
+                    <span>
+
+                        Farmer • ${story.location}
+
+                    </span>
+
+                </div>
+
+            `;
+
+        });
+
+        container.appendChild(slide);
+
+    });
+    slides = container.querySelectorAll(".slide");
+
+currentSlide = 0;
+
+showSlide(currentSlide);
+
+}
+loadFarmerStories().then(() => {
+
+    if(storyInterval){
+
+        clearInterval(storyInterval);
+
+    }
+
+    storyInterval = setInterval(() => {
+
+        changeSlide(1);
+
+    },5000);
+
+});
+window.changeSlide = changeSlide;

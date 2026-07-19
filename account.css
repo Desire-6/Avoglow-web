@@ -3804,6 +3804,84 @@ DELETE ACCOUNT MODAL
     background:#b3261e;
 
 }
+/* ===========================
+   Delete Password
+=========================== */
+
+#passwordContainer{
+
+    margin:20px 0;
+
+}
+
+#deletePassword{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+    outline:none;
+
+    box-sizing:border-box;
+
+}
+
+#deletePassword:focus{
+
+    border-color:#0c593a;
+
+    box-shadow:0 0 0 3px rgba(12,89,58,.15);
+
+}
+.btn-loader{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.btn-loader.hidden{
+
+    display:none;
+
+}
+
+.btn-text.hidden{
+
+    display:none;
+
+}
+
+#confirmDeleteBtn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+#confirmDeleteBtn:disabled{
+
+    opacity:.7;
+
+    cursor:not-allowed;
+
+}
 
 /* FOOTER */
 

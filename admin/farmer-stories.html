@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/farmer-stories.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+              <a href="dashboard.html">
+    <i class="fas fa-chart-pie"></i>
+    Dashboard
+</a>
+
+<a href="orders.html">
+    <i class="fas fa-box"></i>
+    Orders
+</a>
+
+<a href="products.html">
+    <i class="fas fa-cube"></i>
+    Products
+</a>
+
+<a href="farmer-stories.html" class="active">
+    <i class="fas fa-seedling"></i>
+    Farmer Stories
+</a>
+
+<a href="customers.html">
+    <i class="fas fa-users"></i>
+    Customers
+</a>
+
+<!-- <a href="analytics.html">
+    <i class="fas fa-chart-line"></i>
+    Analytics
+</a> -->
+
+<a href="activity.html">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    Activity
+</a>
+
+<a href="settings.html">
+    <i class="fas fa-gear"></i>
+    Settings
+</a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+    <main class="main-content">
+
+    <header class="page-header">
+
+        <div>
+
+            <h1>Farmer Stories</h1>
+
+            <p>
+                Manage testimonials and success stories shown on the website.
+            </p>
+
+        </div>
+
+        <button id="addStoryBtn" class="primary-btn">
+
+            <i class="fas fa-plus"></i>
+
+            Add Story
+
+        </button>
+
+    </header>
+
+    <!-- Statistics -->
+
+    <section class="story-stats">
+
+        <div class="stat-card">
+
+            <h3 id="totalStories">0</h3>
+
+            <span>Total Stories</span>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h3 id="publishedStories">0</h3>
+
+            <span>Published</span>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h3 id="draftStories">0</h3>
+
+            <span>Drafts</span>
+
+        </div>
+
+    </section>
+
+    <!-- Search -->
+
+    <div class="toolbar">
+
+        <div class="search-box">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                type="text"
+                id="searchStory"
+                placeholder="Search farmer..."
+            >
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Farmer</th>
+
+                    <th>Location</th>
+
+                    <th>Status</th>
+
+                    <th>Created</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+           <tbody id="storiesTableBody">
+
+</tbody>
+
+        </table>
+
+    </div>
+    <div class="pagination" id="pagination"></div>
+
+</main>
+</div>
+<div id="storyModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+
+                Add Farmer Story
+
+            </h2>
+
+            <button id="closeStoryModal">
+
+                <i class="fas fa-times"></i>
+
+            </button>
+
+        </div>
+
+        <form id="storyForm">
+
+            <input
+                type="hidden"
+                id="storyId"
+            >
+
+            <div class="form-group">
+
+                <label>Farmer Name</label>
+
+                <input
+                    type="text"
+                    id="farmerName"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    id="farmerLocation"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Story</label>
+
+                <textarea
+                    id="farmerStory"
+                    rows="6"
+                    required
+                ></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="storyPublished"
+                    >
+
+                    Publish immediately
+
+                </label>
+
+            </div>
+
+           <button
+    id="saveStoryBtn"
+    type="submit"
+    class="primary-btn">
+
+    Save Story
+
+</button>
+
+        </form>
+
+    </div>
+
+</div>
+<div id="deleteStoryModal" class="modal hidden">
+
+    <div class="modal-content small">
+
+        <div class="modal-header">
+
+            <h2>
+
+                Delete Farmer Story
+
+            </h2>
+
+        </div>
+
+        <p>
+
+            This story will be permanently deleted.
+
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                id="cancelDeleteStory"
+                class="secondary-btn">
+
+                Cancel
+
+            </button>
+
+            <button
+                id="confirmDeleteStory"
+                class="danger-btn">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toastContainer"></div>
+    <script type="module" src="js/farmer-stories.js"></script>
+</body>
+</html>

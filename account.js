@@ -29,6 +29,14 @@ import {
     writeBatch,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+const confirmDeleteBtn =
+document.getElementById("confirmDeleteBtn");
+
+const deleteBtnText =
+confirmDeleteBtn.querySelector(".btn-text");
+
+const deleteBtnLoader =
+confirmDeleteBtn.querySelector(".btn-loader");
 function showToast(message){
 
     const toast =
@@ -3149,24 +3157,279 @@ showToast(
 // }
 
 // );
+/* ===========================================
+   USER SUBCOLLECTIONS
+=========================================== */
+
+const USER_SUBCOLLECTIONS = [
+
+    "cart",
+
+    "profile",
+
+    "wishlist",
+
+    "messages",
+
+    "inbox",
+
+    "orders",
+
+    "settings"
+
+];
+/* ===========================================
+   DELETE ONE SUBCOLLECTION
+=========================================== */
+
+async function deleteSubcollection(uid, subcollectionName){
+
+    const snapshot = await getDocs(
+
+        collection(
+
+            db,
+
+            "users",
+
+            uid,
+
+            subcollectionName
+
+        )
+
+    );
+
+    if(snapshot.empty){
+
+        return;
+
+    }
+
+    const batch = writeBatch(db);
+
+    snapshot.forEach(document=>{
+
+        batch.delete(document.ref);
+
+    });
+
+    await batch.commit();
+
+}
+/* ===========================================
+   DELETE DOCUMENTS FROM GLOBAL COLLECTION
+=========================================== */
+
+async function deleteGlobalDocuments(collectionName, uid){
+
+    const q = query(
+
+        collection(db, collectionName),
+
+        where("userId", "==", uid)
+
+    );
+
+    const snapshot = await getDocs(q);
+
+    if(snapshot.empty){
+
+        return;
+
+    }
+
+    const batch = writeBatch(db);
+
+    snapshot.forEach(document=>{
+
+        batch.delete(document.ref);
+
+    });
+
+    await batch.commit();
+
+}
+/* ===========================================
+   DELETE USER DATA
+=========================================== */
+
+async function deleteUserData(uid){
+
+    /* ---------------------------
+       Delete User Subcollections
+    ---------------------------- */
+
+    for(const subcollection of USER_SUBCOLLECTIONS){
+
+        try{
+
+            await deleteSubcollection(uid, subcollection);
+
+        }
+
+        catch(error){
+
+            console.warn(
+
+                "Couldn't delete",
+
+                subcollection,
+
+                error
+
+            );
+
+        }
+
+    }
+
+    /* ---------------------------
+       Delete Global Documents
+    ---------------------------- */
+
+    try{
+
+       await deleteOrders(uid);
+
+    }
+
+    catch(error){
+
+        console.warn(error);
+
+    }
+
+    try{
+
+        await deleteGlobalDocuments("notifications", uid);
+
+    }
+
+    catch(error){
+
+        console.warn(error);
+
+    }
+
+    try{
+
+        await deleteGlobalDocuments("reviews", uid);
+
+    }
+
+    catch(error){
+
+        console.warn(error);
+
+    }
+
+    /* ---------------------------
+       Delete User Document
+    ---------------------------- */
+
+    await deleteDoc(
+
+        doc(db, "users", uid)
+
+    );
+
+}
+async function deleteOrders(uid){
+
+    const q = query(
+
+        collection(db,"orders"),
+
+        where("userId","==",uid)
+
+    );
+
+    const snapshot = await getDocs(q);
+
+    for(const orderDocument of snapshot.docs){
+
+        // delete tracking
+
+        const trackingSnapshot = await getDocs(
+
+            collection(
+
+                db,
+
+                "orders",
+
+                orderDocument.id,
+
+                "tracking"
+
+            )
+
+        );
+
+        const trackingBatch = writeBatch(db);
+
+        trackingSnapshot.forEach(doc=>{
+
+            trackingBatch.delete(doc.ref);
+
+        });
+
+        await trackingBatch.commit();
+
+        // delete order
+
+        await deleteDoc(orderDocument.ref);
+
+    }
+
+}
 const deleteModal =
 document.getElementById("deleteAccountModal");
 
 document
-
 .getElementById("delete-account-btn")
+.addEventListener("click",()=>{
 
-.addEventListener(
+    const user = auth.currentUser;
 
-"click",
+    if(!user){
 
-()=>{
+        showToast(
+
+            "Please login again.",
+
+            "error"
+
+        );
+
+        return;
+
+    }
+
+    const provider =
+
+        user.providerData[0].providerId;
+
+    if(provider==="password"){
+
+        document
+        .getElementById("passwordContainer")
+        .style.display="block";
+
+    }
+
+    else{
+
+        document
+        .getElementById("passwordContainer")
+        .style.display="none";
+
+    }
 
     deleteModal.classList.remove("hidden");
 
-}
-
-);
+});
 document
 
 .getElementById("cancelDeleteBtn")
@@ -3189,25 +3452,12 @@ document
 "click",
 
 async()=>{
-    const providerId =
-auth.currentUser.providerData[0].providerId;
+    confirmDeleteBtn.disabled = true;
 
-if(providerId === "password"){
+deleteBtnText.classList.add("hidden");
 
-    document
-    .getElementById("passwordContainer")
-    .style.display="block";
-
-}
-
-else{
-
-    document
-    .getElementById("passwordContainer")
-    .style.display="none";
-
-}
-
+deleteBtnLoader.classList.remove("hidden");
+  
 try{
 
 const user = auth.currentUser;
@@ -3287,6 +3537,11 @@ window.location.href="index.html";
 }
 
 catch(error){
+    confirmDeleteBtn.disabled = false;
+
+deleteBtnLoader.classList.add("hidden");
+
+deleteBtnText.classList.remove("hidden");
 
 console.error(error);
 
@@ -3301,63 +3556,3 @@ error.message,
 }
 
 });
-
-async function deleteUserData(uid){
-
-await deleteCollection("wishlist");
-
-await deleteCollection("cart");
-
-await deleteCollection("messages");
-
-await deleteCollection("inbox");
-
-await deleteCollection("orders");
-
-await deleteCollection("settings");
-
-await deleteDoc(
-
-doc(
-
-db,
-
-"users",
-
-uid
-
-)
-
-);
-
-async function deleteCollection(name){
-
-const snap = await getDocs(
-
-collection(
-
-db,
-
-"users",
-
-uid,
-
-name
-
-)
-
-);
-
-const batch = writeBatch(db);
-
-snap.forEach(docItem=>{
-
-batch.delete(docItem.ref);
-
-});
-
-await batch.commit();
-
-}
-
-}
