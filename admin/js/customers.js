@@ -17,7 +17,7 @@ query,
 updateDoc,
 doc,
 where,
-
+getDoc,
 orderBy,
 addDoc,
 serverTimestamp
