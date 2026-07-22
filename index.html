@@ -10,6 +10,7 @@
     </title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="review-remainder.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -534,90 +535,20 @@
 
     <div class="testimonial-wrapper">
 
-        <button class="testimonial-btn testimonial-prev">
+        <button
+id="testimonialPrev"
+class="testimonial-btn testimonial-prev">
             &#10094;
         </button>
+<div
+    class="testimonial-track"
+    id="testimonialTrack">
 
-        <div class="testimonial-track">
+</div>
 
-            <!-- Slide 1 -->
-
-            <div class="testimonial-slide">
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        Root & Revive transformed my hair. My hair feels stronger
-                        and healthier.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>Sarah N.</h4>
-                    <span>Kampala</span>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        I love knowing my purchase supports farmers while giving
-                        amazing results.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>David K.</h4>
-                    <span>Entebbe</span>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        AvoChai has become part of my daily wellness routine.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>Grace M.</h4>
-                    <span>Jinja</span>
-                </div>
-
-            </div>
-
-            <!-- Slide 2 -->
-
-            <div class="testimonial-slide">
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        Premium products and outstanding customer service.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>Alex N.</h4>
-                    <span>Mbarara</span>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        Beautiful packaging and incredible quality.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>Flavia N.</h4>
-                    <span>Wakiso</span>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="quote">❝</div>
-                    <p>
-                        Every purchase feels meaningful because it supports local
-                        communities.
-                    </p>
-                    <div class="stars">★★★★★</div>
-                    <h4>Joseph M.</h4>
-                    <span>Masaka</span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <button class="testimonial-btn testimonial-next">
+        <button
+id="testimonialNext"
+class="testimonial-btn testimonial-next">
             &#10095;
         </button>
 
@@ -870,72 +801,11 @@ counters.forEach(counter => {
 });
 
 </script>
-<script>
 
-const track = document.querySelector('.testimonial-track');
-const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-
-let currentSlide = 0;
-
-function updateTestimonials(){
-
-    track.style.transform =
-        `translateX(-${currentSlide * 100}%)`;
-
-}
-
-document
-.querySelector('.testimonial-next')
-.addEventListener('click',()=>{
-
-    currentSlide++;
-
-    if(currentSlide >= testimonialSlides.length){
-
-        currentSlide = 0;
-
-    }
-
-    updateTestimonials();
-
-});
-
-document
-.querySelector('.testimonial-prev')
-.addEventListener('click',()=>{
-
-    currentSlide--;
-
-    if(currentSlide < 0){
-
-        currentSlide = testimonialSlides.length - 1;
-
-    }
-
-    updateTestimonials();
-
-});
-
-/* Auto slide */
-
-setInterval(()=>{
-
-    currentSlide++;
-
-    if(currentSlide >= testimonialSlides.length){
-
-        currentSlide = 0;
-
-    }
-
-    updateTestimonials();
-
-},6000);
-
-</script>
 <script type="module" src="cart-badge.js"></script>
 <!-- <script type="module" src="test-firestore.js"></script> -->
-<!-- <script type="module" src="products.js"></script> -->
+<script type="module" src="index.js"></script>
 <script type="module" src="account-dropdown.js"></script>
+<script type="module" src="review-remainder.js"></script>
 </body>
 </html>

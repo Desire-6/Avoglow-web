@@ -16,7 +16,8 @@ import {
     collection,
     getDoc,
     getDocs,
-    serverTimestamp
+    serverTimestamp,
+    setDoc
 }
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
@@ -259,19 +260,29 @@ document.getElementById("updateStatus")
     try {
 
         // 1. Update the order status
-        await updateDoc(
+      await updateDoc(
 
-            doc(
-                db,
-                "orders",
-                currentOrder.orderNumber
-            ),
+    doc(
+        db,
+        "orders",
+        currentOrder.orderNumber
+    ),
 
-            {
-                status: newStatus
-            }
+    {
 
-        );
+        status: newStatus,
+
+        deliveredAt:
+
+            newStatus === "Delivered"
+
+            ? serverTimestamp()
+
+            : currentOrder.deliveredAt
+
+    }
+
+);
 
 
         // 2. Update tracking stages
@@ -332,6 +343,11 @@ document.getElementById("updateStatus")
         await sendCustomerNotification(
             newStatus
         );
+        if(newStatus === "Delivered"){
+
+    await createPendingReviews();
+
+}
 
 
         showToast(
@@ -377,111 +393,74 @@ document.getElementById("updateStatus")
 };
 async function updateTracking(status){
 
-    const trackingRef =
-        collection(
+    const trackingRef = collection(
+        db,
+        "orders",
+        currentOrder.orderNumber,
+        "tracking"
+    );
 
-            db,
-
-            "orders",
-
-            currentOrder.orderNumber,
-
-            "tracking"
-
-        );
-
-
-    const snapshot =
-        await getDocs(trackingRef);
-
+    const snapshot = await getDocs(trackingRef);
 
     const updates = [];
 
-
     snapshot.forEach(docSnap => {
 
-        const stage =
-            docSnap.data().stage;
+        const data = docSnap.data();
+        const stage = data.stage;
 
-
-        let complete = false;
-
+        let shouldComplete = false;
 
         if(status === "Preparing Order"){
 
-            complete =
-
+            shouldComplete =
                 stage === "Order Placed" ||
-
                 stage === "Preparing Order";
 
         }
 
+        else if(status === "Ready for Pickup"){
 
-        else if(
-            status === "Ready for Pickup"
-        ){
-
-            complete =
-
+            shouldComplete =
                 stage === "Order Placed" ||
-
                 stage === "Preparing Order" ||
-
                 stage === "Ready For Pickup";
 
         }
 
+        else if(status === "Out for Delivery"){
 
-        else if(
-            status === "Out for Delivery"
-        ){
-
-            complete =
-
+            shouldComplete =
                 stage === "Order Placed" ||
-
                 stage === "Preparing Order" ||
-
                 stage === "Out For Delivery";
 
         }
 
-
         else if(status === "Delivered"){
 
-            complete = true;
+            shouldComplete = true;
 
         }
 
+        // Don't overwrite dates that already exist
+        if(shouldComplete && !data.completed){
 
-        updates.push(
+            updates.push(
 
-            updateDoc(
+                updateDoc(docSnap.ref,{
 
-                docSnap.ref,
+                    completed:true,
 
-                {
+                    date:serverTimestamp()
 
-                    completed:
-                        complete,
+                })
 
-                    date:
+            );
 
-                        complete
-
-                        ? serverTimestamp()
-
-                        : null
-
-                }
-
-            )
-
-        );
+        }
 
     });
-
 
     await Promise.all(updates);
 
@@ -621,6 +600,59 @@ estimatedTo:currentOrder.estimatedTo
 }
 
 );
+
+}
+async function createPendingReviews() {
+
+    const pendingCollection = collection(
+
+        db,
+
+        "users",
+
+        currentOrder.userId,
+
+        "pendingReviews"
+
+    );
+
+    for (const item of currentOrder.items) {
+
+        const reviewRef = doc(
+
+            pendingCollection,
+
+            currentOrder.orderNumber + "_" + item.slug
+
+        );
+
+        await setDoc(reviewRef, {
+
+            orderNumber: currentOrder.orderNumber,
+
+            productSlug: item.slug,
+
+            productName: item.name,
+
+            productImage: item.image,
+
+            subtitle: item.subtitle,
+
+            price: item.price,
+
+            size: item.size,
+
+            quantity: item.quantity,
+
+            deliveredAt: serverTimestamp(),
+
+            reviewed: false,
+
+            dismissed: false
+
+        });
+
+    }
 
 }
 function showToast(title,message,type="success"){

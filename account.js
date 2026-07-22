@@ -666,7 +666,7 @@ currentPage = 1;
     let totalOrders = 0;
 let pendingOrders = 0;
 let readyOrders = 0;
-let completedOrders = 0;
+let deliveredOrders = 0;
 
     const q = query(
 
@@ -720,8 +720,8 @@ switch(order.status){
         readyOrders++;
         break;
 
-    case "Completed":
-        completedOrders++;
+    case "Delivered":
+        deliveredOrders++;
         break;
 
 }
@@ -735,7 +735,7 @@ const estimatedTo = addWorkingDays(created, 3);
 
 const deliveryText =
 
-order.status === "Completed"
+order.status === "Delivered"
 
 ? `Delivered on
 <strong>
@@ -762,8 +762,8 @@ pendingOrders;
 document.getElementById("count-ready").textContent =
 readyOrders;
 
-document.getElementById("count-completed").textContent =
-completedOrders;
+document.getElementById("count-delivered").textContent =
+deliveredOrders;
 filteredOrders = [...allOrders];
 
 renderOrders();
@@ -1488,7 +1488,7 @@ async function renderOrderDetails(order){
     <div class="order-action-bar">
 
  ${
-    order.status === "Completed"
+    order.status === "Delivered"
 
     ?
 
@@ -1903,7 +1903,7 @@ Back to Details
 <h2>
 
 ${
-order.status==="Completed"
+order.status==="Delivered"
 
 ?
 
@@ -1959,7 +1959,7 @@ step.completed
 
 ?
 
-`<span class="tracking-state completed">Completed</span>`
+`<span class="tracking-state completed">Delivered</span>`
 
 :
 

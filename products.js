@@ -128,6 +128,7 @@ import {
     setDoc,
     deleteDoc,
     query,
+    where,
     orderBy
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
@@ -260,10 +261,11 @@ const productsGrid = document.getElementById("products-grid");
 
 async function loadProducts() {
 
-    const productsQuery = query(
-        collection(db, "products"),
-        orderBy("displayOrder")
-    );
+  const productsQuery = query(
+    collection(db, "products"),
+    where("status", "==", "Active"),
+    orderBy("displayOrder")
+);
 
     const querySnapshot = await getDocs(productsQuery);
 
