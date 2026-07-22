@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | AVOGLOW Admin</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/messages.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-content">
+
+            <div class="logo">
+
+                <img src="../Images/logo.png">
+
+                <h2>AVOGLOW</h2>
+
+                <span>Admin Portal</span>
+
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html">
+
+                    <i class="fas fa-chart-pie"></i>
+
+                    Dashboard
+
+                </a>
+
+                <a href="orders.html">
+
+                    <i class="fas fa-box"></i>
+
+                    Orders
+
+                </a>
+
+                <a href="products.html">
+
+                    <i class="fas fa-cube"></i>
+
+                    Products
+
+                </a>
+                   <a href="farmer-stories.html">
+    <i class="fas fa-seedling"></i>
+    Farmer Stories
+</a>
+
+                <a href="customers.html">
+
+                    <i class="fas fa-users"></i>
+
+                    Customers
+
+                </a>
+
+                <!-- <a href="analytics.html">
+
+                    <i class="fas fa-chart-line"></i>
+
+                    Analytics
+
+                </a> -->
+                <a href="messages.html" class="active">
+        <i class="fas fa-envelope"></i>
+        Messages
+    </a>
+
+                <a href="activity.html">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                    Activity
+
+                </a>
+
+                <a href="settings.html">
+
+                    <i class="fas fa-gear"></i>
+
+                    Settings
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <button id="logoutBtn">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </aside>
+<main class="messages-page">
+
+    <div class="page-header">
+
+        <h1>Customer Messages</h1>
+
+        <p>
+            View and manage all customer enquiries.
+        </p>
+
+    </div>
+
+    <div class="messages-toolbar">
+
+        <input
+            type="text"
+            id="searchMessages"
+            placeholder="Search by name, email or message number">
+
+        <select id="messageFilter">
+
+            <option value="all">All Messages</option>
+            <option value="New">New</option>
+            <option value="Read">Read</option>
+
+        </select>
+
+    </div>
+
+    <div class="messages-table">
+
+        <table id="messagesTableWrapper">
+
+            <thead>
+
+                <tr>
+
+                    <th>Message</th>
+
+                    <th>Customer</th>
+
+                    <th>Inquiry</th>
+
+                    <th>Date</th>
+
+                    <th>Status</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="messagesTable"></tbody>
+
+        </table>
+        <div class="messages-pagination" id="messagesPagination">
+
+    <button id="prevPage">
+
+        <i class="fas fa-chevron-left"></i>
+
+    </button>
+
+    <span id="pageInfo"></span>
+
+    <button id="nextPage">
+
+        <i class="fas fa-chevron-right"></i>
+
+    </button>
+
+</div>
+
+        <div
+            id="emptyMessages"
+            class="empty-messages"
+            style="display:none;">
+
+            <i class="fas fa-inbox"></i>
+
+            <h3>No messages found</h3>
+
+            <p>
+                There are no customer messages matching your search or filter.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+<div id="messageModal" class="message-modal">
+
+    <div class="message-modal-content">
+
+        <button
+            id="closeMessageModal"
+            class="close-message">
+
+            <i class="fas fa-times"></i>
+
+        </button>
+
+        <h2>Customer Message</h2>
+
+        <div class="message-layout">
+
+            <!-- LEFT PANEL -->
+
+            <div class="message-sidebar">
+
+                <div class="info-group">
+
+                    <label>Message Number</label>
+
+                    <p id="viewMessageNumber"></p>
+
+                </div>
+
+                <div class="info-group">
+
+                    <label>Customer</label>
+
+                    <p id="viewCustomerName"></p>
+
+                </div>
+
+                <div class="info-group">
+
+                    <label>Email</label>
+
+                    <p id="viewCustomerEmail"></p>
+
+                </div>
+
+                <div class="info-group">
+
+                    <label>Phone</label>
+
+                    <p id="viewCustomerPhone"></p>
+
+                </div>
+
+                <div class="info-group">
+
+                    <label>Inquiry Type</label>
+
+                    <p id="viewInquiryType"></p>
+
+                </div>
+
+                <div class="info-group">
+
+                    <label>Date Received</label>
+
+                    <p id="viewMessageDate"></p>
+
+                </div>
+
+                <!-- <div class="info-group">
+
+                    <label>Status</label>
+
+                    <p id="viewMessageStatus"></p>
+
+                </div> -->
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+
+            <div class="message-main">
+
+                <div class="customer-message">
+
+                    <h3>Customer Message</h3>
+
+                    <div
+                        id="viewMessageText"
+                        class="message-body">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module" src="js/messages.js"></script>
+</div>
+</body>
+</html>

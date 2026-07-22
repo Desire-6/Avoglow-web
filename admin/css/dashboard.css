@@ -65,11 +65,12 @@ margin-bottom:40px;
 }
 
 .logo img{
-
-width:90px;
-
-margin-bottom:15px;
-
+    width: 150px;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    margin-bottom: 15px;
 }
 
 .logo h2{

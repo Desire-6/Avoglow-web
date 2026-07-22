@@ -173,67 +173,71 @@
 
         <h2>Send Us A Message</h2>
 
-        <form>
+        <form id="contactForm">
 
-            <div class="form-row">
+    <div class="form-row">
 
-                <input
-                    type="text"
-                    placeholder="Full Name"
-                    required
-                >
+        <input
+            id="fullName"
+            type="text"
+            placeholder="Full Name"
+            required>
 
-                <input
-                    type="email"
-                    placeholder="Email Address"
-                    required
-                >
+        <input
+            id="email"
+            type="email"
+            placeholder="Email Address"
+            required>
 
-            </div>
+    </div>
 
-            <input
-                type="tel"
-                placeholder="Phone Number"
-                required
-            >
+    <input
+        id="phone"
+        type="tel"
+        placeholder="Phone Number"
+        required>
 
-            <select required>
+    <select
+        id="inquiryType"
+        required>
 
-                <option value="">
-                    Select Inquiry Type
-                </option>
+        <option value="">
+            Select Inquiry Type
+        </option>
 
-                <option>
-                    Retail Customer
-                </option>
+        <option>
+            Retail Customer
+        </option>
 
-                <option>
-                    Wholesale Inquiry
-                </option>
+        <option>
+            Wholesale Inquiry
+        </option>
 
-                <option>
-                    Partnership
-                </option>
+        <option>
+            Partnership
+        </option>
 
-                <option>
-                    General Inquiry
-                </option>
+        <option>
+            General Inquiry
+        </option>
 
-            </select>
+    </select>
 
-            <textarea
-                rows="8"
-                placeholder="Your Message"
-                required>
-            </textarea>
+    <textarea
+        id="message"
+        rows="8"
+        placeholder="Your Message"
+        required></textarea>
 
-            <button type="submit">
+    <button
+        id="sendMessage"
+        type="submit">
 
-                Send Message
+        Send Message
 
-            </button>
+    </button>
 
-        </form>
+</form>
 
     </div>
 
@@ -322,7 +326,9 @@
     </div>
 
 </footer>
+<div id="toastContainer"></div>
 <script type="module" src="cart-badge.js"></script>
 <script type="module" src="account-dropdown.js"></script>
+<script type="module" src="contact.js"></script>
 </body>
 </html>

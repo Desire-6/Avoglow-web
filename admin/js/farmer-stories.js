@@ -19,6 +19,34 @@ import {
 }
 
 from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import {
+    requireAdmin
+} from "../../auth-service.js";
+/*=====================================
+CHECK ADMIN LOGIN
+=====================================*/
+
+async function checkAdminAccess(){
+
+    try{
+
+        await requireAdmin();
+
+        initialiseStories();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        window.location.href = "../../login.html";
+
+    }
+
+}
+
+checkAdminAccess();
 /*=====================================
 ELEMENTS
 =====================================*/
@@ -65,42 +93,47 @@ const rowsPerPage = 20;
 LOAD STORIES
 =====================================*/
 
-const storiesQuery = query(
+function initialiseStories(){
 
-    collection(db,"farmerStories"),
+    const storiesQuery = query(
 
-    orderBy("createdAt","desc")
+        collection(db,"farmerStories"),
 
-);
+        orderBy("createdAt","desc")
 
-onSnapshot(
+    );
 
-    storiesQuery,
+    onSnapshot(
 
-    snapshot=>{
+        storiesQuery,
 
-        stories=[];
+        snapshot=>{
 
-        snapshot.forEach(doc=>{
+            stories = [];
 
-            stories.push({
+            snapshot.forEach(doc=>{
 
-                id:doc.id,
+                stories.push({
 
-                ...doc.data()
+                    id: doc.id,
+
+                    ...doc.data()
+
+                });
 
             });
 
-        });
-        currentPage = 1;
+            currentPage = 1;
 
-        renderStories(stories);
+            renderStories(stories);
 
-        updateStats();
+            updateStats();
 
-    }
+        }
 
-);
+    );
+
+}
 
 function renderStories(data){
 
