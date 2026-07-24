@@ -549,285 +549,285 @@ await sendPasswordResetEmail(
    GOOGLE LOGIN
 ========================== */
 
-const googleLoginButton =
-    document.getElementById("google-login");
+// const googleLoginButton =
+//     document.getElementById("google-login");
 
-if(googleLoginButton){
+// if(googleLoginButton){
 
-    googleLoginButton.addEventListener(
-        "click",
-        signInWithGoogle
-    );
+//     googleLoginButton.addEventListener(
+//         "click",
+//         signInWithGoogle
+//     );
 
-}
+// }
 
 
-async function signInWithGoogle(){
+// async function signInWithGoogle(){
 
-    const originalContent =
-        googleLoginButton.innerHTML;
+//     const originalContent =
+//         googleLoginButton.innerHTML;
 
 
-    googleLoginButton.disabled = true;
+//     googleLoginButton.disabled = true;
 
 
-    googleLoginButton.innerHTML = `
+//     googleLoginButton.innerHTML = `
 
-        <i class="fas fa-spinner fa-spin"></i>
+//         <i class="fas fa-spinner fa-spin"></i>
 
-        Signing in...
+//         Signing in...
 
-    `;
+//     `;
 
 
-    try{
+//     try{
 
-       const user =
-    await loginWithGoogle();
+//        const user =
+//     await loginWithGoogle();
 
 
-        /*
-        ==========================================
-        CHECK FIRESTORE USER PROFILE
-        ==========================================
-        */
+//         /*
+//         ==========================================
+//         CHECK FIRESTORE USER PROFILE
+//         ==========================================
+//         */
 
-        const userRef =
-            doc(
+//         const userRef =
+//             doc(
 
-                db,
+//                 db,
 
-                "users",
+//                 "users",
 
-                user.uid
+//                 user.uid
 
-            );
+//             );
 
 
-        const userSnap =
-            await getDoc(
+//         const userSnap =
+//             await getDoc(
 
-                userRef
+//                 userRef
 
-            );
+//             );
 
 
-        /*
-        ==========================================
-        BLOCKED USER CHECK
-        ==========================================
-        */
+//         /*
+//         ==========================================
+//         BLOCKED USER CHECK
+//         ==========================================
+//         */
 
-        if(userSnap.exists()){
+//         if(userSnap.exists()){
 
-            const userData =
-                userSnap.data();
+//             const userData =
+//                 userSnap.data();
 
 
-            if(
+//             if(
 
-                userData.status === "Blocked"
+//                 userData.status === "Blocked"
 
-            ){
+//             ){
 
-                await auth.signOut();
+//                 await auth.signOut();
 
 
-                showToast(
+//                 showToast(
 
-                    "Your account has been blocked by an administrator.",
+//                     "Your account has been blocked by an administrator.",
 
-                    "error"
+//                     "error"
 
-                );
+//                 );
 
 
-                googleLoginButton.disabled =
-                    false;
+//                 googleLoginButton.disabled =
+//                     false;
 
 
-                googleLoginButton.innerHTML =
-                    originalContent;
+//                 googleLoginButton.innerHTML =
+//                     originalContent;
 
 
-                return;
+//                 return;
 
-            }
+//             }
 
-        }
+//         }
 
 
-        /*
-        ==========================================
-        CREATE OR UPDATE USER PROFILE
-        ==========================================
-        */
+//         /*
+//         ==========================================
+//         CREATE OR UPDATE USER PROFILE
+//         ==========================================
+//         */
 
-        if(!userSnap.exists()){
+//         if(!userSnap.exists()){
 
-            await setDoc(
+//             await setDoc(
 
-                userRef,
+//                 userRef,
 
-                {
+//                 {
 
-                    uid:
-                        user.uid,
+//                     uid:
+//                         user.uid,
 
-                    name:
-                        user.displayName || "",
+//                     name:
+//                         user.displayName || "",
 
-                    email:
-                        user.email || "",
+//                     email:
+//                         user.email || "",
 
-                    phone:
-                        user.phoneNumber || "",
+//                     phone:
+//                         user.phoneNumber || "",
 
-                    photoURL:
-                        user.photoURL || "",
+//                     photoURL:
+//                         user.photoURL || "",
 
-                    status:
-                        "Active",
+//                     status:
+//                         "Active",
 
-                    providers:
-                        ["google"],
+//                     providers:
+//                         ["google"],
 
-                    createdAt:
-                        serverTimestamp()
+//                     createdAt:
+//                         serverTimestamp()
 
-                }
+//                 }
 
-            );
+//             );
 
-        }
+//         }
 
-        else{
+//         else{
 
-            await setDoc(
+//             await setDoc(
 
-                userRef,
+//                 userRef,
 
-                {
+//                 {
 
-                    name:
-                        user.displayName || "",
+//                     name:
+//                         user.displayName || "",
 
-                    email:
-                        user.email || "",
+//                     email:
+//                         user.email || "",
 
-                    photoURL:
-                        user.photoURL || "",
+//                     photoURL:
+//                         user.photoURL || "",
 
-                    providers:
-                        arrayUnion("google")
+//                     providers:
+//                         arrayUnion("google")
 
-                },
+//                 },
 
-                {
+//                 {
 
-                    merge:
-                        true
+//                     merge:
+//                         true
 
-                }
+//                 }
 
-            );
+//             );
 
-        }
+//         }
 
 
-        /*
-        ==========================================
-        SAVE LOGIN STATE
-        ==========================================
-        */
+//         /*
+//         ==========================================
+//         SAVE LOGIN STATE
+//         ==========================================
+//         */
 
-        localStorage.setItem(
+//         localStorage.setItem(
 
-            "loggedIn",
+//             "loggedIn",
 
-            "true"
+//             "true"
 
-        );
+//         );
 
 
-        localStorage.setItem(
+//         localStorage.setItem(
 
-            "userEmail",
+//             "userEmail",
 
-            user.email
+//             user.email
 
-        );
+//         );
 
 
-        /*
-        ==========================================
-        REDIRECT
-        ==========================================
-        */
+//         /*
+//         ==========================================
+//         REDIRECT
+//         ==========================================
+//         */
 
-await redirectUser(user);
+// await redirectUser(user);
 
-    }
+//     }
 
-    catch(error){
+//     catch(error){
 
-        console.error(
+//         console.error(
 
-            "Google sign-in error:",
+//             "Google sign-in error:",
 
-            error
+//             error
 
-        );
+//         );
 
 
-        let message =
-            "Unable to sign in with Google.";
+//         let message =
+//             "Unable to sign in with Google.";
 
 
-        switch(error.code){
+//         switch(error.code){
 
-            case "auth/popup-closed-by-user":
+//             case "auth/popup-closed-by-user":
 
-                message =
-                    "Google sign-in was cancelled.";
+//                 message =
+//                     "Google sign-in was cancelled.";
 
-                break;
+//                 break;
 
 
-            case "auth/popup-blocked":
+//             case "auth/popup-blocked":
 
-                message =
-                    "Please allow popups to sign in with Google.";
+//                 message =
+//                     "Please allow popups to sign in with Google.";
 
-                break;
+//                 break;
 
 
-            case "auth/unauthorized-domain":
+//             case "auth/unauthorized-domain":
 
-                message =
-                    "This website domain is not authorized for Google sign-in.";
+//                 message =
+//                     "This website domain is not authorized for Google sign-in.";
 
-                break;
+//                 break;
 
-        }
+//         }
 
 
-        showToast(
+//         showToast(
 
-            message,
+//             message,
 
-            "error"
+//             "error"
 
-        );
+//         );
 
 
-        googleLoginButton.disabled =
-            false;
+//         googleLoginButton.disabled =
+//             false;
 
 
-        googleLoginButton.innerHTML =
-            originalContent;
+//         googleLoginButton.innerHTML =
+//             originalContent;
 
-    }
+//     }
 
-}
+// }
